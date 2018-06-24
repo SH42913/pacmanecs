@@ -2,3 +2,7 @@
 	path = Assets/LeopotamGroup/Ecs
 	url = https://github.com/Leopotam/ecs.git
 	branch = develop
+[submodule "Assets/Plugins"]
+	path = Assets/LeopotamGroup/Ecs.UnityIntegration
+	url = https://github.com/Leopotam/ecs-unityintegration.git
+	branch = develop
