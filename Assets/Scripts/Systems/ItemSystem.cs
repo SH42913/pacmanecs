@@ -44,11 +44,8 @@ namespace Systems
 
             foreach (var foodObject in foodObjects)
             {
-                int entity = EcsWorld.CreateEntity();
-                EcsWorld
-                    .AddComponent<PositionComponent>(entity)
-                    .Position = foodObject.transform.position.ToVector2Int();
-
+                int entity = foodObject.CreateEntityWithPosition(EcsWorld);
+                
                 var foodComponent = EcsWorld.AddComponent<ItemComponent>(entity);
                 foodComponent.ItemType = ItemTypes.Food;
                 foodComponent.UseAction = FoodAction;

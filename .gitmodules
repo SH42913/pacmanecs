@@ -1,0 +1,4 @@
+[submodule "Assets/Plugins"]
+	path = Assets/LeopotamGroup/Ecs
+	url = https://github.com/Leopotam/ecs.git
+	branch = develop

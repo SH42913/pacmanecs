@@ -39,14 +39,9 @@ namespace Systems
                         break;
                 }
 
-                Vector3 startPosition = ghostObject.transform.position;
-                int entity = EcsWorld.CreateEntity();
-                EcsWorld
-                    .AddComponent<PositionComponent>(entity)
-                    .Position = startPosition.ToVector2Int();
-
+                int entity = ghostObject.CreateEntityWithPosition(EcsWorld);
                 var moveComponent = EcsWorld.AddComponent<MoveComponent>(entity);
-                moveComponent.DesiredPosition = startPosition;
+                moveComponent.DesiredPosition = ghostObject.transform.position;
                 moveComponent.Heading = Directions.LEFT;
                 moveComponent.Speed = GhostSpeed;
                 moveComponent.Transform = ghostObject.transform;

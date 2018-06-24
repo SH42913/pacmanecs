@@ -19,12 +19,8 @@ namespace Systems
 
             foreach (var player in playerObjects)
             {
-                var entity = EcsWorld.CreateEntity();
+                var entity = player.CreateEntityWithPosition(EcsWorld);
                 var startPosition = player.transform.position;
-            
-                EcsWorld
-                    .AddComponent<PositionComponent>(entity)
-                    .Position = startPosition.ToVector2Int();
 
                 var moveComponent = EcsWorld.AddComponent<MoveComponent>(entity);
                 moveComponent.Transform = player.transform;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Components;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
@@ -17,6 +18,16 @@ public static class VariousExtensions
             x = Mathf.RoundToInt(vector.x),
             y = Mathf.RoundToInt(vector.z),
         };
+    }
+
+    public static int CreateEntityWithPosition(this GameObject gameObject, EcsWorld ecsWorld)
+    {
+        int entity = ecsWorld.CreateEntity();
+        ecsWorld
+            .AddComponent<PositionComponent>(entity)
+            .Position = gameObject.transform.position.ToVector2Int();
+
+        return entity;
     }
 
     public static T GetComponent<T>(this EcsFilter<T> filter, Expression<Func<T, bool>> limits = null)

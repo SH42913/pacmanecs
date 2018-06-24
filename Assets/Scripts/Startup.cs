@@ -39,6 +39,7 @@ public class Startup : MonoBehaviour
 			{
 				GhostSpeed = _ghostSpeed
 			})
+			.Add(new PortalSystem())
 			.Add(new MoveSystem())
 			.Add(new DeathSystem())
 			.Add(new ItemSystem())

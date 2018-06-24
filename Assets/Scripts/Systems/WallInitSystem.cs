@@ -15,11 +15,8 @@ namespace Systems
 
             foreach (GameObject wall in walls)
             {
-                var entity = EcsWorld.CreateEntity();
+                var entity = wall.CreateEntityWithPosition(EcsWorld);
                 EcsWorld.AddComponent<WallComponent>(entity);
-                EcsWorld
-                    .AddComponent<PositionComponent>(entity)
-                    .Position = wall.transform.position.ToVector2Int();
             }
         }
 
