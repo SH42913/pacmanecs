@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using Components;
+using Components.BaseComponents;
+using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 

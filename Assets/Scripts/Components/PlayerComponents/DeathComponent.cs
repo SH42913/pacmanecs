@@ -1,4 +1,4 @@
-﻿namespace Components
+﻿namespace Components.PlayerComponents
 {
     public class DeathComponent
     {

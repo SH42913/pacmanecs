@@ -5,9 +5,10 @@ using UnityEngine;
 namespace Systems
 {
     [EcsInject]
-    public class PlayerSystem : IEcsInitSystem, IEcsRunSystem
+    public class PlayerInitSystem : IEcsInitSystem
     {
         public uint StartLifes { get; set; }
+        public float StartSpeed { get; set; }
         public uint CreatedPlayersCount { get; private set; }
         
         private EcsWorld EcsWorld { get; set; }
@@ -28,18 +29,13 @@ namespace Systems
                     ? Directions.RIGHT
                     : Directions.LEFT;
                 moveComponent.DesiredPosition = startPosition;
-                moveComponent.Speed = 3f;
+                moveComponent.Speed = StartSpeed;
 
                 var playerComponent = EcsWorld.AddComponent<PlayerComponent>(entity);
                 playerComponent.Lifes = StartLifes;
                 playerComponent.Num = ++CreatedPlayersCount;
                 playerComponent.StartPosition = startPosition;
             }
-        }
-        
-        public void Run()
-        {
-            
         }
 
         public void Destroy() {}

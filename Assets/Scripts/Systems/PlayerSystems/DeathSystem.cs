@@ -46,7 +46,7 @@ namespace Systems
                 if (targetPlayer.Lifes == 0)
                 {
                     targetPlayer.IsDead = true;
-                    deadMoveComponent?.Transform?.gameObject.SetActive(false);
+                    deadMoveComponent?.Transform.gameObject.SetActive(false);
                 }
                 
                 EcsWorld.CreateEntityWith<UpdateGuiComponent>();

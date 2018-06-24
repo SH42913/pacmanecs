@@ -1,4 +1,7 @@
 ﻿using Components;
+using Components.BaseComponents;
+using Components.PlayerComponents;
+using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
@@ -10,6 +13,8 @@ namespace Systems
         private EcsWorld EcsWorld { get; set; }
         private EcsFilter<PositionComponent, ItemComponent> Items { get; set; }
         private EcsFilter<PositionComponent, MoveComponent, PlayerComponent> Players { get; set; }
+        
+        public float FoodPenalty { get; set; }
         
         public void Initialize()
         {
@@ -29,10 +34,11 @@ namespace Systems
                     x => !x.Used);
                 if(item == null) continue;
                 
-                item.UseAction.Invoke(Players.Components2[i], Players.Components3[i]);
+                item.UseAction(Players.Components2[i], Players.Components3[i]);
                 item.Used = true;
                 item.GameObject.SetActive(false);
                 EcsWorld.CreateEntityWith<UpdateGuiComponent>();
+                EcsWorld.RemoveEntity(item.ItemEntity);
             }
         }
 
@@ -50,6 +56,7 @@ namespace Systems
                 foodComponent.ItemType = ItemTypes.Food;
                 foodComponent.UseAction = FoodAction;
                 foodComponent.GameObject = foodObject;
+                foodComponent.ItemEntity = entity;
             }
         }
 
@@ -68,19 +75,20 @@ namespace Systems
                 component.ItemType = ItemTypes.Energizer;
                 component.UseAction = EnergizerAction;
                 component.GameObject = energizer;
+                component.ItemEntity = entity;
             }
         }
 
         private void FoodAction(MoveComponent moveComponent, PlayerComponent player)
         {
             player.Scores += 10;
-            moveComponent.Speed -= 0.001f;
+            moveComponent.Speed -= FoodPenalty;
         }
 
         private void EnergizerAction(MoveComponent moveComponent, PlayerComponent player)
         {
             player.Scores += 50;
-            moveComponent.Speed -= 0.005f;
+            moveComponent.Speed -= 5 * FoodPenalty;
         }
     }
 }

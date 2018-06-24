@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Components
+namespace Components.PlayerComponents
 {
     public class PlayerComponent
     {
-        public uint Num { get; set; }
-        public uint Scores { get; set; }
-        public uint Lifes { get; set; }
+        public int Num { get; set; }
+        public int Scores { get; set; }
+        public int Lifes { get; set; }
         public bool IsDead { get; set; }
         public Vector3 StartPosition { get; set; }
     }

@@ -1,4 +1,4 @@
-﻿namespace Components
+﻿namespace Components.StaticComponents
 {
     public class PortalComponent
     {

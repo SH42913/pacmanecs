@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Components
+namespace Components.BaseComponents
 {
     public class PositionComponent
     {

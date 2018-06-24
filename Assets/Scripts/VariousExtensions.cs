@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 using Components;
+using Components.BaseComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
@@ -30,16 +31,15 @@ public static class VariousExtensions
         return entity;
     }
 
-    public static T GetComponent<T>(this EcsFilter<T> filter, Expression<Func<T, bool>> limits = null)
+    public static T GetComponent<T>(this EcsFilter<T> filter, Func<T, bool> limits = null)
         where T : class, new()
     {
         if(limits == null) limits = x => true;
-        var func = limits.Compile();
 
         for (int i = 0; i < filter.EntitiesCount; i++)
         {
             var component = filter.Components1[i];
-            if(!func(component)) continue;
+            if(!limits(component)) continue;
 
             return component;
         }
@@ -49,22 +49,19 @@ public static class VariousExtensions
     
     public static T1 GetFirstComponent<T1, T2>(
         this EcsFilter<T1, T2> filter,
-        Expression<Func<T1, bool>> limits1 = null,
-        Expression<Func<T2, bool>> limits2 = null)
+        Func<T1, bool> limits1 = null,
+        Func<T2, bool> limits2 = null)
         where T1 : class, new()
         where T2 : class, new()
     {
         if(limits1 == null) limits1 = x => true;
         if(limits2 == null) limits2 = x => true;
-        
-        var func1 = limits1.Compile();
-        var func2 = limits2.Compile();
 
         for (int i = 0; i < filter.EntitiesCount; i++)
         {
             var component1 = filter.Components1[i];
             var component2 = filter.Components2[i];
-            if(!func1(component1) || !func2(component2)) continue;
+            if(!limits1(component1) || !limits2(component2)) continue;
 
             return component1;
         }
@@ -74,22 +71,19 @@ public static class VariousExtensions
     
     public static T2 GetSecondComponent<T1, T2>(
         this EcsFilter<T1, T2> filter,
-        Expression<Func<T1, bool>> limits1 = null,
-        Expression<Func<T2, bool>> limits2 = null)
+        Func<T1, bool> limits1 = null,
+        Func<T2, bool> limits2 = null)
         where T1 : class, new()
         where T2 : class, new()
     {
         if(limits1 == null) limits1 = x => true;
         if(limits2 == null) limits2 = x => true;
-        
-        var func1 = limits1.Compile();
-        var func2 = limits2.Compile();
 
         for (int i = 0; i < filter.EntitiesCount; i++)
         {
             var component1 = filter.Components1[i];
             var component2 = filter.Components2[i];
-            if(!func1(component1) || !func2(component2)) continue;
+            if(!limits1(component1) || !limits2(component2)) continue;
 
             return component2;
         }

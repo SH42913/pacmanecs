@@ -1,4 +1,7 @@
 ﻿using Components;
+using Components.BaseComponents;
+using Components.GhostComponents;
+using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
