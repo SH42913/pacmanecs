@@ -1,9 +1,8 @@
-﻿using Components;
-using Components.BaseComponents;
+﻿using Components.BaseComponents;
 using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 
-namespace Systems
+namespace Systems.PlayerSystems
 {
     [EcsInject]
     public class CommandSystem : IEcsRunSystem
@@ -29,7 +28,7 @@ namespace Systems
             }
         }
 
-        private void RemoveCommandsWhere(uint playerNum)
+        private void RemoveCommandsWhere(int playerNum)
         {
             for (int i = 0; i < Commands.EntitiesCount; i++)
             {

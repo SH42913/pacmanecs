@@ -1,15 +1,16 @@
-﻿using Components;
+﻿using Components.BaseComponents;
+using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.PlayerSystems
 {
     [EcsInject]
     public class PlayerInitSystem : IEcsInitSystem
     {
-        public uint StartLifes { get; set; }
+        public int StartLifes { get; set; }
         public float StartSpeed { get; set; }
-        public uint CreatedPlayersCount { get; private set; }
+        public int CreatedPlayersCount { get; private set; }
         
         private EcsWorld EcsWorld { get; set; }
         private EcsFilter<MoveComponent, PlayerComponent> Players { get; set; }

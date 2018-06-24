@@ -1,9 +1,10 @@
 ﻿using System;
-using Components;
+using Components.BaseComponents;
+using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.BaseSystems
 {
     [EcsInject]
     public class MoveSystem : IEcsRunSystem

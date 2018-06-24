@@ -1,11 +1,10 @@
-﻿using Components;
-using Components.BaseComponents;
+﻿using Components.BaseComponents;
 using Components.PlayerComponents;
 using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.StaticSystems
 {
     [EcsInject]
     public class ItemSystem : IEcsInitSystem, IEcsRunSystem

@@ -1,10 +1,9 @@
-﻿using Components;
-using Components.BaseComponents;
+﻿using Components.BaseComponents;
 using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.PlayerSystems
 {
     [EcsInject]
     public class PlayerInputSystem : IEcsRunSystem
@@ -16,7 +15,7 @@ namespace Systems
         {
             for (int i = 0; i < Players.EntitiesCount; i++)
             {
-                uint playerNum = Players.Components1[i].Num;
+                int playerNum = Players.Components1[i].Num;
                 float yAxis = Input.GetAxis($"Player{playerNum}Y");
                 float xAxis = Input.GetAxis($"Player{playerNum}X");
 
@@ -36,10 +35,17 @@ namespace Systems
                 {
                     SendCommand(Directions.LEFT, playerNum);
                 }
+
+                if (Input.GetKeyUp(KeyCode.Escape))
+                {
+                    EcsWorld.CreateEntityWith<GameStateComponent>().State = Time.timeScale < 1
+                        ? GameStates.START
+                        : GameStates.PAUSE;
+                }
             }
         }
 
-        private void SendCommand(Directions newDirection, uint playerNum)
+        private void SendCommand(Directions newDirection, int playerNum)
         {
             var command = EcsWorld.CreateEntityWith<CommandComponent>();
             command.PlayerNum = playerNum;

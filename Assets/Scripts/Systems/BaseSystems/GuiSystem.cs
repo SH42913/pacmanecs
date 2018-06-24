@@ -1,10 +1,9 @@
-﻿using Components;
-using Components.BaseComponents;
+﻿using Components.BaseComponents;
 using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine.UI;
 
-namespace Systems
+namespace Systems.BaseSystems
 {
     [EcsInject]
     public class GuiSystem : IEcsRunSystem

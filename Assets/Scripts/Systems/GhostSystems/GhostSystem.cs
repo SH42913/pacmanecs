@@ -1,11 +1,10 @@
-﻿using Components;
-using Components.BaseComponents;
+﻿using Components.BaseComponents;
 using Components.GhostComponents;
 using Components.PlayerComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.GhostSystems
 {
     [EcsInject]
     public class GhostSystem : IEcsInitSystem, IEcsRunSystem
@@ -22,36 +21,29 @@ namespace Systems
 
             foreach (GameObject ghostObject in ghostObjects)
             {
-                GhostBehaviours behaviour;
                 switch (ghostObject.name.ToLower())
                 {
                     case "blinky":
-                        behaviour = GhostBehaviours.BLINKY;
                         break;
                     case "pinky":
-                        behaviour = GhostBehaviours.PINKY;
                         break;
                     case "inky":
-                        behaviour = GhostBehaviours.INKY;
                         break;
                     case "clyde":
-                        behaviour = GhostBehaviours.CLYDE;
                         break;
                     default:
-                        behaviour = GhostBehaviours.BLINKY;
                         break;
                 }
 
                 int entity = ghostObject.CreateEntityWithPosition(EcsWorld);
+                EcsWorld.AddComponent<GhostComponent>(entity);
+                
                 var moveComponent = EcsWorld.AddComponent<MoveComponent>(entity);
                 moveComponent.DesiredPosition = ghostObject.transform.position;
                 moveComponent.Heading = Directions.LEFT;
                 moveComponent.Speed = GhostSpeed;
                 moveComponent.Transform = ghostObject.transform;
 
-                EcsWorld
-                    .AddComponent<GhostComponent>(entity)
-                    .Behaviour = behaviour;
             }
         }
 

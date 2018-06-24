@@ -1,9 +1,8 @@
-﻿using Components;
-using Components.StaticComponents;
+﻿using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.StaticSystems
 {
     [EcsInject]
     public class WallInitSystem : IEcsInitSystem

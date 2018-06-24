@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using Components;
 using Components.BaseComponents;
 using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems
+namespace Systems.StaticSystems
 {
     [EcsInject]
     public class PortalSystem : IEcsInitSystem, IEcsRunSystem
@@ -57,22 +56,20 @@ namespace Systems
                 var objectToTeleport = Moveables.GetSecondComponent(x => x.Position == portalPosition.Position);
                 if(objectToTeleport == null) continue;
 
-                var positionToTeleport = Moveables.GetFirstComponent(x => x.Position == portalPosition.Position);
                 var portalList = FindPortalsWithChannel(Portals.Components2[i].Channel);
                 portalList.Remove(portalPosition);
                 if(portalList.Count == 0) continue;
 
                 int selectedPortal = Random.Range(0, portalList.Count);
                 var otherPortalPosition = portalList[selectedPortal].Position;
-                var newPosition = otherPortalPosition.ToVector3(objectToTeleport.Transform.position.y);
-                
-                positionToTeleport.Position = otherPortalPosition;
-                objectToTeleport.Transform.position = newPosition;
-                objectToTeleport.DesiredPosition = newPosition;
+                var teleportComponent = EcsWorld.CreateEntityWith<TeleportComponent>();
+                teleportComponent.MoveComponent = objectToTeleport;
+                teleportComponent.TargetPosition = otherPortalPosition.ToVector3(objectToTeleport.Transform.position.y);
 
                 portalComponent.TimeToReload = TimeToReloadPortals;
                 var otherPortalEntity = GetIndexOf(portalList[selectedPortal]);
                 if(!otherPortalEntity.HasValue) continue;
+                
                 Portals.Components2[otherPortalEntity.Value].TimeToReload = TimeToReloadPortals;
             }
         }
