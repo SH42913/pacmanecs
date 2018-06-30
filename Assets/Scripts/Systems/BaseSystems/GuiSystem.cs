@@ -23,7 +23,7 @@ namespace Systems.BaseSystems
             {
                 var player = _players.Components1[i];
 
-                scoreText += string.Format("P{0} Scores:{1}", player.Num, player.Scores);
+                scoreText += string.Format("P{0} Scores:{1} ", player.Num, player.Scores);
 
                 if (!player.IsDead)
                 {

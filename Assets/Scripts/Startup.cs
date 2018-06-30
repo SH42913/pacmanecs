@@ -1,6 +1,6 @@
-﻿using Systems;
-using Systems.BaseSystems;
+﻿using Systems.BaseSystems;
 using Systems.GhostSystems;
+using Systems.ItemSystems;
 using Systems.PlayerSystems;
 using Systems.StaticSystems;
 using Components.BaseComponents;
@@ -19,9 +19,6 @@ public class Startup : MonoBehaviour
 
 	[SerializeField, Range(0, 10)]
 	private float _startPacmanSpeed;
-
-	[SerializeField, Range(0, 0.1f)]
-	private float _foodSpeedPenalty;
 	
 	[Header("Gui Elements"), SerializeField]
 	private Text _scoresText;
@@ -56,10 +53,6 @@ public class Startup : MonoBehaviour
 			.Add(new PortalSystem())
 			.Add(new DeathSystem())
 			.Add(new TeleportSystem())
-			.Add(new ItemSystem
-			{
-				FoodPenalty = _foodSpeedPenalty
-			})
 			.Add(new GuiSystem
 			{
 				Text = _scoresText
@@ -67,7 +60,8 @@ public class Startup : MonoBehaviour
 			.Add(new GameStateSystem
 			{
 				GuiElement = _pauseMenu
-			});
+			})
+			.AddItemSystems();
 		
 		UpdateSystems.Initialize();
 #if UNITY_EDITOR
@@ -100,5 +94,21 @@ public class Startup : MonoBehaviour
 	public void QuitGame()
 	{
 		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.EXIT;
+	}
+}
+
+public static class SystemExtensions
+{
+	public static EcsSystems AddItemSystems(this EcsSystems systems)
+	{
+		systems
+			.Add(new ItemSystem
+			{
+				FoodPenalty = 0.001f
+			})
+			.Add(new FoodSystem())
+			.Add(new EnergizerSystem());
+
+		return systems;
 	}
 }

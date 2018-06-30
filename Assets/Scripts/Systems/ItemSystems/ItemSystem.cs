@@ -1,10 +1,12 @@
-﻿using Components.BaseComponents;
+﻿using System;
+using Components.BaseComponents;
+using Components.ItemComponents;
 using Components.PlayerComponents;
 using Components.StaticComponents;
 using LeopotamGroup.Ecs;
 using UnityEngine;
 
-namespace Systems.StaticSystems
+namespace Systems.ItemSystems
 {
     [EcsInject]
     public class ItemSystem : IEcsInitSystem, IEcsRunSystem
@@ -28,15 +30,22 @@ namespace Systems.StaticSystems
             {
                 var playerPosition = _players.Components1[i].Position;
 
-                var item = _items.GetSecondComponent(
-                    x => x.Position == playerPosition,
-                    x => !x.Used);
+                var item = _items.GetSecondComponent(x => x.Position == playerPosition);
                 if(item == null) continue;
                 
-                item.UseAction(_players.Components2[i], _players.Components3[i]);
-                item.Used = true;
                 item.GameObject.SetActive(false);
-                _ecsWorld.CreateEntityWith<UpdateGuiComponent>();
+                int playerEntity = _players.Entities[i];
+                switch (item.ItemType)
+                {
+                    case ItemTypes.Food:
+                        CreateFoodComponent(playerEntity);
+                        break;
+                    case ItemTypes.Energizer:
+                        CreateEnergizerComponent(playerEntity);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
                 _ecsWorld.RemoveEntity(item.ItemEntity);
             }
         }
@@ -47,13 +56,12 @@ namespace Systems.StaticSystems
         {
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
 
-            foreach (var foodObject in foodObjects)
+            foreach (GameObject foodObject in foodObjects)
             {
                 int entity = foodObject.CreateEntityWithPosition(_ecsWorld);
                 
                 var foodComponent = _ecsWorld.AddComponent<ItemComponent>(entity);
                 foodComponent.ItemType = ItemTypes.Food;
-                foodComponent.UseAction = FoodAction;
                 foodComponent.GameObject = foodObject;
                 foodComponent.ItemEntity = entity;
             }
@@ -63,7 +71,7 @@ namespace Systems.StaticSystems
         {
             GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
 
-            foreach (var energizer in energizers)
+            foreach (GameObject energizer in energizers)
             {
                 int entity = _ecsWorld.CreateEntity();
                 _ecsWorld
@@ -72,22 +80,25 @@ namespace Systems.StaticSystems
 
                 var component = _ecsWorld.AddComponent<ItemComponent>(entity);
                 component.ItemType = ItemTypes.Energizer;
-                component.UseAction = EnergizerAction;
                 component.GameObject = energizer;
                 component.ItemEntity = entity;
             }
         }
 
-        private void FoodAction(MoveComponent moveComponent, PlayerComponent player)
+        private void CreateFoodComponent(int playerEntity)
         {
-            player.Scores += 10;
-            moveComponent.Speed -= FoodPenalty;
+            var component = _ecsWorld.CreateEntityWith<FoodComponent>();
+            component.PlayerEntity = playerEntity;
+            component.SpeedPenalty = FoodPenalty;
+            component.Scores = 10;
         }
 
-        private void EnergizerAction(MoveComponent moveComponent, PlayerComponent player)
+        private void CreateEnergizerComponent(int playerEntity)
         {
-            player.Scores += 50;
-            moveComponent.Speed -= 5 * FoodPenalty;
+            var component = _ecsWorld.CreateEntityWith<EnergizerComponent>();
+            component.PlayerEntity = playerEntity;
+            component.SpeedPenalty = 5 * FoodPenalty;
+            component.Scores = 50;
         }
     }
 }
