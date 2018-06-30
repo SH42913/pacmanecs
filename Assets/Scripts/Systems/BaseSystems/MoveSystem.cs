@@ -9,14 +9,14 @@ namespace Systems.BaseSystems
     [EcsInject]
     public class MoveSystem : IEcsRunSystem
     {
-        private EcsFilter<PositionComponent, MoveComponent> Components { get; set; }
-        private EcsFilter<PositionComponent, WallComponent> Walls { get; set; }
+        private EcsFilter<PositionComponent, MoveComponent> _moveComponents = null;
+        private EcsFilter<PositionComponent, WallComponent> _walls = null;
         
         public void Run()
         {
-            for (int i = 0; i < Components.EntitiesCount; i++)
+            for (int i = 0; i < _moveComponents.EntitiesCount; i++)
             {
-                var moveComponent = Components.Components2[i];
+                var moveComponent = _moveComponents.Components2[i];
                 Vector3 estimatedVector = moveComponent.DesiredPosition - moveComponent.Transform.position;
 
                 if (estimatedVector.magnitude > 0.1f)
@@ -28,10 +28,10 @@ namespace Systems.BaseSystems
                     continue;
                 }
                 
-                Components.Components1[i].Position = moveComponent.Transform.position.ToVector2Int();
+                _moveComponents.Components1[i].Position = moveComponent.Transform.position.ToVector2Int();
                 Vector2Int newPosition;
                 Vector3 newDirection;
-                var position = Components.Components1[i].Position;
+                var position = _moveComponents.Components1[i].Position;
                 switch (moveComponent.Heading)
                 {
                     case Directions.UP:
@@ -55,7 +55,7 @@ namespace Systems.BaseSystems
                 }
                 moveComponent.Transform.rotation = Quaternion.Euler(newDirection);
 
-                if(Walls.GetSecondComponent(x => x.Position == newPosition) != null) continue;
+                if(_walls.GetFirstComponent(x => x.Position == newPosition) != null) continue;
                 moveComponent.DesiredPosition = newPosition.ToVector3(moveComponent.Transform.position.y);
             }
         }

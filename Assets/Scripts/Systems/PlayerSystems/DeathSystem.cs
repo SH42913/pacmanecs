@@ -8,43 +8,46 @@ namespace Systems.PlayerSystems
     [EcsInject]
     public class DeathSystem : IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<DeathComponent> DeathComponents { get; set; }
-        private EcsFilter<MoveComponent, PlayerComponent> Players { get; set; }
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<DeathComponent> _deathComponents = null;
+        private EcsFilter<MoveComponent, PlayerComponent> _players = null;
         
         public void Run()
         {
-            for (int i = 0; i < DeathComponents.EntitiesCount; i++)
+            for (int i = 0; i < _deathComponents.EntitiesCount; i++)
             {
-                var targetPlayer = DeathComponents.Components1[i].Player;
-                MoveComponent deadMoveComponent = Players.GetFirstComponent(null, x => x.Equals(targetPlayer));
+                var targetPlayer = _deathComponents.Components1[i].Player;
+                MoveComponent deadMoveComponent = _players.GetFirstComponent(null, x => x.Equals(targetPlayer));
                 
                 if (--targetPlayer.Lifes <= 0)
                 {
                     targetPlayer.IsDead = true;
-                    deadMoveComponent?.Transform.gameObject.SetActive(false);
+                    if (deadMoveComponent != null)
+                    {
+                        deadMoveComponent.Transform.gameObject.SetActive(false);
+                    }
                 }
                 
                 Vector3 respawnVector = targetPlayer.Lifes > 0
                     ? targetPlayer.StartPosition
                     : Vector3.zero;
 
-                var teleportComponent = EcsWorld.CreateEntityWith<TeleportComponent>();
+                var teleportComponent = _ecsWorld.CreateEntityWith<TeleportComponent>();
                 teleportComponent.MoveComponent = deadMoveComponent;
                 teleportComponent.TargetPosition = respawnVector;
                 
-                EcsWorld.CreateEntityWith<UpdateGuiComponent>();
+                _ecsWorld.CreateEntityWith<UpdateGuiComponent>();
                 RemoveEntitiesWith(targetPlayer);
             }
         }
 
         private void RemoveEntitiesWith(PlayerComponent playerComponent)
         {
-            for (int i = 0; i < DeathComponents.EntitiesCount; i++)
+            for (int i = 0; i < _deathComponents.EntitiesCount; i++)
             {
-                if(!DeathComponents.Components1[i].Player.Equals(playerComponent)) continue;
+                if(!_deathComponents.Components1[i].Player.Equals(playerComponent)) continue;
                 
-                EcsWorld.RemoveEntity(DeathComponents.Entities[i]);
+                _ecsWorld.RemoveEntity(_deathComponents.Entities[i]);
             }
         }
     }

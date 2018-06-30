@@ -9,12 +9,12 @@ namespace Systems.StaticSystems
     [EcsInject]
     public class PortalSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<PositionComponent, PortalComponent> Portals { get; set; }
-        private EcsFilter<PositionComponent, MoveComponent> Moveables { get; set; }
-
-        public float TimeToReloadPortals { get; set; } = 1f;
+        public float TimeToReloadPortals = 1f;
         
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<PositionComponent, PortalComponent> _portals = null;
+        private EcsFilter<PositionComponent, MoveComponent> _moveables = null;
+
         public void Initialize()
         {
             GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
@@ -24,12 +24,12 @@ namespace Systems.StaticSystems
                 int? channelNum = GetChannelFrom(portal);
                 if (!channelNum.HasValue)
                 {
-                    Debug.LogWarning($"Portal {portal.name} has wrong name!");
+                    Debug.LogWarning(string.Format("Portal {0} has wrong name!", portal.name));
                     continue;
                 }
 
-                int entity = portal.CreateEntityWithPosition(EcsWorld);
-                EcsWorld
+                int entity = portal.CreateEntityWithPosition(_ecsWorld);
+                _ecsWorld
                     .AddComponent<PortalComponent>(entity)
                     .Channel = channelNum.Value;
                 
@@ -43,26 +43,26 @@ namespace Systems.StaticSystems
 
         public void Run()
         {
-            for (int i = 0; i < Portals.EntitiesCount; i++)
+            for (int i = 0; i < _portals.EntitiesCount; i++)
             {
-                var portalPosition = Portals.Components1[i];
-                var portalComponent = Portals.Components2[i];
+                var portalPosition = _portals.Components1[i];
+                var portalComponent = _portals.Components2[i];
                 if (portalComponent.TimeToReload > 0)
                 {
                     portalComponent.TimeToReload -= Time.deltaTime;
                     continue;
                 }
 
-                var objectToTeleport = Moveables.GetSecondComponent(x => x.Position == portalPosition.Position);
+                var objectToTeleport = _moveables.GetSecondComponent(x => x.Position == portalPosition.Position);
                 if(objectToTeleport == null) continue;
 
-                var portalList = FindPortalsWithChannel(Portals.Components2[i].Channel);
+                var portalList = FindPortalsWithChannel(_portals.Components2[i].Channel);
                 portalList.Remove(portalPosition);
                 if(portalList.Count == 0) continue;
 
                 int selectedPortal = Random.Range(0, portalList.Count);
                 var otherPortalPosition = portalList[selectedPortal].Position;
-                var teleportComponent = EcsWorld.CreateEntityWith<TeleportComponent>();
+                var teleportComponent = _ecsWorld.CreateEntityWith<TeleportComponent>();
                 teleportComponent.MoveComponent = objectToTeleport;
                 teleportComponent.TargetPosition = otherPortalPosition.ToVector3(objectToTeleport.Transform.position.y);
 
@@ -70,7 +70,7 @@ namespace Systems.StaticSystems
                 var otherPortalEntity = GetIndexOf(portalList[selectedPortal]);
                 if(!otherPortalEntity.HasValue) continue;
                 
-                Portals.Components2[otherPortalEntity.Value].TimeToReload = TimeToReloadPortals;
+                _portals.Components2[otherPortalEntity.Value].TimeToReload = TimeToReloadPortals;
             }
         }
 
@@ -90,19 +90,19 @@ namespace Systems.StaticSystems
         private List<PositionComponent> FindPortalsWithChannel(int channelNum)
         {
             var list = new List<PositionComponent>();
-            for (int i = 0; i < Portals.EntitiesCount; i++)
+            for (int i = 0; i < _portals.EntitiesCount; i++)
             {
-                if (Portals.Components2[i].Channel != channelNum) continue;
-                list.Add(Portals.Components1[i]);
+                if (_portals.Components2[i].Channel != channelNum) continue;
+                list.Add(_portals.Components1[i]);
             }
             return list;
         }
 
         private int? GetIndexOf(PositionComponent component)
         {
-            for (int i = 0; i < Portals.EntitiesCount; i++)
+            for (int i = 0; i < _portals.EntitiesCount; i++)
             {
-                if(!Portals.Components1[i].Equals(component)) continue;
+                if(!_portals.Components1[i].Equals(component)) continue;
                 return i;
             }
 

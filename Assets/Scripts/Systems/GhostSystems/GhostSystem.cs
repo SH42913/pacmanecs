@@ -9,11 +9,11 @@ namespace Systems.GhostSystems
     [EcsInject]
     public class GhostSystem : IEcsInitSystem, IEcsRunSystem
     {
-        public float GhostSpeed { get; set; } = 2f;
-        
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<PositionComponent,MoveComponent, GhostComponent> Ghosts { get; set; }
-        private EcsFilter<PositionComponent, PlayerComponent> Players { get; set; }
+        public float GhostSpeed = 2f;
+
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<PositionComponent, MoveComponent, GhostComponent> _ghosts = null;
+        private EcsFilter<PositionComponent, PlayerComponent> _players = null;
         
         public void Initialize()
         {
@@ -35,10 +35,10 @@ namespace Systems.GhostSystems
                         break;
                 }
 
-                int entity = ghostObject.CreateEntityWithPosition(EcsWorld);
-                EcsWorld.AddComponent<GhostComponent>(entity);
+                int entity = ghostObject.CreateEntityWithPosition(_ecsWorld);
+                _ecsWorld.AddComponent<GhostComponent>(entity);
                 
-                var moveComponent = EcsWorld.AddComponent<MoveComponent>(entity);
+                var moveComponent = _ecsWorld.AddComponent<MoveComponent>(entity);
                 moveComponent.DesiredPosition = ghostObject.transform.position;
                 moveComponent.Heading = Directions.LEFT;
                 moveComponent.Speed = GhostSpeed;
@@ -49,16 +49,16 @@ namespace Systems.GhostSystems
 
         public void Run()
         {
-            for (int i = 0; i < Ghosts.EntitiesCount; i++)
+            for (int i = 0; i < _ghosts.EntitiesCount; i++)
             {
-                var currentPosition = Ghosts.Components1[i].Position;
-                var moveComponent = Ghosts.Components2[i];
+                var currentPosition = _ghosts.Components1[i].Position;
+                var moveComponent = _ghosts.Components2[i];
                 var targetPosition = moveComponent.DesiredPosition.ToVector2Int();
                 
-                var deadPlayer = Players.GetSecondComponent(x => x.Position == currentPosition);
+                var deadPlayer = _players.GetSecondComponent(x => x.Position == currentPosition);
                 if (deadPlayer != null)
                 {
-                    EcsWorld
+                    _ecsWorld
                         .CreateEntityWith<DeathComponent>()
                         .Player = deadPlayer;
                 }

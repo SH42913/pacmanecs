@@ -4,7 +4,7 @@ namespace Components.PlayerComponents
 {
     public class CommandComponent
     {
-        public int PlayerNum { get; set; }
-        public Directions NewDirection { get; set; }
+        public int PlayerNum;
+        public Directions NewDirection;
     }
 }

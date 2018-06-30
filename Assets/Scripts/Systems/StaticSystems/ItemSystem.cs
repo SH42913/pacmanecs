@@ -9,35 +9,35 @@ namespace Systems.StaticSystems
     [EcsInject]
     public class ItemSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<PositionComponent, ItemComponent> Items { get; set; }
-        private EcsFilter<PositionComponent, MoveComponent, PlayerComponent> Players { get; set; }
+        public float FoodPenalty;
         
-        public float FoodPenalty { get; set; }
-        
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<PositionComponent, ItemComponent> _items = null;
+        private EcsFilter<PositionComponent, MoveComponent, PlayerComponent> _players = null;
+
         public void Initialize()
         {
             CreateFood();
             CreateEnergizers();
-            EcsWorld.CreateEntityWith<UpdateGuiComponent>();
+            _ecsWorld.CreateEntityWith<UpdateGuiComponent>();
         }
 
         public void Run()
         {
-            for (int i = 0; i < Players.EntitiesCount; i++)
+            for (int i = 0; i < _players.EntitiesCount; i++)
             {
-                var playerPosition = Players.Components1[i].Position;
+                var playerPosition = _players.Components1[i].Position;
 
-                var item = Items.GetSecondComponent(
+                var item = _items.GetSecondComponent(
                     x => x.Position == playerPosition,
                     x => !x.Used);
                 if(item == null) continue;
                 
-                item.UseAction(Players.Components2[i], Players.Components3[i]);
+                item.UseAction(_players.Components2[i], _players.Components3[i]);
                 item.Used = true;
                 item.GameObject.SetActive(false);
-                EcsWorld.CreateEntityWith<UpdateGuiComponent>();
-                EcsWorld.RemoveEntity(item.ItemEntity);
+                _ecsWorld.CreateEntityWith<UpdateGuiComponent>();
+                _ecsWorld.RemoveEntity(item.ItemEntity);
             }
         }
 
@@ -49,9 +49,9 @@ namespace Systems.StaticSystems
 
             foreach (var foodObject in foodObjects)
             {
-                int entity = foodObject.CreateEntityWithPosition(EcsWorld);
+                int entity = foodObject.CreateEntityWithPosition(_ecsWorld);
                 
-                var foodComponent = EcsWorld.AddComponent<ItemComponent>(entity);
+                var foodComponent = _ecsWorld.AddComponent<ItemComponent>(entity);
                 foodComponent.ItemType = ItemTypes.Food;
                 foodComponent.UseAction = FoodAction;
                 foodComponent.GameObject = foodObject;
@@ -65,12 +65,12 @@ namespace Systems.StaticSystems
 
             foreach (var energizer in energizers)
             {
-                int entity = EcsWorld.CreateEntity();
-                EcsWorld
+                int entity = _ecsWorld.CreateEntity();
+                _ecsWorld
                     .AddComponent<PositionComponent>(entity)
                     .Position = energizer.transform.position.ToVector2Int();
 
-                var component = EcsWorld.AddComponent<ItemComponent>(entity);
+                var component = _ecsWorld.AddComponent<ItemComponent>(entity);
                 component.ItemType = ItemTypes.Energizer;
                 component.UseAction = EnergizerAction;
                 component.GameObject = energizer;

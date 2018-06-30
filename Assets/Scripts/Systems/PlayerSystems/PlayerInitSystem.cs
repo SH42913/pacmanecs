@@ -8,12 +8,12 @@ namespace Systems.PlayerSystems
     [EcsInject]
     public class PlayerInitSystem : IEcsInitSystem
     {
-        public int StartLifes { get; set; }
-        public float StartSpeed { get; set; }
-        public int CreatedPlayersCount { get; private set; }
-        
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<MoveComponent, PlayerComponent> Players { get; set; }
+        public int StartLifes;
+        public float StartSpeed;
+
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<MoveComponent, PlayerComponent> _players = null;
+        private int _createdPlayersCount;
 
         public void Initialize()
         {
@@ -21,20 +21,20 @@ namespace Systems.PlayerSystems
 
             foreach (var player in playerObjects)
             {
-                var entity = player.CreateEntityWithPosition(EcsWorld);
+                var entity = player.CreateEntityWithPosition(_ecsWorld);
                 var startPosition = player.transform.position;
 
-                var moveComponent = EcsWorld.AddComponent<MoveComponent>(entity);
+                var moveComponent = _ecsWorld.AddComponent<MoveComponent>(entity);
                 moveComponent.Transform = player.transform;
-                moveComponent.Heading = CreatedPlayersCount % 2 != 0
+                moveComponent.Heading = _createdPlayersCount % 2 != 0
                     ? Directions.RIGHT
                     : Directions.LEFT;
                 moveComponent.DesiredPosition = startPosition;
                 moveComponent.Speed = StartSpeed;
 
-                var playerComponent = EcsWorld.AddComponent<PlayerComponent>(entity);
+                var playerComponent = _ecsWorld.AddComponent<PlayerComponent>(entity);
                 playerComponent.Lifes = StartLifes;
-                playerComponent.Num = ++CreatedPlayersCount;
+                playerComponent.Num = ++_createdPlayersCount;
                 playerComponent.StartPosition = startPosition;
             }
         }

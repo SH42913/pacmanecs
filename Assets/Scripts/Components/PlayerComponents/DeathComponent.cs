@@ -2,6 +2,6 @@
 {
     public class DeathComponent
     {
-        public PlayerComponent Player { get; set; }
+        public PlayerComponent Player;
     }
 }

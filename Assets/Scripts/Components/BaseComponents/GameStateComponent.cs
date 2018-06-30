@@ -10,6 +10,6 @@
     
     public class GameStateComponent
     {
-        public GameStates State { get; set; }
+        public GameStates State;
     }
 }

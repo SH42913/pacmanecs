@@ -59,8 +59,12 @@ public static class VariousExtensions
 
         for (int i = 0; i < filter.EntitiesCount; i++)
         {
-            var component1 = filter.Components1[i];
-            var component2 = filter.Components2[i];
+            var component1 = filter.Components1 != null
+                ? filter.Components1[i]
+                : null;
+            var component2 = filter.Components2 != null
+                ? filter.Components2[i]
+                : null;
             if(!limits1(component1) || !limits2(component2)) continue;
 
             return component1;
@@ -81,8 +85,12 @@ public static class VariousExtensions
 
         for (int i = 0; i < filter.EntitiesCount; i++)
         {
-            var component1 = filter.Components1[i];
-            var component2 = filter.Components2[i];
+            var component1 = filter.Components1 != null
+                ? filter.Components1[i]
+                : null;
+            var component2 = filter.Components2 != null
+                ? filter.Components2[i]
+                : null;
             if(!limits1(component1) || !limits2(component2)) continue;
 
             return component2;

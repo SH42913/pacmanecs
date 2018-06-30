@@ -13,10 +13,10 @@ namespace Components.StaticComponents
     
     public class ItemComponent
     {
-        public int ItemEntity { get; set; }
-        public GameObject GameObject { get; set; }
-        public ItemTypes ItemType { get; set; }
-        public Action<MoveComponent, PlayerComponent> UseAction { get; set; }
-        public bool Used { get; set; }
+        public int ItemEntity;
+        public GameObject GameObject;
+        public ItemTypes ItemType;
+        public Action<MoveComponent, PlayerComponent> UseAction;
+        public bool Used;
     }
 }

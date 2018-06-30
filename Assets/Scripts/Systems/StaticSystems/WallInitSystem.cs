@@ -7,7 +7,7 @@ namespace Systems.StaticSystems
     [EcsInject]
     public class WallInitSystem : IEcsInitSystem
     {
-        private EcsWorld EcsWorld { get; set; }
+        private EcsWorld _ecsWorld = null;
         
         public void Initialize()
         {
@@ -15,8 +15,8 @@ namespace Systems.StaticSystems
 
             foreach (GameObject wall in walls)
             {
-                var entity = wall.CreateEntityWithPosition(EcsWorld);
-                EcsWorld.AddComponent<WallComponent>(entity);
+                var entity = wall.CreateEntityWithPosition(_ecsWorld);
+                _ecsWorld.AddComponent<WallComponent>(entity);
             }
         }
 

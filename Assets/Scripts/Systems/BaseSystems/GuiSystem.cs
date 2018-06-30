@@ -8,38 +8,37 @@ namespace Systems.BaseSystems
     [EcsInject]
     public class GuiSystem : IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<PlayerComponent> Players { get; set; }
-        private EcsFilter<UpdateGuiComponent> UpdateComponents { get; set; }
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<PlayerComponent> _players = null;
+        private EcsFilter<UpdateGuiComponent> _updateComponents = null;
 
-        public Text Text { get; set; }
+        public Text Text;
         
         public void Run()
         {
-            if(UpdateComponents.EntitiesCount == 0) return;
+            if(_updateComponents.EntitiesCount == 0) return;
             
             var scoreText = "";
-            for (int i = 0; i < Players.EntitiesCount; i++)
+            for (int i = 0; i < _players.EntitiesCount; i++)
             {
-                var player = Players.Components1[i];
-                
-                scoreText += $"P{player.Num} " +
-                             $"Scores:{player.Scores} ";
+                var player = _players.Components1[i];
+
+                scoreText += string.Format("P{0} Scores:{1}", player.Num, player.Scores);
 
                 if (!player.IsDead)
                 {
-                    scoreText += $"Lifes:{player.Lifes}\n";
+                    scoreText += string.Format("Lifes:{0}\n", player.Lifes);
                 }
                 else
                 {
-                    scoreText += $"IS DEAD\n";
+                    scoreText += "IS DEAD\n";
                 }
             }
             Text.text = scoreText;
 
-            for (int i = 0; i < UpdateComponents.EntitiesCount; i++)
+            for (int i = 0; i < _updateComponents.EntitiesCount; i++)
             {
-                EcsWorld.RemoveEntity(UpdateComponents.Entities[i]);
+                _ecsWorld.RemoveEntity(_updateComponents.Entities[i]);
             }
         }
     }

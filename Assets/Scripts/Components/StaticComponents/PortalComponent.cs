@@ -2,7 +2,7 @@
 {
     public class PortalComponent
     {
-        public int Channel { get; set; }
-        public float TimeToReload { get; set; }
+        public int Channel;
+        public float TimeToReload;
     }
 }

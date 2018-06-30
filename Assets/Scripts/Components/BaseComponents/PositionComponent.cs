@@ -4,6 +4,6 @@ namespace Components.BaseComponents
 {
     public class PositionComponent
     {
-        public Vector2Int Position { get; set; }
+        public Vector2Int Position;
     }
 }

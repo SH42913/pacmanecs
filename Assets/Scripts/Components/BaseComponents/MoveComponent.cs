@@ -12,9 +12,9 @@ namespace Components.BaseComponents
     
     public class MoveComponent
     {
-        public Directions Heading { get; set; }
-        public Vector3 DesiredPosition { get; set; }
-        public float Speed { get; set; }
-        public Transform Transform { get; set; }
+        public Directions Heading;
+        public Vector3 DesiredPosition;
+        public float Speed;
+        public Transform Transform;
     }
 }

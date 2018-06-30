@@ -8,16 +8,16 @@ namespace Systems.PlayerSystems
     [EcsInject]
     public class PlayerInputSystem : IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<PlayerComponent> Players { get; set; }
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<PlayerComponent> _players = null;
         
         public void Run()
         {
-            for (int i = 0; i < Players.EntitiesCount; i++)
+            for (int i = 0; i < _players.EntitiesCount; i++)
             {
-                int playerNum = Players.Components1[i].Num;
-                float yAxis = Input.GetAxis($"Player{playerNum}Y");
-                float xAxis = Input.GetAxis($"Player{playerNum}X");
+                int playerNum = _players.Components1[i].Num;
+                float yAxis = Input.GetAxis(string.Format("Player{0}Y", playerNum));
+                float xAxis = Input.GetAxis(string.Format("Player{0}X", playerNum));
 
                 if (yAxis > 0)
                 {
@@ -38,7 +38,7 @@ namespace Systems.PlayerSystems
 
                 if (Input.GetKeyUp(KeyCode.Escape))
                 {
-                    EcsWorld.CreateEntityWith<GameStateComponent>().State = Time.timeScale < 1
+                    _ecsWorld.CreateEntityWith<GameStateComponent>().State = Time.timeScale < 1
                         ? GameStates.START
                         : GameStates.PAUSE;
                 }
@@ -47,7 +47,7 @@ namespace Systems.PlayerSystems
 
         private void SendCommand(Directions newDirection, int playerNum)
         {
-            var command = EcsWorld.CreateEntityWith<CommandComponent>();
+            var command = _ecsWorld.CreateEntityWith<CommandComponent>();
             command.PlayerNum = playerNum;
             command.NewDirection = newDirection;
         }

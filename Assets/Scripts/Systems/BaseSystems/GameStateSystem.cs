@@ -9,16 +9,16 @@ namespace Systems.BaseSystems
     [EcsInject]
     public class GameStateSystem : IEcsRunSystem
     {
-        private EcsWorld EcsWorld { get; set; }
-        private EcsFilter<GameStateComponent> States { get; set; }
-        
-        public GameObject GuiElement { get; set; }
+        private EcsWorld _ecsWorld = null;
+        private EcsFilter<GameStateComponent> _states = null;
+
+        public GameObject GuiElement;
         
         public void Run()
         {
-            for (int i = 0; i < States.EntitiesCount; i++)
+            for (int i = 0; i < _states.EntitiesCount; i++)
             {
-                switch (States.Components1[i].State)
+                switch (_states.Components1[i].State)
                 {
                     case GameStates.PAUSE:
                         Time.timeScale = 0f;
@@ -38,7 +38,7 @@ namespace Systems.BaseSystems
                         throw new ArgumentOutOfRangeException();
                 }
                 
-                EcsWorld.RemoveEntity(States.Entities[i]);
+                _ecsWorld.RemoveEntity(_states.Entities[i]);
             }
         }
     }
