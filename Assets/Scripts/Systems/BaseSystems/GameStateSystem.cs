@@ -1,6 +1,6 @@
 ﻿using System;
 using Components.BaseComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

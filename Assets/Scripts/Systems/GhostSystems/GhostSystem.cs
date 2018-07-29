@@ -1,7 +1,7 @@
 ﻿using Components.BaseComponents;
 using Components.GhostComponents;
 using Components.PlayerComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Systems.GhostSystems

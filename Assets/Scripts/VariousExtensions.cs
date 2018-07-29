@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq.Expressions;
-using Components;
 using Components.BaseComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 
 public static class VariousExtensions
@@ -23,14 +21,16 @@ public static class VariousExtensions
 
     public static int CreateEntityWithPosition(this GameObject gameObject, EcsWorld ecsWorld)
     {
-        int entity = ecsWorld.CreateEntity();
-        ecsWorld
-            .AddComponent<PositionComponent>(entity)
-            .Position = gameObject.transform.position.ToVector2Int();
+        PositionComponent position;
+        int entity = ecsWorld.CreateEntityWith(out position);
+        position.Position = gameObject.transform.position.ToVector2Int();
 
         return entity;
     }
 
+    /// <summary>
+    /// You better don't use this extensions in real projects, 'cause it can strike on performance
+    /// </summary>
     public static T GetComponent<T>(this EcsFilter<T> filter, Func<T, bool> limits = null)
         where T : class, new()
     {
@@ -47,6 +47,9 @@ public static class VariousExtensions
         return null;
     }
     
+    /// <summary>
+    /// You better don't use this extensions in real projects, 'cause it can strike on performance
+    /// </summary>
     public static T1 GetFirstComponent<T1, T2>(
         this EcsFilter<T1, T2> filter,
         Func<T1, bool> limits1 = null,
@@ -73,6 +76,9 @@ public static class VariousExtensions
         return null;
     }
     
+    /// <summary>
+    /// You better don't use this extensions in real projects, 'cause it can strike on performance
+    /// </summary>
     public static T2 GetSecondComponent<T1, T2>(
         this EcsFilter<T1, T2> filter,
         Func<T1, bool> limits1 = null,

@@ -1,5 +1,5 @@
 ﻿using Components.BaseComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 
 namespace Systems.BaseSystems
 {

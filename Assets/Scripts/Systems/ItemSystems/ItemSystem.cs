@@ -2,8 +2,7 @@
 using Components.BaseComponents;
 using Components.ItemComponents;
 using Components.PlayerComponents;
-using Components.StaticComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Systems.ItemSystems
@@ -73,10 +72,9 @@ namespace Systems.ItemSystems
 
             foreach (GameObject energizer in energizers)
             {
-                int entity = _ecsWorld.CreateEntity();
-                _ecsWorld
-                    .AddComponent<PositionComponent>(entity)
-                    .Position = energizer.transform.position.ToVector2Int();
+                PositionComponent position;
+                int entity = _ecsWorld.CreateEntityWith(out position);
+                position.Position = energizer.transform.position.ToVector2Int();
 
                 var component = _ecsWorld.AddComponent<ItemComponent>(entity);
                 component.ItemType = ItemTypes.Energizer;

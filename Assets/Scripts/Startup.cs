@@ -4,7 +4,7 @@ using Systems.ItemSystems;
 using Systems.PlayerSystems;
 using Systems.StaticSystems;
 using Components.BaseComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,7 +34,7 @@ public class Startup : MonoBehaviour
 	{
 		EcsWorld = new EcsWorld();
 #if UNITY_EDITOR
-		LeopotamGroup.Ecs.UnityIntegration.EcsWorldObserver.Create (EcsWorld);
+		Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create (EcsWorld);
 #endif  
 		UpdateSystems = new EcsSystems(EcsWorld)
 			.Add(new PlayerInitSystem
@@ -65,7 +65,7 @@ public class Startup : MonoBehaviour
 		
 		UpdateSystems.Initialize();
 #if UNITY_EDITOR
-		LeopotamGroup.Ecs.UnityIntegration.EcsSystemsObserver.Create (UpdateSystems);
+		Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (UpdateSystems);
 #endif
 		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.START;
 	}

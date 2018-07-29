@@ -1,5 +1,5 @@
 ﻿using Components.StaticComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Systems.StaticSystems

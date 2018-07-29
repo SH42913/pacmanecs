@@ -1,6 +1,6 @@
 ﻿using Components.BaseComponents;
 using Components.PlayerComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 using UnityEngine.UI;
 
 namespace Systems.BaseSystems

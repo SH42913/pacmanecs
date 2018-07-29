@@ -1,7 +1,7 @@
 ﻿using Components.BaseComponents;
 using Components.ItemComponents;
 using Components.PlayerComponents;
-using LeopotamGroup.Ecs;
+using Leopotam.Ecs;
 
 namespace Systems.ItemSystems
 {
