@@ -10,14 +10,14 @@ namespace Systems.PlayerSystems
     {
         private EcsWorld _ecsWorld = null;
         private EcsFilter<DeathComponent> _deathComponents = null;
-        private EcsFilter<MoveComponent, PlayerComponent> _players = null;
         
         public void Run()
         {
             for (int i = 0; i < _deathComponents.EntitiesCount; i++)
             {
-                var targetPlayer = _deathComponents.Components1[i].Player;
-                MoveComponent deadMoveComponent = _players.GetFirstComponent(null, x => x.Equals(targetPlayer));
+                int playerEntity = _deathComponents.Components1[i].PlayerEntity;
+                var targetPlayer = _ecsWorld.GetComponent<PlayerComponent>(playerEntity);
+                var deadMoveComponent = _ecsWorld.GetComponent<MoveComponent>(playerEntity);
                 
                 if (--targetPlayer.Lifes <= 0)
                 {
@@ -33,20 +33,19 @@ namespace Systems.PlayerSystems
                     : Vector3.zero;
 
                 var teleportComponent = _ecsWorld.CreateEntityWith<TeleportComponent>();
-                teleportComponent.MoveComponent = deadMoveComponent;
+                teleportComponent.MoveEntity = playerEntity;
                 teleportComponent.TargetPosition = respawnVector;
                 
                 _ecsWorld.CreateEntityWith<UpdateGuiComponent>();
-                RemoveEntitiesWith(targetPlayer);
+                RemoveEntitiesWith(playerEntity);
             }
         }
 
-        private void RemoveEntitiesWith(PlayerComponent playerComponent)
+        private void RemoveEntitiesWith(int playerEntity)
         {
             for (int i = 0; i < _deathComponents.EntitiesCount; i++)
             {
-                if(!_deathComponents.Components1[i].Player.Equals(playerComponent)) continue;
-                
+                if(_deathComponents.Components1[i].PlayerEntity != playerEntity) continue;
                 _ecsWorld.RemoveEntity(_deathComponents.Entities[i]);
             }
         }

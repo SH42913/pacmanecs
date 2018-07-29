@@ -45,6 +45,8 @@ namespace Systems.ItemSystems
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
+
+                item.GameObject = null;
                 _ecsWorld.RemoveEntity(item.ItemEntity);
             }
         }

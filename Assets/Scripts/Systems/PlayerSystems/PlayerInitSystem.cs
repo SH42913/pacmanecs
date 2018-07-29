@@ -12,7 +12,6 @@ namespace Systems.PlayerSystems
         public float StartSpeed;
 
         private EcsWorld _ecsWorld = null;
-        private EcsFilter<MoveComponent, PlayerComponent> _players = null;
         private int _createdPlayersCount;
 
         public void Initialize()
@@ -39,6 +38,7 @@ namespace Systems.PlayerSystems
             }
         }
 
-        public void Destroy() {}
+        public void Destroy() 
+        {}
     }
 }

@@ -4,7 +4,7 @@ namespace Components.BaseComponents
 {
     public class TeleportComponent
     {
-        public MoveComponent MoveComponent;
+        public int MoveEntity;
         public Vector3 TargetPosition;
     }
 }

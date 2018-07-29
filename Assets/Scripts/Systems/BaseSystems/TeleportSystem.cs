@@ -8,26 +8,24 @@ namespace Systems.BaseSystems
     {
         private EcsWorld _ecsWorld = null;
         private EcsFilter<TeleportComponent> _components = null;
-        private EcsFilter<PositionComponent, MoveComponent> _moveables = null;
         
         public void Run()
         {
-            for (int i = 0; i < _components.EntitiesCount; i++)
+            for (int teleportIndex = 0; teleportIndex < _components.EntitiesCount; teleportIndex++)
             {
-                var teleportComponent = _components.Components1[i];
+                var teleportComponent = _components.Components1[teleportIndex];
+                var moveEntity = teleportComponent.MoveEntity;
 
-                for (int j = 0; j < _moveables.EntitiesCount; j++)
+                var moveComponent = _ecsWorld.GetComponent<MoveComponent>(moveEntity);
+                var positionComponent = _ecsWorld.GetComponent<PositionComponent>(moveEntity);
+                if (moveComponent != null && positionComponent != null)
                 {
-                    var moveComponent = _moveables.Components2[j];
-                    if(!moveComponent.Equals(teleportComponent.MoveComponent)) continue;
-
-                    var positionComponent = _moveables.Components1[j];
                     positionComponent.Position = teleportComponent.TargetPosition.ToVector2Int();
                     moveComponent.DesiredPosition = teleportComponent.TargetPosition;
                     moveComponent.Transform.position = teleportComponent.TargetPosition;
                 }
                 
-                _ecsWorld.RemoveEntity(_components.Entities[i]);
+                _ecsWorld.RemoveEntity(_components.Entities[teleportIndex]);
             }
         }
     }

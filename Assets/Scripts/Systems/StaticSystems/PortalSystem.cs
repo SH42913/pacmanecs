@@ -53,8 +53,17 @@ namespace Systems.StaticSystems
                     continue;
                 }
 
-                var objectToTeleport = _moveables.GetSecondComponent(x => x.Position == portalPosition.Position);
-                if(objectToTeleport == null) continue;
+
+                int? entityToTeleport = null;
+                float gameObjectHeight = 0;
+                for (int moveIndex = 0; moveIndex < _moveables.EntitiesCount; moveIndex++)
+                {
+                    if(_moveables.Components1[moveIndex].Position != portalPosition.Position) continue;
+                    entityToTeleport = _moveables.Entities[moveIndex];
+                    gameObjectHeight = _moveables.Components2[moveIndex].Transform.position.y;
+                    break;
+                }
+                if(entityToTeleport == null) continue;
 
                 var portalList = FindPortalsWithChannel(_portals.Components2[i].Channel);
                 portalList.Remove(portalPosition);
@@ -63,8 +72,9 @@ namespace Systems.StaticSystems
                 int selectedPortal = Random.Range(0, portalList.Count);
                 var otherPortalPosition = portalList[selectedPortal].Position;
                 var teleportComponent = _ecsWorld.CreateEntityWith<TeleportComponent>();
-                teleportComponent.MoveComponent = objectToTeleport;
-                teleportComponent.TargetPosition = otherPortalPosition.ToVector3(objectToTeleport.Transform.position.y);
+                
+                teleportComponent.MoveEntity = entityToTeleport.Value;
+                teleportComponent.TargetPosition = otherPortalPosition.ToVector3(gameObjectHeight);
 
                 portalComponent.TimeToReload = TimeToReloadPortals;
                 var otherPortalEntity = GetIndexOf(portalList[selectedPortal]);

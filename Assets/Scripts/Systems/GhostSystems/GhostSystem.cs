@@ -49,18 +49,20 @@ namespace Systems.GhostSystems
 
         public void Run()
         {
-            for (int i = 0; i < _ghosts.EntitiesCount; i++)
+            for (int ghostIndex = 0; ghostIndex < _ghosts.EntitiesCount; ghostIndex++)
             {
-                var currentPosition = _ghosts.Components1[i].Position;
-                var moveComponent = _ghosts.Components2[i];
+                var currentPosition = _ghosts.Components1[ghostIndex].Position;
+                var moveComponent = _ghosts.Components2[ghostIndex];
                 var targetPosition = moveComponent.DesiredPosition.ToVector2Int();
-                
-                var deadPlayer = _players.GetSecondComponent(x => x.Position == currentPosition);
-                if (deadPlayer != null)
+
+                for (int playerIndex = 0; playerIndex < _players.EntitiesCount; playerIndex++)
                 {
+                    if(!_players.Components1[playerIndex].Position.Equals(currentPosition)) continue;
+                    
                     _ecsWorld
                         .CreateEntityWith<DeathComponent>()
-                        .Player = deadPlayer;
+                        .PlayerEntity = _players.Entities[playerIndex];
+                    break;
                 }
 
                 if(currentPosition != targetPosition) continue;
@@ -70,10 +72,5 @@ namespace Systems.GhostSystems
 
         public void Destroy()
         {}
-
-        private Vector2Int GetBlinkyTargetCell()
-        {
-            return Vector2Int.zero;
-        }
     }
 }
