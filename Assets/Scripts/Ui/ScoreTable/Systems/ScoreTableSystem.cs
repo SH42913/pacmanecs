@@ -24,7 +24,7 @@ namespace Ui.ScoreTable.Systems
 
                 if (!player.IsDead)
                 {
-                    scoresString += string.Format("Lifes:{0}\n", player.Lives);
+                    scoresString += string.Format("Lives:{0}\n", player.Lives);
                 }
                 else
                 {

@@ -1,9 +1,15 @@
-﻿using Leopotam.Ecs;
-
-namespace Ghosts
+﻿namespace Ghosts
 {
-    [EcsIgnoreInFilter]
+    public enum GhostTypes
+    {
+        BLINKY,
+        PINKY,
+        INKY,
+        CLYDE
+    }
+
     public class GhostComponent
     {
+        public GhostTypes GhostType;
     }
 }

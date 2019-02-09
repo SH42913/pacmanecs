@@ -1,17 +1,19 @@
-﻿using Leopotam.Ecs;
+﻿using Ghosts;
+using Leopotam.Ecs;
 
 namespace Items.Food.Systems
 {
     [EcsInject]
     public class EnergizerSystem : IEcsRunSystem
     {
+        private readonly EcsWorld _ecsWorld = null;
         private readonly EcsFilter<EnergizerComponent, TakenItemComponent> _takenEnergizers = null;
 
         public void Run()
         {
-            for (int i = 0; i < _takenEnergizers.EntitiesCount; i++)
+            if (_takenEnergizers.EntitiesCount > 0)
             {
-                //ToDo Ghost fear mode enable
+                _ecsWorld.CreateEntityWith<EnableGhostFearStateEvent>();
             }
         }
     }

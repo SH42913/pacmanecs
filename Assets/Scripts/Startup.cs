@@ -45,6 +45,7 @@ public sealed class Startup : MonoBehaviour
             .Add(new ItemSystem())
             .Add(new FoodSystem())
             .Add(new EnergizerSystem())
+            .Add(new GhostFearStateSystem())
             .Add(new DeathSystem())
             .Add(new PortalSystem())
             .Add(new TeleportSystem())
