@@ -1,114 +1,85 @@
-﻿using Systems.BaseSystems;
-using Systems.GhostSystems;
-using Systems.ItemSystems;
-using Systems.PlayerSystems;
-using Systems.StaticSystems;
-using Components.BaseComponents;
+﻿using UnityEngine;
 using Leopotam.Ecs;
-using UnityEngine;
-using UnityEngine.UI;
+using Death.Systems;
+using Ghosts.Systems;
+using Items.Food.Systems;
+using Items.Systems;
+using Moving.Systems;
+using Players.Systems;
+using Portals.Systems;
+using Teleports.Systems;
+using Ui.GameStates;
+using Ui.GameStates.Systems;
+using Ui.ScoreTable.Systems;
+using Walls.Systems;
+using World.Systems;
 
-public class Startup : MonoBehaviour
+public sealed class Startup : MonoBehaviour
 {
-	[Header("Gameplay elements"),
-	 SerializeField, Range(0, 10)]
-	private int _startLifes;
+    private EcsWorld _world;
+    private EcsSystems _systems;
 
-	[SerializeField, Range(0, 10)]
-	private float _ghostSpeed;
+    private void OnEnable()
+    {
+        _world = new EcsWorld();
+        _systems = new EcsSystems(_world);
 
-	[SerializeField, Range(0, 10)]
-	private float _startPacmanSpeed;
-	
-	[Header("Gui Elements"), SerializeField]
-	private Text _scoresText;
-
-	[SerializeField]
-	private GameObject _pauseMenu;
-	
-	private EcsWorld EcsWorld { get; set; }
-	private EcsSystems UpdateSystems { get; set; }
-	
-	// Use this for initialization
-	private void Start () 
-	{
-		EcsWorld = new EcsWorld();
 #if UNITY_EDITOR
-		Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create (EcsWorld);
-#endif  
-		UpdateSystems = new EcsSystems(EcsWorld)
-			.Add(new PlayerInitSystem
-			{
-				StartLifes = _startLifes,
-				StartSpeed = _startPacmanSpeed
-			})
-			.Add(new WallInitSystem())
-			.Add(new PlayerInputSystem())
-			.Add(new CommandSystem())
-			.Add(new GhostSystem
-			{
-				GhostSpeed = _ghostSpeed
-			})
-			.Add(new MoveSystem())
-			.Add(new PortalSystem())
-			.Add(new DeathSystem())
-			.Add(new TeleportSystem())
-			.Add(new GuiSystem
-			{
-				Text = _scoresText
-			})
-			.Add(new GameStateSystem
-			{
-				GuiElement = _pauseMenu
-			})
-			.AddItemSystems();
-		
-		UpdateSystems.Initialize();
-#if UNITY_EDITOR
-		Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create (UpdateSystems);
+        Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
+        Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
-		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.START;
-	}
-	
-	// Update is called once per frame
-	private void Update () 
-	{
-		UpdateSystems.Run();	
-	}
 
-	private void OnDestroy()
-	{
-		UpdateSystems.Destroy();
-	}
+        _systems
+            .Add(new WorldInitSystem())
+            .Add(new PlayerInitSystem())
+            .Add(new GhostInitSystem())
+            .Add(new WallInitSystem())
+            .Add(new PortalInitSystem())
+            .Add(new FoodInitSystem())
+            .Add(new ScoreTableInitSystem())
+            .Add(new GameStateInitSystem())
+            .Add(new PlayerInputSystem())
+            .Add(new GhostSystem())
+            .Add(new UpdateDirectionSystem())
+            .Add(new MoveSystem())
+            .Add(new ItemSystem())
+            .Add(new FoodSystem())
+            .Add(new EnergizerSystem())
+            .Add(new DeathSystem())
+            .Add(new PortalSystem())
+            .Add(new TeleportSystem())
+            .Add(new WorldSystem())
+            .Add(new ScoreTableSystem())
+            .Add(new GameStateSystem())
+            .Initialize();
+    }
 
-	public void RestartGame()
-	{
-		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.RESTART;
-	}
+    private void Update()
+    {
+        _systems.Run();
+        _world.RemoveOneFrameComponents();
+    }
 
-	public void UnpauseGame()
-	{
-		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.START;
-	}
+    private void OnDisable()
+    {
+        _systems.Dispose();
+        _systems = null;
+        _world.Dispose();
+        _world = null;
+    }
 
-	public void QuitGame()
-	{
-		EcsWorld.CreateEntityWith<GameStateComponent>().State = GameStates.EXIT;
-	}
-}
+    public void RestartGame()
+    {
+        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.RESTART;
+    }
 
-public static class SystemExtensions
-{
-	public static EcsSystems AddItemSystems(this EcsSystems systems)
-	{
-		systems
-			.Add(new ItemSystem
-			{
-				FoodPenalty = 0.001f
-			})
-			.Add(new FoodSystem())
-			.Add(new EnergizerSystem());
+    public void ContinueGame()
+    {
+        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.START;
+    }
 
-		return systems;
-	}
+    public void QuitGame()
+    {
+        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.EXIT;
+    }
 }
