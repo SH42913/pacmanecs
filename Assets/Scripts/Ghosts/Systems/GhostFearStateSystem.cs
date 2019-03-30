@@ -23,16 +23,15 @@ namespace Ghosts.Systems
             GhostConfig ghostConfig = _mainGameConfig.GhostConfig;
             WorldComponent world = _world.Components1[0];
 
-            if (_enableEvents.EntitiesCount > 0)
+            if (!_enableEvents.IsEmpty())
             {
                 foreach (int i in _ghosts)
                 {
                     GameObject ghost = _ghosts.Components2[i].Transform.gameObject;
-                    int ghostEntity = _ghosts.Entities[i];
+                    EcsEntity ghostEntity = _ghosts.Entities[i];
 
-                    bool isNew;
                     _ecsWorld
-                        .EnsureComponent<GhostInFearStateComponent>(ghostEntity, out isNew)
+                        .EnsureComponent<GhostInFearStateComponent>(ghostEntity, out bool isNew)
                         .EstimateTime = ghostConfig.FearStateInSec;
 
                     if (isNew)
@@ -47,7 +46,7 @@ namespace Ghosts.Systems
                 GhostComponent ghostComponent = _fearStateGhosts.Components1[i];
                 GhostInFearStateComponent fearState = _fearStateGhosts.Components2[i];
                 GameObject ghost = _fearStateGhosts.Components3[i].Transform.gameObject;
-                int ghostEntity = _fearStateGhosts.Entities[i];
+                EcsEntity ghostEntity = _fearStateGhosts.Entities[i];
 
                 fearState.EstimateTime -= Time.deltaTime;
                 if (fearState.EstimateTime <= 0)
@@ -77,14 +76,14 @@ namespace Ghosts.Systems
                 }
 
                 Vector2Int currentPosition = _ecsWorld.GetComponent<PositionComponent>(ghostEntity).Position;
-                foreach (int entity in world.WorldField[currentPosition.x][currentPosition.y])
+                foreach (EcsEntity entity in world.WorldField[currentPosition.x][currentPosition.y])
                 {
                     var player = _ecsWorld.GetComponent<PlayerComponent>(entity);
                     if (player == null) continue;
 
                     player.Scores += ghostConfig.ScoresPerGhost;
-                    _ecsWorld.CreateEntityWith<UpdateScoreTableEvent>();
                     _ecsWorld.AddComponent<DestroyedWorldObjectComponent>(ghostEntity);
+                    _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
                 }
             }
         }

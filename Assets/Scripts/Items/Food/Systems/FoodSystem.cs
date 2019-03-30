@@ -13,16 +13,16 @@ namespace Items.Food.Systems
 
         public void Run()
         {
-            for (int i = 0; i < _takenFoods.EntitiesCount; i++)
+            foreach (int i in _takenFoods)
             {
-                int playerEntity = _takenFoods.Components2[i].PlayerEntity;
+                EcsEntity playerEntity = _takenFoods.Components2[i].PlayerEntity;
                 var player = _ecsWorld.GetComponent<PlayerComponent>(playerEntity);
                 var moveComponent = _ecsWorld.GetComponent<MoveComponent>(playerEntity);
 
                 player.Scores += _takenFoods.Components1[i].Scores;
                 moveComponent.Speed -= _takenFoods.Components1[i].SpeedPenalty;
 
-                _ecsWorld.CreateEntityWith<UpdateScoreTableEvent>();
+                _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
             }
         }
     }

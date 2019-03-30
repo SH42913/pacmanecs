@@ -19,18 +19,17 @@ namespace Portals.Systems
         public void Run()
         {
             WorldComponent world = _world.Components1[0];
-
             foreach (int i in _movableObjects)
             {
                 Vector2Int newPosition = _movableObjects.Components1[i].NewPosition;
-                int movableEntity = _movableObjects.Entities[i];
+                EcsEntity movableEntity = _movableObjects.Entities[i];
 
-                foreach (int entity in world.WorldField[newPosition.x][newPosition.y])
+                foreach (EcsEntity entity in world.WorldField[newPosition.x][newPosition.y])
                 {
                     var portal = _ecsWorld.GetComponent<PortalComponent>(entity);
                     if (portal == null || portal.EstimateReloadTime > 0) continue;
 
-                    int otherPortalEntity = portal.OtherPortalEntity;
+                    EcsEntity otherPortalEntity = portal.OtherPortalEntity;
                     var otherPortal = _ecsWorld.GetComponent<PortalComponent>(otherPortalEntity);
 
                     Vector2Int otherPortalPosition = _ecsWorld

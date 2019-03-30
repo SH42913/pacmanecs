@@ -23,7 +23,7 @@ namespace Ghosts.Systems
             WorldComponent world = _world.Components1[0];
             foreach (int i in _stoppedGhosts)
             {
-                int ghostEntity = _stoppedGhosts.Entities[i];
+                EcsEntity ghostEntity = _stoppedGhosts.Entities[i];
                 _ecsWorld
                     .AddComponent<ChangeDirectionComponent>(ghostEntity)
                     .NewDirection = _random.NextEnum<Directions>();
@@ -32,7 +32,7 @@ namespace Ghosts.Systems
             foreach (int i in _ghosts)
             {
                 Vector2Int currentPosition = _ghosts.Components1[i].Position;
-                foreach (int entity in world.WorldField[currentPosition.x][currentPosition.y])
+                foreach (EcsEntity entity in world.WorldField[currentPosition.x][currentPosition.y])
                 {
                     var player = _ecsWorld.GetComponent<PlayerComponent>(entity);
                     var isDead = _ecsWorld.GetComponent<PlayerIsDeadEvent>(entity);

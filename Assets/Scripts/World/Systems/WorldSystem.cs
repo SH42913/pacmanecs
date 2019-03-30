@@ -19,7 +19,7 @@ namespace World.Systems
             foreach (int i in _createEvents)
             {
                 Transform newObject = _createEvents.Components1[i].Transform;
-                int entity = _createEvents.Entities[i];
+                EcsEntity entity = _createEvents.Entities[i];
 
                 Vector2Int position = newObject.position.ToVector2Int();
                 world.WorldField[position.x][position.y].Add(entity);
@@ -32,7 +32,7 @@ namespace World.Systems
                 PositionComponent positionComponent = _movedObjects.Components1[i];
                 Vector2Int oldPosition = positionComponent.Position;
                 Vector2Int newPosition = _movedObjects.Components2[i].NewPosition;
-                int entity = _movedObjects.Entities[i];
+                EcsEntity entity = _movedObjects.Entities[i];
 
                 world.WorldField[oldPosition.x][oldPosition.y].Remove(entity);
                 world.WorldField[newPosition.x][newPosition.y].Add(entity);
@@ -44,7 +44,7 @@ namespace World.Systems
             {
                 Transform objectToDestroy = _destroyedObjects.Components1[i].Transform;
                 Vector2Int position = _destroyedObjects.Components2[i].Position;
-                int entity = _destroyedObjects.Entities[i];
+                EcsEntity entity = _destroyedObjects.Entities[i];
 
                 world.WorldField[position.x][position.y].Remove(entity);
                 objectToDestroy.gameObject.SetActive(false);

@@ -22,7 +22,7 @@ namespace Moving.Systems
                 PositionComponent positionComponent = _moveableEntities.Components1[i];
                 MoveComponent moveComponent = _moveableEntities.Components2[i];
                 Transform transform = _moveableEntities.Components3[i].Transform;
-                int movingEntity = _moveableEntities.Entities[i];
+                EcsEntity movingEntity = _moveableEntities.Entities[i];
 
                 float height = transform.position.y;
                 Vector3 desiredPosition = moveComponent.DesiredPosition.ToVector3(height);
@@ -69,7 +69,7 @@ namespace Moving.Systems
                 transform.rotation = Quaternion.Euler(newDirection);
 
                 bool stuckToWall = false;
-                foreach (int entity in world.WorldField[newDesiredPosition.x][newDesiredPosition.y])
+                foreach (EcsEntity entity in world.WorldField[newDesiredPosition.x][newDesiredPosition.y])
                 {
                     if (!_ecsWorld.IsEntityExists(entity)) continue;
                     if (_ecsWorld.GetComponent<WallComponent>(entity) == null) continue;

@@ -18,7 +18,7 @@ namespace Death.Systems
             foreach (int i in _deadPlayers)
             {
                 PlayerComponent deadPlayer = _deadPlayers.Components1[i];
-                int playerEntity = _deadPlayers.Entities[i];
+                EcsEntity playerEntity = _deadPlayers.Entities[i];
 
                 Vector2Int spawnPosition = deadPlayer.StartPosition;
                 if (--deadPlayer.Lives <= 0)
@@ -29,7 +29,7 @@ namespace Death.Systems
                 }
 
                 _ecsWorld.AddComponent<TeleportingComponent>(playerEntity).NewPosition = spawnPosition;
-                _ecsWorld.CreateEntityWith<UpdateScoreTableEvent>();
+                _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
             }
         }
     }

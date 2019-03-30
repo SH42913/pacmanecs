@@ -22,7 +22,7 @@ namespace Items.Food.Systems
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (GameObject foodObject in foodObjects)
             {
-                int entity = _ecsWorld.CreateEntityWith(out FoodComponent foodComponent, out ItemComponent _);
+                EcsEntity entity = _ecsWorld.CreateEntityWith(out FoodComponent foodComponent, out ItemComponent _);
 
                 foodComponent.Scores = foodConfig.ScoresPerFood;
                 foodComponent.SpeedPenalty = foodConfig.SpeedPenalty;
@@ -33,7 +33,7 @@ namespace Items.Food.Systems
             GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
             foreach (GameObject energizer in energizers)
             {
-                int entity = _ecsWorld.CreateEntityWith(
+                EcsEntity entity = _ecsWorld.CreateEntityWith(
                     out FoodComponent foodComponent, 
                     out ItemComponent _, out EnergizerComponent _);
 

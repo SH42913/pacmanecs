@@ -83,16 +83,19 @@ public sealed class Startup : MonoBehaviour
 
     public void RestartGame()
     {
-        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.RESTART;
+        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.RESTART;
     }
 
     public void ContinueGame()
     {
-        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.START;
+        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.START;
     }
 
     public void QuitGame()
     {
-        _world.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.EXIT;
+        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.EXIT;
     }
 }

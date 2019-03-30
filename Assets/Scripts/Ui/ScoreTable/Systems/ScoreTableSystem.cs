@@ -13,10 +13,10 @@ namespace Ui.ScoreTable.Systems
 
         public void Run()
         {
-            if (_updateEvents.EntitiesCount <= 0) return;
+            if (_updateEvents.IsEmpty()) return;
 
             string scoresString = "";
-            for (int i = 0; i < _players.EntitiesCount; i++)
+            foreach (int i in _players)
             {
                 PlayerComponent player = _players.Components1[i];
                 scoresString += $"P{player.Num} Scores:{player.Scores} ";

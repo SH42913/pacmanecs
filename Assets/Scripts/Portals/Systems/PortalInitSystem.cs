@@ -13,7 +13,7 @@ namespace Portals.Systems
         public void Initialize()
         {
             GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
-            var channelDict = new Dictionary<int, int>();
+            var channelDict = new Dictionary<int, EcsEntity>();
             var filledChannels = new HashSet<int>();
 
             foreach (GameObject portal in portals)
@@ -32,21 +32,21 @@ namespace Portals.Systems
                     continue;
                 }
 
-                int entity = _ecsWorld.CreateEntityWith(out PortalComponent portalComponent);
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(entity).Transform = portal.transform;
+                EcsEntity portalEntity = _ecsWorld.CreateEntityWith(out PortalComponent portalComponent);
+                _ecsWorld.AddComponent<CreateWorldObjectEvent>(portalEntity).Transform = portal.transform;
 
                 if (channelDict.ContainsKey(channel))
                 {
                     filledChannels.Add(channel);
-                    int otherPortalEntity = channelDict[channel];
+                    EcsEntity otherPortalEntity = channelDict[channel];
                     portalComponent.OtherPortalEntity = channelDict[channel];
                     _ecsWorld
                         .GetComponent<PortalComponent>(otherPortalEntity)
-                        .OtherPortalEntity = entity;
+                        .OtherPortalEntity = portalEntity;
                 }
                 else
                 {
-                    channelDict.Add(channel, entity);
+                    channelDict.Add(channel, portalEntity);
                 }
             }
         }

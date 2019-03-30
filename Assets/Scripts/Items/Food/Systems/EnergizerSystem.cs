@@ -11,9 +11,9 @@ namespace Items.Food.Systems
 
         public void Run()
         {
-            if (_takenEnergizers.EntitiesCount > 0)
+            if (!_takenEnergizers.IsEmpty())
             {
-                _ecsWorld.CreateEntityWith<EnableGhostFearStateEvent>();
+                _ecsWorld.CreateEntityWith(out EnableGhostFearStateEvent _);
             }
         }
     }

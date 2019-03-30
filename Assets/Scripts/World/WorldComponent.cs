@@ -5,7 +5,7 @@ namespace World
 {
     public class WorldComponent : IEcsAutoResetComponent
     {
-        public HashSet<int>[][] WorldField;
+        public HashSet<EcsEntity>[][] WorldField;
 
         public void Reset()
         {

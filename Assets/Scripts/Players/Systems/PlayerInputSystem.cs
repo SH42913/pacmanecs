@@ -16,36 +16,36 @@ namespace Players.Systems
             foreach (int i in _players)
             {
                 int playerNum = _players.Components1[i].Num;
-                float yAxis = Input.GetAxis(string.Format("Player{0}Y", playerNum));
-                float xAxis = Input.GetAxis(string.Format("Player{0}X", playerNum));
+                EcsEntity playerEntity = _players.Entities[i];
+                float yAxis = Input.GetAxis($"Player{playerNum}Y");
+                float xAxis = Input.GetAxis($"Player{playerNum}X");
 
                 if (yAxis > 0)
                 {
-                    SendCommand(Directions.UP, playerNum);
+                    SendCommand(Directions.UP, playerEntity);
                 }
                 else if (yAxis < 0)
                 {
-                    SendCommand(Directions.DOWN, playerNum);
+                    SendCommand(Directions.DOWN, playerEntity);
                 }
                 else if (xAxis > 0)
                 {
-                    SendCommand(Directions.RIGHT, playerNum);
+                    SendCommand(Directions.RIGHT, playerEntity);
                 }
                 else if (xAxis < 0)
                 {
-                    SendCommand(Directions.LEFT, playerNum);
+                    SendCommand(Directions.LEFT, playerEntity);
                 }
 
-                if (Input.GetKeyUp(KeyCode.Escape))
-                {
-                    _ecsWorld.CreateEntityWith<ChangeGameStateEvent>().State = Time.timeScale < 1
-                        ? GameStates.START
-                        : GameStates.PAUSE;
-                }
+                if (!Input.GetKeyUp(KeyCode.Escape)) continue;
+                _ecsWorld.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+                changeGameStateEvent.State = Time.timeScale < 1
+                    ? GameStates.START
+                    : GameStates.PAUSE;
             }
         }
 
-        private void SendCommand(Directions newDirection, int playerEntity)
+        private void SendCommand(Directions newDirection, EcsEntity playerEntity)
         {
             var command = _ecsWorld.EnsureComponent<ChangeDirectionComponent>(playerEntity, out _);
             command.NewDirection = newDirection;

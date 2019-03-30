@@ -10,13 +10,15 @@ namespace Ui.GameStates.Systems
 
         public void Initialize()
         {
-            var menus = Object.FindObjectsOfType<PauseMenuBehaviour>();
+            PauseMenuBehaviour[] menus = Object.FindObjectsOfType<PauseMenuBehaviour>();
             foreach (PauseMenuBehaviour behaviour in menus)
             {
-                _ecsWorld.CreateEntityWith<PauseMenuComponent>().GameObject = behaviour.gameObject;
+                _ecsWorld.CreateEntityWith(out PauseMenuComponent pauseMenu);
+                pauseMenu.GameObject = behaviour.gameObject;
             }
 
-            _ecsWorld.CreateEntityWith<ChangeGameStateEvent>().State = GameStates.START;
+            _ecsWorld.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+            changeGameStateEvent.State = GameStates.START;
         }
 
         public void Destroy()

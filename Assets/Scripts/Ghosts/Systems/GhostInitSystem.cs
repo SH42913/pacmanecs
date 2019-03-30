@@ -24,7 +24,7 @@ namespace Ghosts.Systems
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
             foreach (GameObject ghostObject in ghostObjects)
             {
-                int ghostEntity = _ecsWorld.CreateEntityWith(
+                EcsEntity ghostEntity = _ecsWorld.CreateEntityWith(
                     out GhostComponent ghostComponent, 
                     out MoveComponent moveComponent, 
                     out GhostInFearStateComponent _);

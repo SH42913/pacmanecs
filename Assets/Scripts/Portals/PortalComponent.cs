@@ -1,8 +1,10 @@
-﻿namespace Portals
+﻿using Leopotam.Ecs;
+
+namespace Portals
 {
     public class PortalComponent
     {
-        public int OtherPortalEntity;
+        public EcsEntity OtherPortalEntity;
         public float EstimateReloadTime;
     }
 }

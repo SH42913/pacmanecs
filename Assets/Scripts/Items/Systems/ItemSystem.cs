@@ -19,9 +19,9 @@ namespace Items.Systems
             foreach (int i in _players)
             {
                 Vector2Int newPosition = _players.Components1[i].NewPosition;
-                int playerEntity = _players.Entities[i];
+                EcsEntity playerEntity = _players.Entities[i];
 
-                foreach (int entity in world.WorldField[newPosition.x][newPosition.y])
+                foreach (EcsEntity entity in world.WorldField[newPosition.x][newPosition.y])
                 {
                     var item = _ecsWorld.GetComponent<ItemComponent>(entity);
                     if (item == null) continue;

@@ -18,16 +18,16 @@ namespace World.Systems
                 throw new Exception($"{nameof(WorldConfig)} doesn't exists!");
             }
 
-            var world = _ecsWorld.CreateEntityWith<WorldComponent>();
+            _ecsWorld.CreateEntityWith(out WorldComponent world);
             WorldConfig worldConfig = _mainGameConfig.WorldConfig;
             
-            world.WorldField = new HashSet<int>[worldConfig.SizeX][];
+            world.WorldField = new HashSet<EcsEntity>[worldConfig.SizeX][];
             for (int xIndex = 0, xMax = worldConfig.SizeX; xIndex < xMax; xIndex++)
             {
-                var yFields = new HashSet<int>[worldConfig.SizeY];
+                var yFields = new HashSet<EcsEntity>[worldConfig.SizeY];
                 for (int yIndex = 0, yMax = worldConfig.SizeY; yIndex < yMax; yIndex++)
                 {
-                    yFields[yIndex] = new HashSet<int>();
+                    yFields[yIndex] = new HashSet<EcsEntity>();
                 }
 
                 world.WorldField[xIndex] = yFields;

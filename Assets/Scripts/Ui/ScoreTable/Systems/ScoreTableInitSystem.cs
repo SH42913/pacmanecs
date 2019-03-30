@@ -11,13 +11,14 @@ namespace Ui.ScoreTable.Systems
 
         public void Initialize()
         {
-            var scoreTables = Object.FindObjectsOfType<ScoreTableBehaviour>();
+            ScoreTableBehaviour[] scoreTables = Object.FindObjectsOfType<ScoreTableBehaviour>();
             foreach (ScoreTableBehaviour behaviour in scoreTables)
             {
-                _ecsWorld.CreateEntityWith<ScoreTableComponent>().ScoreText = behaviour.GetComponent<Text>();
+                _ecsWorld.CreateEntityWith(out ScoreTableComponent scoreTable);
+                scoreTable.ScoreText = behaviour.GetComponent<Text>();
             }
             
-            _ecsWorld.CreateEntityWith<UpdateScoreTableEvent>();
+            _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
         }
 
         public void Destroy()

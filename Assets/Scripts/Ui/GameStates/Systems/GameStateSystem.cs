@@ -13,7 +13,7 @@ namespace Ui.GameStates.Systems
 
         public void Run()
         {
-            if (_changeStateEvents.EntitiesCount <= 0) return;
+            if (_changeStateEvents.IsEmpty()) return;
 
             bool needDisableMenu = false;
             bool needEnableMenu = false;

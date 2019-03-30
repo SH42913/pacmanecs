@@ -14,8 +14,11 @@ namespace Walls.Systems
             GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
             foreach (GameObject wall in walls)
             {
-                int wallEntity = _ecsWorld.CreateEntityWith(out WallComponent _);
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(wallEntity).Transform = wall.transform;
+                _ecsWorld.CreateEntityWith(
+                    out CreateWorldObjectEvent createEvent,
+                    out WallComponent _);
+                
+                createEvent.Transform = wall.transform;
             }
         }
 

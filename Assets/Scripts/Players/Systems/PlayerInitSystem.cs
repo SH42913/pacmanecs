@@ -24,7 +24,7 @@ namespace Players.Systems
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in playerObjects)
             {
-                int playerEntity = _ecsWorld.CreateEntityWith(
+                EcsEntity playerEntity = _ecsWorld.CreateEntityWith(
                     out PlayerComponent playerComponent, 
                     out MoveComponent moveComponent);
 
