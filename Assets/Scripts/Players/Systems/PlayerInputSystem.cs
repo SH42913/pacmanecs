@@ -47,8 +47,7 @@ namespace Players.Systems
 
         private void SendCommand(Directions newDirection, int playerEntity)
         {
-            bool isNew;
-            var command = _ecsWorld.EnsureComponent<ChangeDirectionComponent>(playerEntity, out isNew);
+            var command = _ecsWorld.EnsureComponent<ChangeDirectionComponent>(playerEntity, out _);
             command.NewDirection = newDirection;
         }
     }

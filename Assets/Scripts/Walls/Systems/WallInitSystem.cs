@@ -12,11 +12,9 @@ namespace Walls.Systems
         public void Initialize()
         {
             GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-
             foreach (GameObject wall in walls)
             {
-                WallComponent wallComponent;
-                int wallEntity = _ecsWorld.CreateEntityWith(out wallComponent);
+                int wallEntity = _ecsWorld.CreateEntityWith(out WallComponent _);
                 _ecsWorld.AddComponent<CreateWorldObjectEvent>(wallEntity).Transform = wall.transform;
             }
         }

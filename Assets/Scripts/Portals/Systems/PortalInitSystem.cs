@@ -21,19 +21,18 @@ namespace Portals.Systems
                 int? channelNum = GetChannelFrom(portal);
                 if (!channelNum.HasValue)
                 {
-                    Debug.LogError(string.Format("Portal {0} has wrong name!", portal.name));
+                    Debug.LogError($"Portal {portal.name} has wrong name!");
                     continue;
                 }
 
                 int channel = channelNum.Value;
                 if (filledChannels.Contains(channel))
                 {
-                    Debug.LogError(string.Format("Channel {0} for portal {1} already used!", channel, portal.name));
+                    Debug.LogError($"Channel {channel} for portal {portal.name} already used!");
                     continue;
                 }
 
-                PortalComponent portalComponent;
-                int entity = _ecsWorld.CreateEntityWith(out portalComponent);
+                int entity = _ecsWorld.CreateEntityWith(out PortalComponent portalComponent);
                 _ecsWorld.AddComponent<CreateWorldObjectEvent>(entity).Transform = portal.transform;
 
                 if (channelDict.ContainsKey(channel))
@@ -56,15 +55,13 @@ namespace Portals.Systems
         {
         }
 
-        private int? GetChannelFrom(GameObject portal)
+        private static int? GetChannelFrom(Object portal)
         {
             int colonPosition = portal.name.IndexOf(':');
             if (colonPosition < 0) return null;
 
             string channelString = portal.name.Substring(colonPosition + 1, 1);
-            int channelNum;
-
-            return int.TryParse(channelString, out channelNum)
+            return int.TryParse(channelString, out int channelNum)
                 ? (int?) channelNum
                 : null;
         }

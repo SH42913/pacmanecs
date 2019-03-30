@@ -3,7 +3,6 @@ using Leopotam.Ecs;
 using Moving;
 using UnityEngine;
 using World;
-using Object = UnityEngine.Object;
 using Random = System.Random;
 
 namespace Ghosts.Systems
@@ -12,35 +11,23 @@ namespace Ghosts.Systems
     public class GhostInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<WorldComponent> _world = null;
-
-        private static readonly Random Random = new Random();
+        private readonly Random _random = null;
+        private readonly MainGameConfig _mainGameConfig = null;
 
         public void Initialize()
         {
-            var ghostConfigBehaviour = Object.FindObjectOfType<GhostConfigBehaviour>();
-            if (ghostConfigBehaviour == null)
+            if (!_mainGameConfig.GhostConfig)
             {
-                throw new Exception("GhostConfigBehaviour must be created!");
+                throw new Exception($"{nameof(GhostConfig)} doesn't exists!");
             }
-
-            int worldEntity = _world.Entities[0];
-            var ghostConfig = _ecsWorld.AddComponent<GhostConfigComponent>(worldEntity);
-            ghostConfig.FearStateInSec = ghostConfigBehaviour.FearStateInSec;
-            ghostConfig.ScoresPerGhost = ghostConfigBehaviour.ScoresPerGhost;
-            ghostConfig.Blinky = ghostConfigBehaviour.Blinky;
-            ghostConfig.Pinky = ghostConfigBehaviour.Pinky;
-            ghostConfig.Inky = ghostConfigBehaviour.Inky;
-            ghostConfig.Clyde = ghostConfigBehaviour.Clyde;
-            ghostConfig.FearState = ghostConfigBehaviour.FearState;
-
+            
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
             foreach (GameObject ghostObject in ghostObjects)
             {
-                MoveComponent moveComponent;
-                GhostComponent ghostComponent;
-                GhostInFearStateComponent fearState;
-                var ghostEntity = _ecsWorld.CreateEntityWith(out ghostComponent, out moveComponent, out fearState);
+                int ghostEntity = _ecsWorld.CreateEntityWith(
+                    out GhostComponent ghostComponent, 
+                    out MoveComponent moveComponent, 
+                    out GhostInFearStateComponent _);
 
                 switch (ghostObject.name.ToLower())
                 {
@@ -59,8 +46,8 @@ namespace Ghosts.Systems
                 }
 
                 moveComponent.DesiredPosition = ghostObject.transform.position.ToVector2Int();
-                moveComponent.Heading = Random.NextEnum<Directions>();
-                moveComponent.Speed = ghostConfigBehaviour.GhostSpeed;
+                moveComponent.Heading = _random.NextEnum<Directions>();
+                moveComponent.Speed = _mainGameConfig.GhostConfig.GhostSpeed;
 
                 _ecsWorld.AddComponent<CreateWorldObjectEvent>(ghostEntity).Transform = ghostObject.transform;
             }

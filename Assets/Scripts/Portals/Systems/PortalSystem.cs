@@ -14,16 +14,16 @@ namespace Portals.Systems
         private readonly EcsWorld _ecsWorld = null;
         private readonly EcsFilter<WorldComponent> _world = null;
         private readonly EcsFilter<PortalComponent> _portals = null;
-        private readonly EcsFilter<NewPositionComponent, MoveComponent> _moveableObjects = null;
+        private readonly EcsFilter<NewPositionComponent, MoveComponent> _movableObjects = null;
 
         public void Run()
         {
             WorldComponent world = _world.Components1[0];
 
-            foreach (int i in _moveableObjects)
+            foreach (int i in _movableObjects)
             {
-                Vector2Int newPosition = _moveableObjects.Components1[i].NewPosition;
-                int movableEntity = _moveableObjects.Entities[i];
+                Vector2Int newPosition = _movableObjects.Components1[i].NewPosition;
+                int movableEntity = _movableObjects.Entities[i];
 
                 foreach (int entity in world.WorldField[newPosition.x][newPosition.y])
                 {

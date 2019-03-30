@@ -18,17 +18,16 @@ namespace Ui.ScoreTable.Systems
             string scoresString = "";
             for (int i = 0; i < _players.EntitiesCount; i++)
             {
-                var player = _players.Components1[i];
+                PlayerComponent player = _players.Components1[i];
+                scoresString += $"P{player.Num} Scores:{player.Scores} ";
 
-                scoresString += string.Format("P{0} Scores:{1} ", player.Num, player.Scores);
-
-                if (!player.IsDead)
+                if (player.IsDead)
                 {
-                    scoresString += string.Format("Lives:{0}\n", player.Lives);
+                    scoresString += "IS DEAD\n";
                 }
                 else
                 {
-                    scoresString += "IS DEAD\n";
+                    scoresString += $"Lives:{player.Lives}\n";
                 }
             }
 

@@ -2,7 +2,6 @@ using System;
 using Leopotam.Ecs;
 using UnityEngine;
 using World;
-using Object = UnityEngine.Object;
 
 namespace Items.Food.Systems
 {
@@ -10,21 +9,20 @@ namespace Items.Food.Systems
     public class FoodInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
+        private readonly MainGameConfig _mainGameConfig = null;
 
         public void Initialize()
         {
-            var foodConfig = Object.FindObjectOfType<FoodConfigBehaviour>();
-            if (foodConfig == null)
+            if (!_mainGameConfig.FoodConfig)
             {
-                throw new Exception("FoodConfigBehaviour must be created!");
+                throw new Exception($"{nameof(FoodConfig)} doesn't exists!");
             }
-
+            
+            FoodConfig foodConfig = _mainGameConfig.FoodConfig;
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (GameObject foodObject in foodObjects)
             {
-                ItemComponent itemComponent;
-                FoodComponent foodComponent;
-                int entity = _ecsWorld.CreateEntityWith(out itemComponent, out foodComponent);
+                int entity = _ecsWorld.CreateEntityWith(out FoodComponent foodComponent, out ItemComponent _);
 
                 foodComponent.Scores = foodConfig.ScoresPerFood;
                 foodComponent.SpeedPenalty = foodConfig.SpeedPenalty;
@@ -35,10 +33,9 @@ namespace Items.Food.Systems
             GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
             foreach (GameObject energizer in energizers)
             {
-                ItemComponent itemComponent;
-                FoodComponent foodComponent;
-                EnergizerComponent energizerComponent;
-                int entity = _ecsWorld.CreateEntityWith(out itemComponent, out foodComponent, out energizerComponent);
+                int entity = _ecsWorld.CreateEntityWith(
+                    out FoodComponent foodComponent, 
+                    out ItemComponent _, out EnergizerComponent _);
 
                 foodComponent.Scores = foodConfig.ScoresPerFood * foodConfig.EnergizerMultiplier;
                 foodComponent.SpeedPenalty = foodConfig.SpeedPenalty * foodConfig.EnergizerMultiplier;

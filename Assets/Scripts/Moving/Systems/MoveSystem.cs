@@ -10,6 +10,7 @@ namespace Moving.Systems
     public class MoveSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
+        
         private readonly EcsFilter<WorldComponent> _world = null;
         private readonly EcsFilter<PositionComponent, MoveComponent, WorldObjectComponent> _moveableEntities = null;
 
@@ -78,8 +79,7 @@ namespace Moving.Systems
 
                 if (stuckToWall)
                 {
-                    bool isNew;
-                    _ecsWorld.EnsureComponent<StoppedComponent>(movingEntity, out isNew);
+                    _ecsWorld.EnsureComponent<StoppedComponent>(movingEntity, out _);
                 }
                 else
                 {

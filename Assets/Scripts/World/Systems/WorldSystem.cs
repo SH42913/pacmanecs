@@ -16,7 +16,6 @@ namespace World.Systems
         public void Run()
         {
             WorldComponent world = _world.Components1[0];
-
             foreach (int i in _createEvents)
             {
                 Transform newObject = _createEvents.Components1[i].Transform;

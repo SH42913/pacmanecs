@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace Players
 {
-    public class PlayerConfigBehaviour : MonoBehaviour
+    [CreateAssetMenu(menuName = "PacManEcs/PlayerConfig")]
+    public class PlayerConfig : ScriptableObject
     {
         [Range(0, 10)]
         public float StartSpeed;

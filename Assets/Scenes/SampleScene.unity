@@ -13317,10 +13317,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1309862173}
   - component: {fileID: 1309862174}
-  - component: {fileID: 1309862177}
-  - component: {fileID: 1309862176}
-  - component: {fileID: 1309862175}
-  - component: {fileID: 1309862178}
   m_Layer: 0
   m_Name: Startup
   m_TagString: Untagged
@@ -13354,69 +13350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63ae06fc612272448a17e5a5398e4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1309862175
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309862172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4589db8031b4799b07726a93352c001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GhostSpeed: 2
-  FearStateInSec: 5
-  ScoresPerGhost: 1000
-  Blinky: {r: 1, g: 0, b: 0, a: 1}
-  Pinky: {r: 1, g: 0, b: 0.6249809, a: 1}
-  Inky: {r: 0, g: 0.72298765, b: 1, a: 1}
-  Clyde: {r: 1, g: 0.6412373, b: 0, a: 1}
-  FearState: {r: 0.006026745, g: 0, b: 1, a: 1}
---- !u!114 &1309862176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309862172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8c92d8cfb6a4f4e9f5c797e92651c69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StartSpeed: 3
-  StartLives: 3
---- !u!114 &1309862177
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309862172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b1b56ebbc2a4623813451edc2e304c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SizeX: 40
-  SizeY: 40
---- !u!114 &1309862178
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1309862172}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84eff36ef6b64b309927722849ec187e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScoresPerFood: 100
-  SpeedPenalty: 0.001
-  EnergizerMultiplier: 3
+  GameConfig: {fileID: 11400000, guid: da2bc9af11b3ffa42a6a2f6a7ecbbe07, type: 2}
 --- !u!1001 &1311004012
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15175,7 +15109,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1492787459}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.14, y: 0, z: 17.13}
+  m_LocalPosition: {x: 17, y: 0, z: 17}
   m_LocalScale: {x: 3.5, y: 1, z: 3.5}
   m_Children: []
   m_Father: {fileID: 1082217957}

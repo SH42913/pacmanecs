@@ -11,15 +11,16 @@ namespace Ghosts.Systems
     public class GhostFearStateSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
+        private readonly MainGameConfig _mainGameConfig = null;
+        
         private readonly EcsFilter<WorldComponent> _world = null;
-        private readonly EcsFilter<GhostConfigComponent> _ghostConfig = null;
         private readonly EcsFilter<EnableGhostFearStateEvent> _enableEvents = null;
         private readonly EcsFilter<GhostComponent, WorldObjectComponent> _ghosts = null;
         private readonly EcsFilter<GhostComponent, GhostInFearStateComponent, WorldObjectComponent> _fearStateGhosts = null;
 
         public void Run()
         {
-            GhostConfigComponent ghostConfig = _ghostConfig.Components1[0];
+            GhostConfig ghostConfig = _mainGameConfig.GhostConfig;
             WorldComponent world = _world.Components1[0];
 
             if (_enableEvents.EntitiesCount > 0)

@@ -23,8 +23,7 @@ namespace Teleports.Systems
                 moveComponent.DesiredPosition = targetPosition;
                 transform.position = targetPosition.ToVector3(transform.position.y);
 
-                bool isNew;
-                _ecsWorld.EnsureComponent<NewPositionComponent>(entity, out isNew).NewPosition = targetPosition;
+                _ecsWorld.EnsureComponent<NewPositionComponent>(entity, out _).NewPosition = targetPosition;
             }
         }
     }

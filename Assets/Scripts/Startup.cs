@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Leopotam.Ecs;
 using Death.Systems;
 using Ghosts.Systems;
@@ -16,11 +17,20 @@ using World.Systems;
 
 public sealed class Startup : MonoBehaviour
 {
+    public MainGameConfig GameConfig;
+
     private EcsWorld _world;
     private EcsSystems _systems;
 
+    private static readonly System.Random Random = new System.Random();
+
     private void OnEnable()
     {
+        if (!GameConfig)
+        {
+            throw new Exception($"{nameof(MainGameConfig)} doesn't exists!");
+        }
+
         _world = new EcsWorld();
         _systems = new EcsSystems(_world);
 
@@ -52,6 +62,8 @@ public sealed class Startup : MonoBehaviour
             .Add(new WorldSystem())
             .Add(new ScoreTableSystem())
             .Add(new GameStateSystem())
+            .Inject(Random)
+            .Inject(GameConfig)
             .Initialize();
     }
 

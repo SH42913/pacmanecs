@@ -12,11 +12,11 @@ namespace Ghosts.Systems
     public class GhostSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
+        private readonly Random _random = null;
+        
         private readonly EcsFilter<WorldComponent> _world = null;
         private readonly EcsFilter<GhostComponent, StoppedComponent> _stoppedGhosts = null;
         private readonly EcsFilter<PositionComponent, GhostComponent>.Exclude<GhostInFearStateComponent> _ghosts = null;
-
-        private static readonly Random Random = new Random();
 
         public void Run()
         {
@@ -26,7 +26,7 @@ namespace Ghosts.Systems
                 int ghostEntity = _stoppedGhosts.Entities[i];
                 _ecsWorld
                     .AddComponent<ChangeDirectionComponent>(ghostEntity)
-                    .NewDirection = Random.NextEnum<Directions>();
+                    .NewDirection = _random.NextEnum<Directions>();
             }
 
             foreach (int i in _ghosts)
