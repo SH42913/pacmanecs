@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d5c899d238248dbb2a49be26c71a4ea, type: 3}
+  m_Script: {fileID: 11500000, guid: fcf93bde4e75abd4eadcec58c392a194, type: 3}
   m_Name: MainGameConfig
   m_EditorClassIdentifier: 
-  WorldConfig: {fileID: 11400000, guid: 79aab1eb565a7d048bcc4daf1b87c18d, type: 2}
-  PlayerConfig: {fileID: 11400000, guid: 2a9935070beca214ebca97bf10440895, type: 2}
-  FoodConfig: {fileID: 11400000, guid: 6b5b5a835bb59c140b157a708c38ae72, type: 2}
-  GhostConfig: {fileID: 11400000, guid: ba6c94fafa4f7b642a5492513b361dd6, type: 2}
+  WorldConfig: {fileID: 11400000, guid: 7b9392c3dfdd9814287382f385f69ca3, type: 2}
+  PlayerConfig: {fileID: 11400000, guid: b75b49fcb49346b47a40ea8856210b35, type: 2}
+  FoodConfig: {fileID: 11400000, guid: a84ee552039d5e84daa9bf0ab1147936, type: 2}
+  GhostConfig: {fileID: 11400000, guid: 456c02491f72d8a47b522a7973f51e51, type: 2}

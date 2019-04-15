@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4589db8031b4799b07726a93352c001, type: 3}
+  m_Script: {fileID: 11500000, guid: 02c160a425b168441beab94bed5dd6f6, type: 3}
   m_Name: GhostConfig
   m_EditorClassIdentifier: 
   GhostSpeed: 2
@@ -17,6 +17,6 @@ MonoBehaviour:
   ScoresPerGhost: 1000
   Blinky: {r: 1, g: 0, b: 0, a: 1}
   Pinky: {r: 1, g: 0, b: 0.625, a: 1}
-  Inky: {r: 0, g: 0.723, b: 1, a: 1}
-  Clyde: {r: 1, g: 0.641, b: 0, a: 1}
-  FearState: {r: 0.01, g: 0, b: 1, a: 1}
+  Inky: {r: 0, g: 0.725, b: 1, a: 1}
+  Clyde: {r: 1, g: 0.64, b: 0, a: 1}
+  FearState: {r: 0.1, g: 0, b: 1, a: 1}
