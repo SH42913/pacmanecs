@@ -3,6 +3,8 @@
 /[Oo]bj/
 /[Bb]uild/
 /[Bb]uilds/
+/.idea/
+/[Ll]ogs/
 
 /Assets/Plugins/*
 /Assets/Plugins.meta
