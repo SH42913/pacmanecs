@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Items.Food
 {
-    [CreateAssetMenu(menuName = "PacManEcs/FoodConfig")]
-    public class FoodConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "PacManEcs/FoodDefinitions", fileName = "FoodDef")]
+    public class FoodDefinition : ScriptableObject
     {
         public int ScoresPerFood;
 

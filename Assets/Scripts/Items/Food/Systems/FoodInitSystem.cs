@@ -8,23 +8,23 @@ namespace Items.Food.Systems
     public class FoodInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
-        private readonly MainGameConfig _mainGameConfig = null;
+        private readonly GameDefinitions _gameDefinitions = null;
 
         public void Init()
         {
-            if (!_mainGameConfig.FoodConfig)
+            if (!_gameDefinitions.foodDefinition)
             {
-                throw new Exception($"{nameof(FoodConfig)} doesn't exists!");
+                throw new Exception($"{nameof(FoodDefinition)} doesn't exists!");
             }
 
-            FoodConfig foodConfig = _mainGameConfig.FoodConfig;
+            FoodDefinition foodDefinition = _gameDefinitions.foodDefinition;
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (GameObject foodObject in foodObjects)
             {
                 EcsEntity entity = _ecsWorld.NewEntityWith(out FoodComponent foodComponent, out ItemComponent _);
 
-                foodComponent.Scores = foodConfig.ScoresPerFood;
-                foodComponent.SpeedPenalty = foodConfig.SpeedPenalty;
+                foodComponent.Scores = foodDefinition.ScoresPerFood;
+                foodComponent.SpeedPenalty = foodDefinition.SpeedPenalty;
 
                 entity.Set<CreateWorldObjectEvent>().Transform = foodObject.transform;
             }
@@ -37,8 +37,8 @@ namespace Items.Food.Systems
                     out EnergizerComponent _,
                     out ItemComponent _);
 
-                foodComponent.Scores = foodConfig.ScoresPerFood * foodConfig.EnergizerMultiplier;
-                foodComponent.SpeedPenalty = foodConfig.SpeedPenalty * foodConfig.EnergizerMultiplier;
+                foodComponent.Scores = foodDefinition.ScoresPerFood * foodDefinition.EnergizerMultiplier;
+                foodComponent.SpeedPenalty = foodDefinition.SpeedPenalty * foodDefinition.EnergizerMultiplier;
 
                 entity.Set<CreateWorldObjectEvent>().Transform = energizer.transform;
             }

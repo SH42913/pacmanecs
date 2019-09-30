@@ -9,17 +9,17 @@ namespace Players.Systems
     public class PlayerInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
-        private readonly MainGameConfig _mainGameConfig = null;
+        private readonly GameDefinitions _gameDefinitions = null;
 
         public void Init()
         {
-            if (!_mainGameConfig.PlayerConfig)
+            if (!_gameDefinitions.playerDefinition)
             {
-                throw new Exception($"{nameof(PlayerConfig)} doesn't exists!");
+                throw new Exception($"{nameof(PlayerDefinition)} doesn't exists!");
             }
 
             int playerCount = 0;
-            PlayerConfig playerConfig = _mainGameConfig.PlayerConfig;
+            PlayerDefinition playerDefinition = _gameDefinitions.playerDefinition;
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in playerObjects)
             {
@@ -33,9 +33,9 @@ namespace Players.Systems
                     : Directions.Left;
 
                 moveComponent.DesiredPosition = startPosition;
-                moveComponent.Speed = playerConfig.StartSpeed;
+                moveComponent.Speed = playerDefinition.StartSpeed;
 
-                playerComponent.Lives = playerConfig.StartLives;
+                playerComponent.Lives = playerDefinition.StartLives;
                 playerComponent.Num = ++playerCount;
                 playerComponent.SpawnPosition = startPosition;
 

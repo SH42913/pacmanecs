@@ -11,7 +11,7 @@ namespace Ghosts.Systems
     {
         private readonly EcsWorld _ecsWorld = null;
         private readonly WorldService _worldService = null;
-        private readonly MainGameConfig _mainGameConfig = null;
+        private readonly GameDefinitions _gameDefinitions = null;
 
         private readonly EcsFilter<EnableGhostFearStateEvent> _enableEvents = null;
         private readonly EcsFilter<GhostComponent> _ghosts = null;
@@ -19,7 +19,7 @@ namespace Ghosts.Systems
 
         public void Run()
         {
-            GhostConfig ghostConfig = _mainGameConfig.GhostConfig;
+            GhostDefinition ghostDefinition = _gameDefinitions.ghostDefinition;
             if (!_enableEvents.IsEmpty())
             {
                 foreach (int i in _ghosts)
@@ -27,8 +27,8 @@ namespace Ghosts.Systems
                     GhostComponent ghost = _ghosts.Get1[i];
                     EcsEntity ghostEntity = _ghosts.Entities[i];
 
-                    ghostEntity.Set<GhostInFearStateComponent>().EstimateTime = ghostConfig.FearStateInSec;
-                    ghost.Renderer.material.color = ghostConfig.FearState;
+                    ghostEntity.Set<GhostInFearStateComponent>().EstimateTime = ghostDefinition.FearStateInSec;
+                    ghost.Renderer.material.color = ghostDefinition.FearState;
                 }
             }
 
@@ -45,16 +45,16 @@ namespace Ghosts.Systems
                     switch (ghostComponent.GhostType)
                     {
                         case GhostTypes.Blinky:
-                            ghostComponent.Renderer.material.color = ghostConfig.Blinky;
+                            ghostComponent.Renderer.material.color = ghostDefinition.Blinky;
                             break;
                         case GhostTypes.Pinky:
-                            ghostComponent.Renderer.material.color = ghostConfig.Pinky;
+                            ghostComponent.Renderer.material.color = ghostDefinition.Pinky;
                             break;
                         case GhostTypes.Inky:
-                            ghostComponent.Renderer.material.color = ghostConfig.Inky;
+                            ghostComponent.Renderer.material.color = ghostDefinition.Inky;
                             break;
                         case GhostTypes.Clyde:
-                            ghostComponent.Renderer.material.color = ghostConfig.Clyde;
+                            ghostComponent.Renderer.material.color = ghostDefinition.Clyde;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -69,7 +69,7 @@ namespace Ghosts.Systems
                     var player = entity.Get<PlayerComponent>();
                     if (player == null) continue;
 
-                    player.Scores += ghostConfig.ScoresPerGhost;
+                    player.Scores += ghostDefinition.ScoresPerGhost;
                     ghostEntity.Set<DestroyedWorldObjectComponent>();
                     _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
                 }

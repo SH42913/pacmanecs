@@ -19,7 +19,7 @@ using World.Systems;
 public sealed class Startup : MonoBehaviour
 {
     public GameObject PauseMenu;
-    public MainGameConfig GameConfig;
+    public GameDefinitions gameDefinitions;
 
     private EcsWorld _ecsWorld;
     private EcsSystems _systems;
@@ -27,9 +27,9 @@ public sealed class Startup : MonoBehaviour
 
     private void OnEnable()
     {
-        if (!GameConfig)
+        if (!gameDefinitions)
         {
-            throw new Exception($"{nameof(MainGameConfig)} doesn't exists!");
+            throw new Exception($"{nameof(GameDefinitions)} doesn't exists!");
         }
 
         _ecsWorld = new EcsWorld();
@@ -64,7 +64,7 @@ public sealed class Startup : MonoBehaviour
             .Add(new ScoreTableSystem())
             .Add(new GameStateSystem())
             .Inject(new WorldService())
-            .Inject(GameConfig)
+            .Inject(gameDefinitions)
             .Inject(_random)
             .ProcessInjects()
             .Init();

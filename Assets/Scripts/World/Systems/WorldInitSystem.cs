@@ -8,22 +8,22 @@ namespace World.Systems
     public class WorldInitSystem : IEcsPreInitSystem
     {
         private readonly WorldService _worldService = null;
-        private readonly MainGameConfig _mainGameConfig = null;
+        private readonly GameDefinitions _gameDefinitions = null;
 
         public void PreInit()
         {
-            if (!_mainGameConfig.WorldConfig)
+            if (!_gameDefinitions.worldDefinition)
             {
-                throw new Exception($"{nameof(WorldConfig)} doesn't exists!");
+                throw new Exception($"{nameof(WorldDefinition)} doesn't exists!");
             }
 
-            WorldConfig worldConfig = _mainGameConfig.WorldConfig;
+            WorldDefinition worldDefinition = _gameDefinitions.worldDefinition;
 
-            _worldService.WorldField = new HashSet<EcsEntity>[worldConfig.SizeX][];
-            for (int xIndex = 0, xMax = worldConfig.SizeX; xIndex < xMax; xIndex++)
+            _worldService.WorldField = new HashSet<EcsEntity>[worldDefinition.SizeX][];
+            for (int xIndex = 0, xMax = worldDefinition.SizeX; xIndex < xMax; xIndex++)
             {
-                var yFields = new HashSet<EcsEntity>[worldConfig.SizeY];
-                for (int yIndex = 0, yMax = worldConfig.SizeY; yIndex < yMax; yIndex++)
+                var yFields = new HashSet<EcsEntity>[worldDefinition.SizeY];
+                for (int yIndex = 0, yMax = worldDefinition.SizeY; yIndex < yMax; yIndex++)
                 {
                     yFields[yIndex] = new HashSet<EcsEntity>();
                 }
@@ -32,8 +32,8 @@ namespace World.Systems
             }
 
 #if DEBUG
-            Vector3 finalX = Vector3.right * worldConfig.SizeX;
-            Vector3 finalY = Vector3.forward * worldConfig.SizeY;
+            Vector3 finalX = Vector3.right * worldDefinition.SizeX;
+            Vector3 finalY = Vector3.forward * worldDefinition.SizeY;
             Vector3 final = finalX + finalY;
 
             Debug.DrawLine(Vector3.zero, finalX, Color.yellow, 5000);

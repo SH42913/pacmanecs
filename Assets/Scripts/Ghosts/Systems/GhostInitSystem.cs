@@ -11,13 +11,13 @@ namespace Ghosts.Systems
     {
         private readonly Random _random = null;
         private readonly EcsWorld _ecsWorld = null;
-        private readonly MainGameConfig _mainGameConfig = null;
+        private readonly GameDefinitions _gameDefinitions = null;
 
         public void Init()
         {
-            if (!_mainGameConfig.GhostConfig)
+            if (!_gameDefinitions.ghostDefinition)
             {
-                throw new Exception($"{nameof(GhostConfig)} doesn't exists!");
+                throw new Exception($"{nameof(GhostDefinition)} doesn't exists!");
             }
 
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
@@ -46,7 +46,7 @@ namespace Ghosts.Systems
 
                 moveComponent.DesiredPosition = ghostObject.transform.position.ToVector2Int();
                 moveComponent.Heading = _random.NextEnum<Directions>();
-                moveComponent.Speed = _mainGameConfig.GhostConfig.GhostSpeed;
+                moveComponent.Speed = _gameDefinitions.ghostDefinition.GhostSpeed;
 
                 ghostComponent.Renderer = ghostObject.GetComponent<MeshRenderer>();
                 ghostEntity.Set<CreateWorldObjectEvent>().Transform = ghostObject.transform;

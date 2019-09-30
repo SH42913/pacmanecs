@@ -9,8 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 161453224998e1343ac33bb99e714dae, type: 3}
-  m_Name: WorldConfig
+  m_Script: {fileID: 11500000, guid: 22d3c78e232b86f45aa98c72d89fdddc, type: 3}
+  m_Name: FoodDef
   m_EditorClassIdentifier: 
-  SizeX: 33
-  SizeY: 33
+  ScoresPerFood: 100
+  SpeedPenalty: 0.001
+  EnergizerMultiplier: 3

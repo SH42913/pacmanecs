@@ -13386,7 +13386,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PauseMenu: {fileID: 1843432174}
-  GameConfig: {fileID: 11400000, guid: a17ae3866028d214daa173be9ebb04b8, type: 2}
+  gameDefinitions: {fileID: 11400000, guid: a17ae3866028d214daa173be9ebb04b8, type: 2}
 --- !u!1001 &1311004012
 PrefabInstance:
   m_ObjectHideFlags: 0

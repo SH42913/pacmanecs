@@ -2,8 +2,8 @@ using UnityEngine;
 
 namespace Ghosts
 {
-    [CreateAssetMenu(menuName = "PacManEcs/GhostConfig")]
-    public class GhostConfig : ScriptableObject
+    [CreateAssetMenu(menuName = "PacManEcs/GhostDefinition", fileName = "GhostDef")]
+    public class GhostDefinition : ScriptableObject
     {
         [Range(0, 10)] public float GhostSpeed;
 
