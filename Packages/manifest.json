@@ -2,13 +2,16 @@
   "dependencies": {
     "com.leopotam.ecs": "https://github.com/Leopotam/ecs.git#8fa86f04b0d41ea6ec13925a0a52c7b3a503cb26",
     "com.leopotam.ecs-unityintegration": "https://github.com/Leopotam/ecs-unityintegration.git#a494e7daddd91d0f787625e9a3c6a2f7afba5fa5",
-    "com.unity.ads": "2.3.1",
-    "com.unity.analytics": "3.2.2",
-    "com.unity.collab-proxy": "1.2.15",
-    "com.unity.package-manager-ui": "2.0.7",
-    "com.unity.purchasing": "2.0.3",
-    "com.unity.textmeshpro": "1.3.0",
+    "com.unity.2d.sprite": "1.0.0",
+    "com.unity.ext.nunit": "1.0.0",
+    "com.unity.ide.rider": "1.1.0",
+    "com.unity.ide.vscode": "1.1.2",
+    "com.unity.package-manager-ui": "2.2.0",
+    "com.unity.test-framework": "1.0.18",
+    "com.unity.timeline": "1.1.0",
+    "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
+    "com.unity.modules.androidjni": "1.0.0",
     "com.unity.modules.animation": "1.0.0",
     "com.unity.modules.assetbundle": "1.0.0",
     "com.unity.modules.audio": "1.0.0",
@@ -35,9 +38,7 @@
     "com.unity.modules.unitywebrequestwww": "1.0.0",
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
-    "com.unity.modules.vr": "1.0.0",
-    "com.unity.modules.wind": "1.0.0",
-    "com.unity.modules.xr": "1.0.0"
+    "com.unity.modules.wind": "1.0.0"
   },
   "lock": {
     "com.leopotam.ecs": {
