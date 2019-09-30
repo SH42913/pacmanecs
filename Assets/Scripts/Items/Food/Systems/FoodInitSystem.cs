@@ -5,47 +5,43 @@ using World;
 
 namespace Items.Food.Systems
 {
-    [EcsInject]
     public class FoodInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
         private readonly MainGameConfig _mainGameConfig = null;
 
-        public void Initialize()
+        public void Init()
         {
             if (!_mainGameConfig.FoodConfig)
             {
                 throw new Exception($"{nameof(FoodConfig)} doesn't exists!");
             }
-            
+
             FoodConfig foodConfig = _mainGameConfig.FoodConfig;
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (GameObject foodObject in foodObjects)
             {
-                EcsEntity entity = _ecsWorld.CreateEntityWith(out FoodComponent foodComponent, out ItemComponent _);
+                EcsEntity entity = _ecsWorld.NewEntityWith(out FoodComponent foodComponent, out ItemComponent _);
 
                 foodComponent.Scores = foodConfig.ScoresPerFood;
                 foodComponent.SpeedPenalty = foodConfig.SpeedPenalty;
 
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(entity).Transform = foodObject.transform;
+                entity.Set<CreateWorldObjectEvent>().Transform = foodObject.transform;
             }
 
             GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
             foreach (GameObject energizer in energizers)
             {
-                EcsEntity entity = _ecsWorld.CreateEntityWith(
-                    out FoodComponent foodComponent, 
-                    out ItemComponent _, out EnergizerComponent _);
+                EcsEntity entity = _ecsWorld.NewEntityWith(
+                    out FoodComponent foodComponent,
+                    out EnergizerComponent _,
+                    out ItemComponent _);
 
                 foodComponent.Scores = foodConfig.ScoresPerFood * foodConfig.EnergizerMultiplier;
                 foodComponent.SpeedPenalty = foodConfig.SpeedPenalty * foodConfig.EnergizerMultiplier;
 
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(entity).Transform = energizer.transform;
+                entity.Set<CreateWorldObjectEvent>().Transform = energizer.transform;
             }
-        }
-
-        public void Destroy()
-        {
         }
     }
 }

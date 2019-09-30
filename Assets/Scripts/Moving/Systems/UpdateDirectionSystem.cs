@@ -2,7 +2,6 @@ using Leopotam.Ecs;
 
 namespace Moving.Systems
 {
-    [EcsInject]
     public class UpdateDirectionSystem : IEcsRunSystem
     {
         private readonly EcsFilter<MoveComponent, ChangeDirectionComponent> _newDirectionEntities = null;
@@ -11,8 +10,8 @@ namespace Moving.Systems
         {
             foreach (int i in _newDirectionEntities)
             {
-                MoveComponent move = _newDirectionEntities.Components1[i];
-                ChangeDirectionComponent changeDirection = _newDirectionEntities.Components2[i];
+                MoveComponent move = _newDirectionEntities.Get1[i];
+                ChangeDirectionComponent changeDirection = _newDirectionEntities.Get2[i];
                 move.Heading = changeDirection.NewDirection;
             }
         }

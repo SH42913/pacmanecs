@@ -2,9 +2,7 @@ using Leopotam.Ecs;
 
 namespace Ghosts
 {
-    [EcsOneFrame]
-    [EcsIgnoreInFilter]
-    public class EnableGhostFearStateEvent
+    public class EnableGhostFearStateEvent : IEcsOneFrame, IEcsIgnoreInFilter
     {
     }
 }

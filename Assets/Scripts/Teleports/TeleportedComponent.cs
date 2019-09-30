@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Teleports
 {
-    [EcsOneFrame]
-    public class TeleportingComponent
+    public class TeleportedComponent : IEcsOneFrame
     {
         public Vector2Int NewPosition;
     }

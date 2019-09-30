@@ -5,7 +5,6 @@ using UnityEngine;
 
 namespace Players.Systems
 {
-    [EcsInject]
     public class PlayerInputSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
@@ -15,39 +14,39 @@ namespace Players.Systems
         {
             foreach (int i in _players)
             {
-                int playerNum = _players.Components1[i].Num;
+                int playerNum = _players.Get1[i].Num;
                 EcsEntity playerEntity = _players.Entities[i];
-                float yAxis = Input.GetAxis($"Player{playerNum}Y");
-                float xAxis = Input.GetAxis($"Player{playerNum}X");
+                float yAxis = Input.GetAxis($"Player{playerNum.ToString()}Y");
+                float xAxis = Input.GetAxis($"Player{playerNum.ToString()}X");
 
                 if (yAxis > 0)
                 {
-                    SendCommand(Directions.UP, playerEntity);
+                    SendCommand(Directions.Up, playerEntity);
                 }
                 else if (yAxis < 0)
                 {
-                    SendCommand(Directions.DOWN, playerEntity);
+                    SendCommand(Directions.Down, playerEntity);
                 }
                 else if (xAxis > 0)
                 {
-                    SendCommand(Directions.RIGHT, playerEntity);
+                    SendCommand(Directions.Right, playerEntity);
                 }
                 else if (xAxis < 0)
                 {
-                    SendCommand(Directions.LEFT, playerEntity);
+                    SendCommand(Directions.Left, playerEntity);
                 }
 
                 if (!Input.GetKeyUp(KeyCode.Escape)) continue;
-                _ecsWorld.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+                _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
                 changeGameStateEvent.State = Time.timeScale < 1
-                    ? GameStates.START
-                    : GameStates.PAUSE;
+                    ? GameStates.Start
+                    : GameStates.Pause;
             }
         }
 
         private void SendCommand(Directions newDirection, EcsEntity playerEntity)
         {
-            var command = _ecsWorld.EnsureComponent<ChangeDirectionComponent>(playerEntity, out _);
+            var command = playerEntity.Set<ChangeDirectionComponent>();
             command.NewDirection = newDirection;
         }
     }

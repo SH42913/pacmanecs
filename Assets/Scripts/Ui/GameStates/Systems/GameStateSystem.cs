@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 namespace Ui.GameStates.Systems
 {
-    [EcsInject]
     public class GameStateSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<ChangeGameStateEvent> _changeStateEvents = null;
         private readonly EcsFilter<PauseMenuComponent> _menus = null;
+        private readonly EcsFilter<ChangeGameStateEvent> _changeStateEvents = null;
 
         public void Run()
         {
@@ -19,20 +18,20 @@ namespace Ui.GameStates.Systems
             bool needEnableMenu = false;
             foreach (int i in _changeStateEvents)
             {
-                switch (_changeStateEvents.Components1[i].State)
+                switch (_changeStateEvents.Get1[i].State)
                 {
-                    case GameStates.PAUSE:
+                    case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;
                         break;
-                    case GameStates.START:
+                    case GameStates.Start:
                         Time.timeScale = 1f;
                         needDisableMenu = true;
                         break;
-                    case GameStates.RESTART:
+                    case GameStates.Restart:
                         SceneManager.LoadScene(0);
                         break;
-                    case GameStates.EXIT:
+                    case GameStates.Exit:
                         Application.Quit();
                         break;
                     default:
@@ -44,7 +43,7 @@ namespace Ui.GameStates.Systems
 
             foreach (int i in _menus)
             {
-                _menus.Components1[i].GameObject.SetActive(needEnableMenu);
+                _menus.Get1[i].GameObject.SetActive(needEnableMenu);
             }
         }
     }

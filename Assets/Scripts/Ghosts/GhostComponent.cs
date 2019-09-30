@@ -1,15 +1,24 @@
-﻿namespace Ghosts
+﻿using Leopotam.Ecs;
+using UnityEngine;
+
+namespace Ghosts
 {
     public enum GhostTypes
     {
-        BLINKY,
-        PINKY,
-        INKY,
-        CLYDE
+        Blinky,
+        Pinky,
+        Inky,
+        Clyde
     }
 
-    public class GhostComponent
+    public class GhostComponent : IEcsAutoReset
     {
         public GhostTypes GhostType;
+        public MeshRenderer Renderer;
+        
+        public void Reset()
+        {
+            Renderer = null;
+        }
     }
 }

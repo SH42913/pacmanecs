@@ -3,7 +3,7 @@ using Leopotam.Ecs;
 
 namespace World
 {
-    public class WorldComponent : IEcsAutoResetComponent
+    public class WorldComponent : IEcsAutoReset
     {
         public HashSet<EcsEntity>[][] WorldField;
 

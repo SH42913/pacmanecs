@@ -17,12 +17,12 @@ using World.Systems;
 
 public sealed class Startup : MonoBehaviour
 {
+    public GameObject PauseMenu;
     public MainGameConfig GameConfig;
 
-    private EcsWorld _world;
+    private EcsWorld _ecsWorld;
     private EcsSystems _systems;
-
-    private static readonly System.Random Random = new System.Random();
+    private System.Random _random;
 
     private void OnEnable()
     {
@@ -31,11 +31,12 @@ public sealed class Startup : MonoBehaviour
             throw new Exception($"{nameof(MainGameConfig)} doesn't exists!");
         }
 
-        _world = new EcsWorld();
-        _systems = new EcsSystems(_world);
+        _ecsWorld = new EcsWorld();
+        _systems = new EcsSystems(_ecsWorld);
+        _random = new System.Random();
 
 #if UNITY_EDITOR
-        Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_world);
+        Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_ecsWorld);
         Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
 #endif
 
@@ -47,7 +48,6 @@ public sealed class Startup : MonoBehaviour
             .Add(new PortalInitSystem())
             .Add(new FoodInitSystem())
             .Add(new ScoreTableInitSystem())
-            .Add(new GameStateInitSystem())
             .Add(new PlayerInputSystem())
             .Add(new GhostSystem())
             .Add(new UpdateDirectionSystem())
@@ -62,40 +62,57 @@ public sealed class Startup : MonoBehaviour
             .Add(new WorldSystem())
             .Add(new ScoreTableSystem())
             .Add(new GameStateSystem())
-            .Inject(Random)
             .Inject(GameConfig)
-            .Initialize();
+            .Inject(_random)
+            .ProcessInjects()
+            .Init();
+
+        InitPauseMenu();
+        StartGame();
     }
 
     private void Update()
     {
         _systems.Run();
-        _world.RemoveOneFrameComponents();
+        _ecsWorld.EndFrame();
     }
 
     private void OnDisable()
     {
-        _systems.Dispose();
+        _systems.Destroy();
         _systems = null;
-        _world.Dispose();
-        _world = null;
+
+        _ecsWorld.Destroy();
+        _ecsWorld = null;
+    }
+
+    private void InitPauseMenu()
+    {
+        _ecsWorld.NewEntityWith(out PauseMenuComponent pauseMenu);
+        pauseMenu.GameObject = PauseMenu;
+    }
+
+    private void StartGame()
+    {
+        _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.Start;
     }
 
     public void RestartGame()
     {
-        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-        changeGameStateEvent.State = GameStates.RESTART;
+        _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.Restart;
     }
 
     public void ContinueGame()
     {
-        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-        changeGameStateEvent.State = GameStates.START;
+        _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.Start;
     }
 
     public void QuitGame()
     {
-        _world.CreateEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-        changeGameStateEvent.State = GameStates.EXIT;
+        _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
+        changeGameStateEvent.State = GameStates.Exit;
     }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace World
 {
-    [EcsOneFrame]
-    public class CreateWorldObjectEvent : IEcsAutoResetComponent
+    public class CreateWorldObjectEvent : IEcsOneFrame, IEcsAutoReset
     {
         public Transform Transform;
 

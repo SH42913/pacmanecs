@@ -7,41 +7,40 @@ using Random = System.Random;
 
 namespace Ghosts.Systems
 {
-    [EcsInject]
     public class GhostInitSystem : IEcsInitSystem
     {
-        private readonly EcsWorld _ecsWorld = null;
         private readonly Random _random = null;
+        private readonly EcsWorld _ecsWorld = null;
         private readonly MainGameConfig _mainGameConfig = null;
 
-        public void Initialize()
+        public void Init()
         {
             if (!_mainGameConfig.GhostConfig)
             {
                 throw new Exception($"{nameof(GhostConfig)} doesn't exists!");
             }
-            
+
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
             foreach (GameObject ghostObject in ghostObjects)
             {
-                EcsEntity ghostEntity = _ecsWorld.CreateEntityWith(
-                    out GhostComponent ghostComponent, 
-                    out MoveComponent moveComponent, 
+                EcsEntity ghostEntity = _ecsWorld.NewEntityWith(
+                    out GhostComponent ghostComponent,
+                    out MoveComponent moveComponent,
                     out GhostInFearStateComponent _);
 
                 switch (ghostObject.name.ToLower())
                 {
                     case "pinky":
-                        ghostComponent.GhostType = GhostTypes.PINKY;
+                        ghostComponent.GhostType = GhostTypes.Pinky;
                         break;
                     case "inky":
-                        ghostComponent.GhostType = GhostTypes.INKY;
+                        ghostComponent.GhostType = GhostTypes.Inky;
                         break;
                     case "clyde":
-                        ghostComponent.GhostType = GhostTypes.CLYDE;
+                        ghostComponent.GhostType = GhostTypes.Clyde;
                         break;
                     default:
-                        ghostComponent.GhostType = GhostTypes.BLINKY;
+                        ghostComponent.GhostType = GhostTypes.Blinky;
                         break;
                 }
 
@@ -49,12 +48,9 @@ namespace Ghosts.Systems
                 moveComponent.Heading = _random.NextEnum<Directions>();
                 moveComponent.Speed = _mainGameConfig.GhostConfig.GhostSpeed;
 
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(ghostEntity).Transform = ghostObject.transform;
+                ghostComponent.Renderer = ghostObject.GetComponent<MeshRenderer>();
+                ghostEntity.Set<CreateWorldObjectEvent>().Transform = ghostObject.transform;
             }
-        }
-
-        public void Destroy()
-        {
         }
     }
 }

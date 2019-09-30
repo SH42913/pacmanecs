@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace World
 {
-    [EcsOneFrame]
-    public class NewPositionComponent
+    public class NewPositionComponent : IEcsOneFrame
     {
         public Vector2Int NewPosition;
     }

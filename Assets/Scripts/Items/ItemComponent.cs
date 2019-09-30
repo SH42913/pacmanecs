@@ -2,8 +2,7 @@
 
 namespace Items
 {
-    [EcsIgnoreInFilter]
-    public class ItemComponent
+    public class ItemComponent : IEcsIgnoreInFilter
     {
     }
 }

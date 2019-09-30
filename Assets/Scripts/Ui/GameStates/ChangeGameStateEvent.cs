@@ -4,14 +4,13 @@ namespace Ui.GameStates
 {
     public enum GameStates
     {
-        START,
-        PAUSE,
-        RESTART,
-        EXIT
+        Start,
+        Pause,
+        Restart,
+        Exit
     }
 
-    [EcsOneFrame]
-    public class ChangeGameStateEvent
+    public class ChangeGameStateEvent : IEcsOneFrame
     {
         public GameStates State;
     }

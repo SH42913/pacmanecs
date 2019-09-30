@@ -6,28 +6,28 @@ using World;
 
 namespace Moving.Systems
 {
-    [EcsInject]
     public class MoveSystem : IEcsRunSystem
     {
-        private readonly EcsWorld _ecsWorld = null;
-        
+        private const float Epsilon = 0.1f;
+
         private readonly EcsFilter<WorldComponent> _world = null;
-        private readonly EcsFilter<PositionComponent, MoveComponent, WorldObjectComponent> _moveableEntities = null;
+        private readonly EcsFilter<PositionComponent, MoveComponent, WorldObjectComponent> _moveEntities = null;
 
         public void Run()
         {
-            WorldComponent world = _world.Components1[0];
-            foreach (int i in _moveableEntities)
+            WorldComponent world = _world.Get1[0];
+            foreach (int i in _moveEntities)
             {
-                PositionComponent positionComponent = _moveableEntities.Components1[i];
-                MoveComponent moveComponent = _moveableEntities.Components2[i];
-                Transform transform = _moveableEntities.Components3[i].Transform;
-                EcsEntity movingEntity = _moveableEntities.Entities[i];
+                PositionComponent positionComponent = _moveEntities.Get1[i];
+                MoveComponent moveComponent = _moveEntities.Get2[i];
+                Transform transform = _moveEntities.Get3[i].Transform;
+                EcsEntity movingEntity = _moveEntities.Entities[i];
 
-                float height = transform.position.y;
+                Vector3 curPosition = transform.position;
+                float height = curPosition.y;
                 Vector3 desiredPosition = moveComponent.DesiredPosition.ToVector3(height);
-                Vector3 estimatedVector = desiredPosition - transform.position;
-                if (estimatedVector.magnitude > 0.1f)
+                Vector3 estimatedVector = desiredPosition - curPosition;
+                if (estimatedVector.magnitude > Epsilon)
                 {
                     transform.position = Vector3.Lerp(
                         transform.position, desiredPosition,
@@ -39,26 +39,26 @@ namespace Moving.Systems
                 Vector2Int newPosition = moveComponent.DesiredPosition;
                 if (!oldPosition.Equals(newPosition))
                 {
-                    _ecsWorld.AddComponent<NewPositionComponent>(movingEntity).NewPosition = newPosition;
+                    movingEntity.Set<NewPositionComponent>().NewPosition = newPosition;
                 }
 
                 Vector2Int newDesiredPosition;
                 Vector3 newDirection;
                 switch (moveComponent.Heading)
                 {
-                    case Directions.UP:
+                    case Directions.Up:
                         newDesiredPosition = new Vector2Int(newPosition.x, newPosition.y + 1);
                         newDirection = new Vector3(0, 0, 0);
                         break;
-                    case Directions.RIGHT:
+                    case Directions.Right:
                         newDesiredPosition = new Vector2Int(newPosition.x + 1, newPosition.y);
                         newDirection = new Vector3(0, 90, 0);
                         break;
-                    case Directions.DOWN:
+                    case Directions.Down:
                         newDesiredPosition = new Vector2Int(newPosition.x, newPosition.y - 1);
                         newDirection = new Vector3(0, 180, 0);
                         break;
-                    case Directions.LEFT:
+                    case Directions.Left:
                         newDesiredPosition = new Vector2Int(newPosition.x - 1, newPosition.y);
                         newDirection = new Vector3(0, -90, 0);
                         break;
@@ -71,20 +71,20 @@ namespace Moving.Systems
                 bool stuckToWall = false;
                 foreach (EcsEntity entity in world.WorldField[newDesiredPosition.x][newDesiredPosition.y])
                 {
-                    if (!_ecsWorld.IsEntityExists(entity)) continue;
-                    if (_ecsWorld.GetComponent<WallComponent>(entity) == null) continue;
+                    if (!entity.IsAlive()) continue;
+                    if (entity.Get<WallComponent>() == null) continue;
 
                     stuckToWall = true;
                 }
 
                 if (stuckToWall)
                 {
-                    _ecsWorld.EnsureComponent<StoppedComponent>(movingEntity, out _);
+                    movingEntity.Set<StoppedComponent>();
                 }
                 else
                 {
                     moveComponent.DesiredPosition = newDesiredPosition;
-                    _ecsWorld.RemoveComponent<StoppedComponent>(movingEntity, true);
+                    movingEntity.Unset<StoppedComponent>();
                 }
             }
         }

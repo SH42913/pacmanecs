@@ -1,7 +1,7 @@
 {
   "dependencies": {
-    "com.leopotam.ecs": "https://github.com/Leopotam/ecs.git#8fa86f04b0d41ea6ec13925a0a52c7b3a503cb26",
-    "com.leopotam.ecs-unityintegration": "https://github.com/Leopotam/ecs-unityintegration.git#a494e7daddd91d0f787625e9a3c6a2f7afba5fa5",
+    "com.leopotam.ecs": "https://github.com/Leopotam/ecs.git#develop",
+    "com.leopotam.ecs-unityintegration": "https://github.com/Leopotam/ecs-unityintegration.git#develop",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.0",
@@ -42,12 +42,12 @@
   },
   "lock": {
     "com.leopotam.ecs": {
-      "hash": "8fa86f04b0d41ea6ec13925a0a52c7b3a503cb26",
-      "revision": "8fa86f04b0d41ea6ec13925a0a52c7b3a503cb26"
+      "hash": "7e1d0f3204b2f029d277a8c3b7169ac158a6f379",
+      "revision": "develop"
     },
     "com.leopotam.ecs-unityintegration": {
-      "hash": "a494e7daddd91d0f787625e9a3c6a2f7afba5fa5",
-      "revision": "a494e7daddd91d0f787625e9a3c6a2f7afba5fa5"
+      "hash": "3845976141448143a4303b5b738acd30ee1fa5fc",
+      "revision": "develop"
     }
   }
 }

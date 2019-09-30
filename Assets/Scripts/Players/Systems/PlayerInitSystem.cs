@@ -6,13 +6,12 @@ using World;
 
 namespace Players.Systems
 {
-    [EcsInject]
     public class PlayerInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
         private readonly MainGameConfig _mainGameConfig = null;
 
-        public void Initialize()
+        public void Init()
         {
             if (!_mainGameConfig.PlayerConfig)
             {
@@ -24,27 +23,24 @@ namespace Players.Systems
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in playerObjects)
             {
-                EcsEntity playerEntity = _ecsWorld.CreateEntityWith(
-                    out PlayerComponent playerComponent, 
+                EcsEntity playerEntity = _ecsWorld.NewEntityWith(
+                    out PlayerComponent playerComponent,
                     out MoveComponent moveComponent);
 
                 Vector2Int startPosition = player.transform.position.ToVector2Int();
                 moveComponent.Heading = playerCount % 2 != 0
-                    ? Directions.RIGHT
-                    : Directions.LEFT;
+                    ? Directions.Right
+                    : Directions.Left;
+
                 moveComponent.DesiredPosition = startPosition;
                 moveComponent.Speed = playerConfig.StartSpeed;
 
                 playerComponent.Lives = playerConfig.StartLives;
                 playerComponent.Num = ++playerCount;
-                playerComponent.StartPosition = startPosition;
+                playerComponent.SpawnPosition = startPosition;
 
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(playerEntity).Transform = player.transform;
+                playerEntity.Set<CreateWorldObjectEvent>().Transform = player.transform;
             }
-        }
-
-        public void Destroy()
-        {
         }
     }
 }

@@ -2,9 +2,7 @@
 
 namespace Death
 {
-    [EcsOneFrame]
-    [EcsIgnoreInFilter]
-    public class PlayerIsDeadEvent
+    public class PlayerIsDeadEvent : IEcsOneFrame, IEcsIgnoreInFilter
     {
     }
 }

@@ -5,7 +5,6 @@ using Ui.ScoreTable;
 
 namespace Items.Food.Systems
 {
-    [EcsInject]
     public class FoodSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
@@ -15,14 +14,14 @@ namespace Items.Food.Systems
         {
             foreach (int i in _takenFoods)
             {
-                EcsEntity playerEntity = _takenFoods.Components2[i].PlayerEntity;
-                var player = _ecsWorld.GetComponent<PlayerComponent>(playerEntity);
-                var moveComponent = _ecsWorld.GetComponent<MoveComponent>(playerEntity);
+                EcsEntity playerEntity = _takenFoods.Get2[i].PlayerEntity;
+                var player = playerEntity.Get<PlayerComponent>();
+                var moveComponent = playerEntity.Get<MoveComponent>();
 
-                player.Scores += _takenFoods.Components1[i].Scores;
-                moveComponent.Speed -= _takenFoods.Components1[i].SpeedPenalty;
+                player.Scores += _takenFoods.Get1[i].Scores;
+                moveComponent.Speed -= _takenFoods.Get1[i].SpeedPenalty;
 
-                _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
+                _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
             }
         }
     }

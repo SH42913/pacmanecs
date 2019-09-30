@@ -7,7 +7,6 @@ using World;
 
 namespace Death.Systems
 {
-    [EcsInject]
     public class DeathSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
@@ -17,19 +16,19 @@ namespace Death.Systems
         {
             foreach (int i in _deadPlayers)
             {
-                PlayerComponent deadPlayer = _deadPlayers.Components1[i];
+                PlayerComponent deadPlayer = _deadPlayers.Get1[i];
                 EcsEntity playerEntity = _deadPlayers.Entities[i];
 
-                Vector2Int spawnPosition = deadPlayer.StartPosition;
+                Vector2Int spawnPosition = deadPlayer.SpawnPosition;
                 if (--deadPlayer.Lives <= 0)
                 {
                     deadPlayer.IsDead = true;
                     spawnPosition = Vector2Int.zero;
-                    _ecsWorld.AddComponent<DestroyedWorldObjectComponent>(playerEntity);
+                    playerEntity.Set<DestroyedWorldObjectComponent>();
                 }
 
-                _ecsWorld.AddComponent<TeleportingComponent>(playerEntity).NewPosition = spawnPosition;
-                _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
+                playerEntity.Set<TeleportedComponent>().NewPosition = spawnPosition;
+                _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
             }
         }
     }

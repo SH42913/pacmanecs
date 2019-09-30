@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace Ui.ScoreTable.Systems
 {
-    [EcsInject]
     public class ScoreTableSystem : IEcsRunSystem
     {
         private readonly EcsFilter<PlayerComponent> _players = null;
@@ -18,8 +17,8 @@ namespace Ui.ScoreTable.Systems
             string scoresString = "";
             foreach (int i in _players)
             {
-                PlayerComponent player = _players.Components1[i];
-                scoresString += $"P{player.Num} Scores:{player.Scores} ";
+                PlayerComponent player = _players.Get1[i];
+                scoresString += $"P{player.Num.ToString()} Scores:{player.Scores.ToString()} ";
 
                 if (player.IsDead)
                 {
@@ -27,13 +26,13 @@ namespace Ui.ScoreTable.Systems
                 }
                 else
                 {
-                    scoresString += $"Lives:{player.Lives}\n";
+                    scoresString += $"Lives:{player.Lives.ToString()}\n";
                 }
             }
 
             foreach (int i in _scoreTables)
             {
-                Text unityText = _scoreTables.Components1[i].ScoreText;
+                Text unityText = _scoreTables.Get1[i].ScoreText;
                 unityText.text = scoresString;
             }
         }

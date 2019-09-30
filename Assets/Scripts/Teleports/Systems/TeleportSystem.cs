@@ -5,25 +5,23 @@ using World;
 
 namespace Teleports.Systems
 {
-    [EcsInject]
     public class TeleportSystem : IEcsRunSystem
     {
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportingComponent> _teleportedEntities = null;
+        private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportedComponent> _teleported = null;
 
         public void Run()
         {
-            foreach (int i in _teleportedEntities)
+            foreach (int i in _teleported)
             {
-                MoveComponent moveComponent = _teleportedEntities.Components1[i];
-                Transform transform = _teleportedEntities.Components2[i].Transform;
-                Vector2Int targetPosition = _teleportedEntities.Components3[i].NewPosition;
-                EcsEntity entity = _teleportedEntities.Entities[i];
+                MoveComponent moveComponent = _teleported.Get1[i];
+                Transform transform = _teleported.Get2[i].Transform;
+                Vector2Int targetPosition = _teleported.Get3[i].NewPosition;
+                EcsEntity entity = _teleported.Entities[i];
 
                 moveComponent.DesiredPosition = targetPosition;
                 transform.position = targetPosition.ToVector3(transform.position.y);
 
-                _ecsWorld.EnsureComponent<NewPositionComponent>(entity, out _).NewPosition = targetPosition;
+                entity.Set<NewPositionComponent>().NewPosition = targetPosition;
             }
         }
     }

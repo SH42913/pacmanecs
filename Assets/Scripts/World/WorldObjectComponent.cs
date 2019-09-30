@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace World
 {
-    public class WorldObjectComponent : IEcsAutoResetComponent
+    public class WorldObjectComponent : IEcsAutoReset
     {
         public Transform Transform;
 

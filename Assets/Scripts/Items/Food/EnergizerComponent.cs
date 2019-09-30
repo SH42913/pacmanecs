@@ -2,8 +2,7 @@
 
 namespace Items.Food
 {
-    [EcsIgnoreInFilter]
-    public class EnergizerComponent
+    public class EnergizerComponent : IEcsIgnoreInFilter
     {
     }
 }

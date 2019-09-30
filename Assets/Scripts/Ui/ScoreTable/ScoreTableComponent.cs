@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Ui.ScoreTable
 {
-    public class ScoreTableComponent : IEcsAutoResetComponent
+    public class ScoreTableComponent : IEcsAutoReset
     {
         public Text ScoreText;
 

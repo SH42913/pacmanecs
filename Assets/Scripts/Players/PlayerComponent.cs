@@ -8,6 +8,6 @@ namespace Players
         public int Scores;
         public int Lives;
         public bool IsDead;
-        public Vector2Int StartPosition;
+        public Vector2Int SpawnPosition;
     }
 }

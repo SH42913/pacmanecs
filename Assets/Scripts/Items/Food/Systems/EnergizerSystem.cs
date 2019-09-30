@@ -3,7 +3,6 @@ using Leopotam.Ecs;
 
 namespace Items.Food.Systems
 {
-    [EcsInject]
     public class EnergizerSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
@@ -13,7 +12,7 @@ namespace Items.Food.Systems
         {
             if (!_takenEnergizers.IsEmpty())
             {
-                _ecsWorld.CreateEntityWith(out EnableGhostFearStateEvent _);
+                _ecsWorld.NewEntityWith(out EnableGhostFearStateEvent _);
             }
         }
     }

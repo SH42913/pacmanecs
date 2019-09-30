@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Ui.GameStates
 {
-    public class PauseMenuComponent : IEcsAutoResetComponent
+    public class PauseMenuComponent : IEcsAutoReset
     {
         public GameObject GameObject;
 

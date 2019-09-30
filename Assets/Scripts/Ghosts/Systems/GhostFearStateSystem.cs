@@ -7,66 +7,56 @@ using World;
 
 namespace Ghosts.Systems
 {
-    [EcsInject]
     public class GhostFearStateSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
         private readonly MainGameConfig _mainGameConfig = null;
-        
+
         private readonly EcsFilter<WorldComponent> _world = null;
         private readonly EcsFilter<EnableGhostFearStateEvent> _enableEvents = null;
-        private readonly EcsFilter<GhostComponent, WorldObjectComponent> _ghosts = null;
-        private readonly EcsFilter<GhostComponent, GhostInFearStateComponent, WorldObjectComponent> _fearStateGhosts = null;
+        private readonly EcsFilter<GhostComponent> _ghosts = null;
+        private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> _fearStateGhosts = null;
 
         public void Run()
         {
             GhostConfig ghostConfig = _mainGameConfig.GhostConfig;
-            WorldComponent world = _world.Components1[0];
+            WorldComponent world = _world.Get1[0];
 
             if (!_enableEvents.IsEmpty())
             {
                 foreach (int i in _ghosts)
                 {
-                    GameObject ghost = _ghosts.Components2[i].Transform.gameObject;
+                    GhostComponent ghost = _ghosts.Get1[i];
                     EcsEntity ghostEntity = _ghosts.Entities[i];
 
-                    _ecsWorld
-                        .EnsureComponent<GhostInFearStateComponent>(ghostEntity, out bool isNew)
-                        .EstimateTime = ghostConfig.FearStateInSec;
-
-                    if (isNew)
-                    {
-                        ghost.GetComponent<MeshRenderer>().material.color = ghostConfig.FearState;
-                    }
+                    ghostEntity.Set<GhostInFearStateComponent>().EstimateTime = ghostConfig.FearStateInSec;
+                    ghost.Renderer.material.color = ghostConfig.FearState;
                 }
             }
 
             foreach (int i in _fearStateGhosts)
             {
-                GhostComponent ghostComponent = _fearStateGhosts.Components1[i];
-                GhostInFearStateComponent fearState = _fearStateGhosts.Components2[i];
-                GameObject ghost = _fearStateGhosts.Components3[i].Transform.gameObject;
+                GhostComponent ghostComponent = _fearStateGhosts.Get1[i];
+                GhostInFearStateComponent fearState = _fearStateGhosts.Get2[i];
                 EcsEntity ghostEntity = _fearStateGhosts.Entities[i];
 
                 fearState.EstimateTime -= Time.deltaTime;
                 if (fearState.EstimateTime <= 0)
                 {
-                    _ecsWorld.RemoveComponent<GhostInFearStateComponent>(ghostEntity);
-
-                    var material = ghost.GetComponent<MeshRenderer>().material;
+                    ghostEntity.Unset<GhostInFearStateComponent>();
                     switch (ghostComponent.GhostType)
                     {
-                        case GhostTypes.BLINKY:
-                            material.color = ghostConfig.Blinky;
+                        case GhostTypes.Blinky:
+                            ghostComponent.Renderer.material.color = ghostConfig.Blinky;
                             break;
-                        case GhostTypes.PINKY:
-                            material.color = ghostConfig.Pinky;
+                        case GhostTypes.Pinky:
+                            ghostComponent.Renderer.material.color = ghostConfig.Pinky;
                             break;
-                        case GhostTypes.INKY:
-                            material.color = ghostConfig.Inky;
+                        case GhostTypes.Inky:
+                            ghostComponent.Renderer.material.color = ghostConfig.Inky;
                             break;
-                        case GhostTypes.CLYDE:
-                            material.color = ghostConfig.Clyde;
+                        case GhostTypes.Clyde:
+                            ghostComponent.Renderer.material.color = ghostConfig.Clyde;
                             break;
                         default:
                             throw new ArgumentOutOfRangeException();
@@ -75,15 +65,15 @@ namespace Ghosts.Systems
                     return;
                 }
 
-                Vector2Int currentPosition = _ecsWorld.GetComponent<PositionComponent>(ghostEntity).Position;
+                Vector2Int currentPosition = ghostEntity.Set<PositionComponent>().Position;
                 foreach (EcsEntity entity in world.WorldField[currentPosition.x][currentPosition.y])
                 {
-                    var player = _ecsWorld.GetComponent<PlayerComponent>(entity);
+                    var player = entity.Get<PlayerComponent>();
                     if (player == null) continue;
 
                     player.Scores += ghostConfig.ScoresPerGhost;
-                    _ecsWorld.AddComponent<DestroyedWorldObjectComponent>(ghostEntity);
-                    _ecsWorld.CreateEntityWith(out UpdateScoreTableEvent _);
+                    ghostEntity.Set<DestroyedWorldObjectComponent>();
+                    _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
                 }
             }
         }

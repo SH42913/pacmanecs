@@ -2,8 +2,7 @@ using Leopotam.Ecs;
 
 namespace Items
 {
-    [EcsOneFrame]
-    public class TakenItemComponent
+    public class TakenItemComponent : IEcsOneFrame
     {
         public EcsEntity PlayerEntity;
     }

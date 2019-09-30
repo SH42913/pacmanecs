@@ -2,8 +2,7 @@
 
 namespace Moving
 {
-    [EcsOneFrame]
-    public class ChangeDirectionComponent
+    public class ChangeDirectionComponent : IEcsOneFrame
     {
         public Directions NewDirection;
     }

@@ -5,12 +5,11 @@ using World;
 
 namespace Portals.Systems
 {
-    [EcsInject]
     public class PortalInitSystem : IEcsInitSystem
     {
         private readonly EcsWorld _ecsWorld = null;
 
-        public void Initialize()
+        public void Init()
         {
             GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
             var channelDict = new Dictionary<int, EcsEntity>();
@@ -28,31 +27,29 @@ namespace Portals.Systems
                 int channel = channelNum.Value;
                 if (filledChannels.Contains(channel))
                 {
-                    Debug.LogError($"Channel {channel} for portal {portal.name} already used!");
+                    Debug.LogError($"Channel {channel.ToString()} for portal {portal.name} already used!");
                     continue;
                 }
 
-                EcsEntity portalEntity = _ecsWorld.CreateEntityWith(out PortalComponent portalComponent);
-                _ecsWorld.AddComponent<CreateWorldObjectEvent>(portalEntity).Transform = portal.transform;
+                EcsEntity portalEntity = _ecsWorld.NewEntityWith(
+                    out PortalComponent portalComponent,
+                    out CreateWorldObjectEvent createEvt);
+                createEvt.Transform = portal.transform;
 
                 if (channelDict.ContainsKey(channel))
                 {
                     filledChannels.Add(channel);
                     EcsEntity otherPortalEntity = channelDict[channel];
                     portalComponent.OtherPortalEntity = channelDict[channel];
-                    _ecsWorld
-                        .GetComponent<PortalComponent>(otherPortalEntity)
-                        .OtherPortalEntity = portalEntity;
+                    
+                    PortalComponent otherPortal = otherPortalEntity.Get<PortalComponent>();
+                    otherPortal.OtherPortalEntity = portalEntity;
                 }
                 else
                 {
                     channelDict.Add(channel, portalEntity);
                 }
             }
-        }
-
-        public void Destroy()
-        {
         }
 
         private static int? GetChannelFrom(Object portal)

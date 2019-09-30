@@ -2,8 +2,7 @@
 
 namespace Walls
 {
-    [EcsIgnoreInFilter]
-    public class WallComponent
+    public class WallComponent : IEcsIgnoreInFilter
     {
     }
 }

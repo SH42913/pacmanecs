@@ -5,11 +5,9 @@ namespace Ghosts
     [CreateAssetMenu(menuName = "PacManEcs/GhostConfig")]
     public class GhostConfig : ScriptableObject
     {
-        [Range(0, 10)] 
-        public float GhostSpeed;
+        [Range(0, 10)] public float GhostSpeed;
 
-        [Range(0, 10)] 
-        public float FearStateInSec;
+        [Range(0, 10)] public float FearStateInSec;
         public int ScoresPerGhost;
 
         public Color Blinky;

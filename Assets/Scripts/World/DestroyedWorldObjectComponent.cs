@@ -2,9 +2,7 @@ using Leopotam.Ecs;
 
 namespace World
 {
-    [EcsOneFrame]
-    [EcsIgnoreInFilter]
-    public class DestroyedWorldObjectComponent
+    public class DestroyedWorldObjectComponent : IEcsOneFrame, IEcsIgnoreInFilter
     {
     }
 }
