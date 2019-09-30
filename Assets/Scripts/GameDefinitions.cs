@@ -1,6 +1,7 @@
 using Ghosts;
 using Items.Food;
 using Players;
+using Portals;
 using UnityEngine;
 using World;
 
@@ -11,4 +12,5 @@ public class GameDefinitions : ScriptableObject
     public PlayerDefinition playerDefinition;
     public FoodDefinition foodDefinition;
     public GhostDefinition ghostDefinition;
+    public PortalDefinition portalDefinition;
 }

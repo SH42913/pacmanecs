@@ -16,3 +16,4 @@ MonoBehaviour:
   playerDefinition: {fileID: 11400000, guid: b75b49fcb49346b47a40ea8856210b35, type: 2}
   foodDefinition: {fileID: 11400000, guid: a84ee552039d5e84daa9bf0ab1147936, type: 2}
   ghostDefinition: {fileID: 11400000, guid: 456c02491f72d8a47b522a7973f51e51, type: 2}
+  portalDefinition: {fileID: 11400000, guid: 48a1a8727c3a2b4479992653eeb0e510, type: 2}

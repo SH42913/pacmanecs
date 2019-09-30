@@ -8,9 +8,8 @@ namespace Portals.Systems
 {
     public class PortalSystem : IEcsRunSystem
     {
-        private const float PortalReloadTime = 1f;
-
         private readonly WorldService _worldService = null;
+        private readonly GameDefinitions _gameDefinitions = null;
         private readonly EcsFilter<PortalComponent> _portals = null;
         private readonly EcsFilter<NewPositionComponent, MoveComponent> _moveObjects = null;
 
@@ -32,8 +31,8 @@ namespace Portals.Systems
                     Vector2Int otherPortalPosition = otherPortalEntity.Get<PositionComponent>().Position;
                     movableEntity.Set<TeleportedComponent>().NewPosition = otherPortalPosition;
 
-                    portal.EstimateReloadTime = PortalReloadTime;
-                    otherPortal.EstimateReloadTime = PortalReloadTime;
+                    portal.EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
+                    otherPortal.EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
                 }
             }
 
