@@ -10,12 +10,11 @@ namespace Moving.Systems
     {
         private const float Epsilon = 0.1f;
 
-        private readonly EcsFilter<WorldComponent> _world = null;
+        private readonly WorldService _worldService = null;
         private readonly EcsFilter<PositionComponent, MoveComponent, WorldObjectComponent> _moveEntities = null;
 
         public void Run()
         {
-            WorldComponent world = _world.Get1[0];
             foreach (int i in _moveEntities)
             {
                 PositionComponent positionComponent = _moveEntities.Get1[i];
@@ -69,7 +68,7 @@ namespace Moving.Systems
                 transform.rotation = Quaternion.Euler(newDirection);
 
                 bool stuckToWall = false;
-                foreach (EcsEntity entity in world.WorldField[newDesiredPosition.x][newDesiredPosition.y])
+                foreach (EcsEntity entity in _worldService.WorldField[newDesiredPosition.x][newDesiredPosition.y])
                 {
                     if (!entity.IsAlive()) continue;
                     if (entity.Get<WallComponent>() == null) continue;

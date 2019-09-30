@@ -10,19 +10,18 @@ namespace Portals.Systems
     {
         private const float PortalReloadTime = 1f;
 
-        private readonly EcsFilter<WorldComponent> _world = null;
+        private readonly WorldService _worldService = null;
         private readonly EcsFilter<PortalComponent> _portals = null;
         private readonly EcsFilter<NewPositionComponent, MoveComponent> _moveObjects = null;
 
         public void Run()
         {
-            WorldComponent world = _world.Get1[0];
             foreach (int i in _moveObjects)
             {
                 Vector2Int newPosition = _moveObjects.Get1[i].NewPosition;
                 EcsEntity movableEntity = _moveObjects.Entities[i];
 
-                foreach (EcsEntity entity in world.WorldField[newPosition.x][newPosition.y])
+                foreach (EcsEntity entity in _worldService.WorldField[newPosition.x][newPosition.y])
                 {
                     var portal = entity.Get<PortalComponent>();
                     if (portal == null || portal.EstimateReloadTime > 0) continue;

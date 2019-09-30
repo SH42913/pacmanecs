@@ -7,7 +7,7 @@ namespace World.Systems
 {
     public class WorldInitSystem : IEcsPreInitSystem
     {
-        private readonly EcsWorld _ecsWorld = null;
+        private readonly WorldService _worldService = null;
         private readonly MainGameConfig _mainGameConfig = null;
 
         public void PreInit()
@@ -17,10 +17,9 @@ namespace World.Systems
                 throw new Exception($"{nameof(WorldConfig)} doesn't exists!");
             }
 
-            _ecsWorld.NewEntityWith(out WorldComponent world);
             WorldConfig worldConfig = _mainGameConfig.WorldConfig;
 
-            world.WorldField = new HashSet<EcsEntity>[worldConfig.SizeX][];
+            _worldService.WorldField = new HashSet<EcsEntity>[worldConfig.SizeX][];
             for (int xIndex = 0, xMax = worldConfig.SizeX; xIndex < xMax; xIndex++)
             {
                 var yFields = new HashSet<EcsEntity>[worldConfig.SizeY];
@@ -29,7 +28,7 @@ namespace World.Systems
                     yFields[yIndex] = new HashSet<EcsEntity>();
                 }
 
-                world.WorldField[xIndex] = yFields;
+                _worldService.WorldField[xIndex] = yFields;
             }
 
 #if DEBUG

@@ -13,6 +13,7 @@ using Ui.GameStates;
 using Ui.GameStates.Systems;
 using Ui.ScoreTable.Systems;
 using Walls.Systems;
+using World;
 using World.Systems;
 
 public sealed class Startup : MonoBehaviour
@@ -62,6 +63,7 @@ public sealed class Startup : MonoBehaviour
             .Add(new WorldSystem())
             .Add(new ScoreTableSystem())
             .Add(new GameStateSystem())
+            .Inject(new WorldService())
             .Inject(GameConfig)
             .Inject(_random)
             .ProcessInjects()

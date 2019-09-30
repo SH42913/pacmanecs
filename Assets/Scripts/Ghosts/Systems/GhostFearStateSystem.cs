@@ -10,9 +10,9 @@ namespace Ghosts.Systems
     public class GhostFearStateSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
+        private readonly WorldService _worldService = null;
         private readonly MainGameConfig _mainGameConfig = null;
 
-        private readonly EcsFilter<WorldComponent> _world = null;
         private readonly EcsFilter<EnableGhostFearStateEvent> _enableEvents = null;
         private readonly EcsFilter<GhostComponent> _ghosts = null;
         private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> _fearStateGhosts = null;
@@ -20,8 +20,6 @@ namespace Ghosts.Systems
         public void Run()
         {
             GhostConfig ghostConfig = _mainGameConfig.GhostConfig;
-            WorldComponent world = _world.Get1[0];
-
             if (!_enableEvents.IsEmpty())
             {
                 foreach (int i in _ghosts)
@@ -66,7 +64,7 @@ namespace Ghosts.Systems
                 }
 
                 Vector2Int currentPosition = ghostEntity.Set<PositionComponent>().Position;
-                foreach (EcsEntity entity in world.WorldField[currentPosition.x][currentPosition.y])
+                foreach (EcsEntity entity in _worldService.WorldField[currentPosition.x][currentPosition.y])
                 {
                     var player = entity.Get<PlayerComponent>();
                     if (player == null) continue;
