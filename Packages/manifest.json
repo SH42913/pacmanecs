@@ -1,7 +1,16 @@
 {
+  "scopedRegistries": [
+    {
+      "name": "Leopotam",
+      "url": "https://npm.leopotam.com",
+      "scopes": [
+        "com.leopotam"
+      ]
+    }
+  ],
   "dependencies": {
-    "com.leopotam.ecs": "https://github.com/Leopotam/ecs.git#develop",
-    "com.leopotam.ecs-unityintegration": "https://github.com/Leopotam/ecs-unityintegration.git#develop",
+    "com.leopotam.ecs": "2019.10.22-preview",
+    "com.leopotam.ecs-unityintegration": "2019.10.22-preview",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.0",
@@ -39,15 +48,5 @@
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.wind": "1.0.0"
-  },
-  "lock": {
-    "com.leopotam.ecs": {
-      "hash": "46d4f5c81b4fa5ea5eee9db5dce9e2bc8b9ad339",
-      "revision": "develop"
-    },
-    "com.leopotam.ecs-unityintegration": {
-      "hash": "d7aad23cb0b7debe5db85fcb7336665291353adb",
-      "revision": "develop"
-    }
   }
 }
