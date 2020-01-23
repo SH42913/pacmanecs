@@ -39,7 +39,7 @@ namespace Game.Moving
                 Vector2Int newPosition = moveComponent.DesiredPosition;
                 if (!oldPosition.Equals(newPosition))
                 {
-                    movingEntity.Set<NewPositionComponent>().NewPosition = newPosition;
+                    movingEntity.Set<NewPositionEvent>().NewPosition = newPosition;
                 }
 
                 Vector2Int newDesiredPosition;

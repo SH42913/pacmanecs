@@ -11,7 +11,7 @@ namespace Game.Portals
         private readonly WorldService _worldService = null;
         private readonly GameDefinitions _gameDefinitions = null;
         private readonly EcsFilter<PortalComponent> _portals = null;
-        private readonly EcsFilter<NewPositionComponent, MoveComponent> _moveObjects = null;
+        private readonly EcsFilter<NewPositionEvent, MoveComponent> _moveObjects = null;
 
         public void Run()
         {
@@ -29,7 +29,7 @@ namespace Game.Portals
                     var otherPortal = otherPortalEntity.Get<PortalComponent>();
 
                     Vector2Int otherPortalPosition = otherPortalEntity.Get<PositionComponent>().Position;
-                    movableEntity.Set<TeleportedComponent>().NewPosition = otherPortalPosition;
+                    movableEntity.Set<TeleportedEvent>().NewPosition = otherPortalPosition;
 
                     portal.EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
                     otherPortal.EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;

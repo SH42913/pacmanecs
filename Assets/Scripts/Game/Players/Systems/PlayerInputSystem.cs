@@ -46,7 +46,7 @@ namespace Game.Players
 
         private void SendCommand(Directions newDirection, EcsEntity playerEntity)
         {
-            var command = playerEntity.Set<ChangeDirectionComponent>();
+            var command = playerEntity.Set<ChangeDirectionEvent>();
             command.NewDirection = newDirection;
         }
     }

@@ -24,10 +24,10 @@ namespace Game.Death
                 {
                     deadPlayer.IsDead = true;
                     spawnPosition = Vector2Int.zero;
-                    playerEntity.Set<DestroyedWorldObjectComponent>();
+                    playerEntity.Set<DestroyedWorldObjectEvent>();
                 }
 
-                playerEntity.Set<TeleportedComponent>().NewPosition = spawnPosition;
+                playerEntity.Set<TeleportedEvent>().NewPosition = spawnPosition;
                 _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
             }
         }

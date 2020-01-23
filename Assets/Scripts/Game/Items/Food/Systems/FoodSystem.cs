@@ -8,7 +8,7 @@ namespace Game.Items.Food
     public class FoodSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<FoodComponent, TakenItemComponent> _takenFoods = null;
+        private readonly EcsFilter<FoodComponent, TakenItemEvent> _takenFoods = null;
 
         public void Run()
         {

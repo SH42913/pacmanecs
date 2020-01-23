@@ -8,7 +8,7 @@ namespace Game.Items
     public class ItemSystem : IEcsRunSystem
     {
         private readonly WorldService _worldService = null;
-        private readonly EcsFilter<NewPositionComponent, PlayerComponent> _players = null;
+        private readonly EcsFilter<NewPositionEvent, PlayerComponent> _players = null;
 
         public void Run()
         {
@@ -22,8 +22,8 @@ namespace Game.Items
                     var item = entity.Get<ItemComponent>();
                     if (item == null) continue;
 
-                    entity.Set<TakenItemComponent>().PlayerEntity = playerEntity;
-                    entity.Set<DestroyedWorldObjectComponent>();
+                    entity.Set<TakenItemEvent>().PlayerEntity = playerEntity;
+                    entity.Set<DestroyedWorldObjectEvent>();
                 }
             }
         }

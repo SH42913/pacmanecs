@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Ui.GameStates
+﻿namespace Game.Ui.GameStates
 {
     public enum GameStates
     {
@@ -10,7 +8,7 @@ namespace Game.Ui.GameStates
         Exit
     }
 
-    public class ChangeGameStateEvent : IEcsOneFrame
+    public class ChangeGameStateEvent
     {
         public GameStates State;
     }

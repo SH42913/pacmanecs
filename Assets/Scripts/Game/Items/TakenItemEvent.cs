@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 
 namespace Game.Items
 {
-    public class TakenItemComponent : IEcsOneFrame, IEcsAutoReset
+    public class TakenItemEvent : IEcsAutoReset
     {
         public EcsEntity PlayerEntity;
 

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Teleports
 {
-    public class TeleportedComponent : IEcsOneFrame
+    public class TeleportedEvent
     {
         public Vector2Int NewPosition;
     }

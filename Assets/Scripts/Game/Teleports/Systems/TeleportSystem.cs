@@ -8,7 +8,7 @@ namespace Game.Teleports
 {
     public class TeleportSystem : IEcsRunSystem
     {
-        private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportedComponent> _teleported = null;
+        private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportedEvent> _teleported = null;
 
         public void Run()
         {
@@ -22,7 +22,7 @@ namespace Game.Teleports
                 moveComponent.DesiredPosition = targetPosition;
                 transform.position = targetPosition.ToVector3(transform.position.y);
 
-                entity.Set<NewPositionComponent>().NewPosition = targetPosition;
+                entity.Set<NewPositionEvent>().NewPosition = targetPosition;
             }
         }
     }

@@ -2,7 +2,7 @@ using Leopotam.Ecs;
 
 namespace Game.Ghosts
 {
-    public class EnableGhostFearStateEvent : IEcsOneFrame, IEcsIgnoreInFilter
+    public class EnableGhostFearStateEvent : IEcsIgnoreInFilter
     {
     }
 }

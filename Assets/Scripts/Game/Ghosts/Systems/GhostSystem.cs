@@ -22,7 +22,7 @@ namespace Game.Ghosts
             foreach (int i in _stoppedGhosts)
             {
                 EcsEntity ghostEntity = _stoppedGhosts.Entities[i];
-                ghostEntity.Set<ChangeDirectionComponent>().NewDirection = _random.NextEnum<Directions>();
+                ghostEntity.Set<ChangeDirectionEvent>().NewDirection = _random.NextEnum<Directions>();
             }
 
             foreach (int i in _ghosts)

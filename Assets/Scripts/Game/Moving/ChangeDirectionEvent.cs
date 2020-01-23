@@ -2,7 +2,7 @@
 
 namespace Game.Moving
 {
-    public class ChangeDirectionComponent : IEcsOneFrame
+    public class ChangeDirectionEvent
     {
         public Directions NewDirection;
     }

@@ -2,7 +2,7 @@
 
 namespace Game.Death
 {
-    public class PlayerIsDeadEvent : IEcsOneFrame, IEcsIgnoreInFilter
+    public class PlayerIsDeadEvent : IEcsIgnoreInFilter
     {
     }
 }

@@ -63,6 +63,16 @@ namespace Game
                 .Add(new WorldSystem())
                 .Add(new ScoreTableSystem())
                 .Add(new GameStateSystem())
+                .OneFrame<EnableGhostFearStateEvent>()
+                .OneFrame<PlayerIsDeadEvent>()
+                .OneFrame<ChangeGameStateEvent>()
+                .OneFrame<UpdateScoreTableEvent>()
+                .OneFrame<TeleportedEvent>()
+                .OneFrame<TakenItemEvent>()
+                .OneFrame<ChangeDirectionEvent>()
+                .OneFrame<CreateWorldObjectEvent>()
+                .OneFrame<DestroyedWorldObjectEvent>()
+                .OneFrame<NewPositionEvent>()
                 .Inject(new WorldService())
                 .Inject(gameDefinitions)
                 .Inject(_random)
@@ -76,7 +86,6 @@ namespace Game
         private void Update()
         {
             _systems.Run();
-            _ecsWorld.EndFrame();
         }
 
         private void OnDisable()

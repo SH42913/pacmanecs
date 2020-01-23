@@ -70,7 +70,7 @@ namespace Game.Ghosts
                     if (player == null) continue;
 
                     player.Scores += ghostDefinition.ScoresPerGhost;
-                    ghostEntity.Set<DestroyedWorldObjectComponent>();
+                    ghostEntity.Set<DestroyedWorldObjectEvent>();
                     _ecsWorld.NewEntityWith(out UpdateScoreTableEvent _);
                 }
             }

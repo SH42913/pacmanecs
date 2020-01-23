@@ -8,8 +8,8 @@ namespace Game.World
     {
         private readonly WorldService _worldService = null;
         private readonly EcsFilter<CreateWorldObjectEvent> _createEvents = null;
-        private readonly EcsFilter<PositionComponent, NewPositionComponent> _movedObjects = null;
-        private readonly EcsFilter<WorldObjectComponent, PositionComponent, DestroyedWorldObjectComponent> _destroyedObjects = null;
+        private readonly EcsFilter<PositionComponent, NewPositionEvent> _movedObjects = null;
+        private readonly EcsFilter<WorldObjectComponent, PositionComponent, DestroyedWorldObjectEvent> _destroyedObjects = null;
 
         public void Run()
         {

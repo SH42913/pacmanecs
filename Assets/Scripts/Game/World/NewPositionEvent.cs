@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.World
 {
-    public class NewPositionComponent : IEcsOneFrame
+    public class NewPositionEvent
     {
         public Vector2Int NewPosition;
     }

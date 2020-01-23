@@ -2,7 +2,7 @@
 
 namespace Game.Ui.ScoreTable
 {
-    public class UpdateScoreTableEvent : IEcsOneFrame, IEcsIgnoreInFilter
+    public class UpdateScoreTableEvent : IEcsIgnoreInFilter
     {
     }
 }

@@ -6,7 +6,7 @@ namespace Game.Items.Food
     public class EnergizerSystem : IEcsRunSystem
     {
         private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<EnergizerComponent, TakenItemComponent> _takenEnergizers = null;
+        private readonly EcsFilter<EnergizerComponent, TakenItemEvent> _takenEnergizers = null;
 
         public void Run()
         {
