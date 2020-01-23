@@ -2,7 +2,7 @@
 using Leopotam.Ecs;
 using UnityEngine.UI;
 
-namespace Game.Ui.ScoreTable.Systems
+namespace Game.Ui.ScoreTable
 {
     public class ScoreTableSystem : IEcsRunSystem
     {

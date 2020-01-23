@@ -2,7 +2,7 @@ using Utils;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.World.Systems
+namespace Game.World
 {
     public class WorldSystem : IEcsRunSystem
     {

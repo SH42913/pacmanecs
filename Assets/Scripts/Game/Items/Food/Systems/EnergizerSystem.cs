@@ -1,7 +1,7 @@
 ﻿using Game.Ghosts;
 using Leopotam.Ecs;
 
-namespace Game.Items.Food.Systems
+namespace Game.Items.Food
 {
     public class EnergizerSystem : IEcsRunSystem
     {

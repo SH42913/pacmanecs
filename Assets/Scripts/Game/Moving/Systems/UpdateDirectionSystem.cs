@@ -1,6 +1,6 @@
 using Leopotam.Ecs;
 
-namespace Game.Moving.Systems
+namespace Game.Moving
 {
     public class UpdateDirectionSystem : IEcsRunSystem
     {

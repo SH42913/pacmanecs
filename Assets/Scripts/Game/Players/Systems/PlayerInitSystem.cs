@@ -5,7 +5,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Players.Systems
+namespace Game.Players
 {
     public class PlayerInitSystem : IEcsInitSystem
     {

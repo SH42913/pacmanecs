@@ -3,7 +3,7 @@ using Game.Players;
 using Game.Ui.ScoreTable;
 using Leopotam.Ecs;
 
-namespace Game.Items.Food.Systems
+namespace Game.Items.Food
 {
     public class FoodSystem : IEcsRunSystem
     {

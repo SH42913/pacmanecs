@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.World.Systems
+namespace Game.World
 {
     public class WorldInitSystem : IEcsPreInitSystem
     {

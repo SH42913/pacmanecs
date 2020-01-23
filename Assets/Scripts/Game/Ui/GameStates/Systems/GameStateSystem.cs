@@ -3,7 +3,7 @@ using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.Ui.GameStates.Systems
+namespace Game.Ui.GameStates
 {
     public class GameStateSystem : IEcsRunSystem
     {

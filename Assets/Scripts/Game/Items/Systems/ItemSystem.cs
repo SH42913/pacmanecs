@@ -3,7 +3,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Items.Systems
+namespace Game.Items
 {
     public class ItemSystem : IEcsRunSystem
     {

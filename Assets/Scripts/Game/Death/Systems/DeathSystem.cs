@@ -5,7 +5,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Death.Systems
+namespace Game.Death
 {
     public class DeathSystem : IEcsRunSystem
     {

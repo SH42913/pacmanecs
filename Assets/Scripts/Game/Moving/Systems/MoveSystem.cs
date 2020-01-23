@@ -5,7 +5,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Moving.Systems
+namespace Game.Moving
 {
     public class MoveSystem : IEcsRunSystem
     {

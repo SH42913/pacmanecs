@@ -5,7 +5,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Ghosts.Systems
+namespace Game.Ghosts
 {
     public class GhostFearStateSystem : IEcsRunSystem
     {

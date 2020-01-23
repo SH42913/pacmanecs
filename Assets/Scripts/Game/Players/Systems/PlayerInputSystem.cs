@@ -3,7 +3,7 @@ using Game.Ui.GameStates;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Players.Systems
+namespace Game.Players
 {
     public class PlayerInputSystem : IEcsRunSystem
     {

@@ -2,7 +2,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Walls.Systems
+namespace Game.Walls
 {
     public class WallInitSystem : IEcsInitSystem
     {

@@ -3,7 +3,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Items.Food.Systems
+namespace Game.Items.Food
 {
     public class FoodInitSystem : IEcsInitSystem
     {

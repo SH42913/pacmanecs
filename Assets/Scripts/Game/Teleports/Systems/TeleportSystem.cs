@@ -4,7 +4,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Teleports.Systems
+namespace Game.Teleports
 {
     public class TeleportSystem : IEcsRunSystem
     {

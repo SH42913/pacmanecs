@@ -7,7 +7,7 @@ using Leopotam.Ecs;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Game.Ghosts.Systems
+namespace Game.Ghosts
 {
     public class GhostSystem : IEcsRunSystem
     {

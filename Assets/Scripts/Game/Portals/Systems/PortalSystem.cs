@@ -4,7 +4,7 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Portals.Systems
+namespace Game.Portals
 {
     public class PortalSystem : IEcsRunSystem
     {
