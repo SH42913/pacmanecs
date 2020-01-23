@@ -9,12 +9,12 @@
     }
   ],
   "dependencies": {
-    "com.leopotam.ecs": "2019.12.22-preview.2",
-    "com.leopotam.ecs-unityintegration": "2019.12.22-preview",
+    "com.leopotam.ecs": "2020.1.22",
+    "com.leopotam.ecs-unityintegration": "2020.1.22",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
-    "com.unity.ide.vscode": "1.1.3",
+    "com.unity.ide.vscode": "1.1.4",
     "com.unity.package-manager-ui": "2.2.0",
     "com.unity.test-framework": "1.0.18",
     "com.unity.timeline": "1.1.0",
