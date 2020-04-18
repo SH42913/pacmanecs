@@ -1,8 +1,5 @@
 ﻿using Leopotam.Ecs;
 
-namespace Game.Walls
-{
-    public class WallComponent : IEcsIgnoreInFilter
-    {
-    }
+namespace Game.Walls {
+    public struct WallComponent : IEcsIgnoreInFilter { }
 }

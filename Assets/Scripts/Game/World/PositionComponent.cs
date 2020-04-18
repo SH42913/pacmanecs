@@ -1,9 +1,7 @@
 using UnityEngine;
 
-namespace Game.World
-{
-    public class PositionComponent
-    {
+namespace Game.World {
+    public struct PositionComponent {
         public Vector2Int Position;
     }
 }

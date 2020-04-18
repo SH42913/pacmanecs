@@ -1,10 +1,8 @@
 using UnityEngine;
 
-namespace Game.World
-{
-    [CreateAssetMenu(menuName = "PacManEcs/WorldDefinition", fileName = "WorldDef")]
-    public class WorldDefinition : ScriptableObject
-    {
+namespace Game.World {
+    [CreateAssetMenu(menuName = "PacManEcs/" + nameof(WorldDefinition))]
+    public sealed class WorldDefinition : ScriptableObject {
         public int SizeX;
         public int SizeY;
     }

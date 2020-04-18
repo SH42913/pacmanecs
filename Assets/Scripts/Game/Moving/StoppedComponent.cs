@@ -1,8 +1,5 @@
 using Leopotam.Ecs;
 
-namespace Game.Moving
-{
-    public class StoppedComponent : IEcsIgnoreInFilter
-    {
-    }
+namespace Game.Moving {
+    public struct StoppedComponent : IEcsIgnoreInFilter { }
 }

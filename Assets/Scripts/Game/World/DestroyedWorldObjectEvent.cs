@@ -1,8 +1,5 @@
 using Leopotam.Ecs;
 
-namespace Game.World
-{
-    public class DestroyedWorldObjectEvent : IEcsIgnoreInFilter
-    {
-    }
+namespace Game.World {
+    public struct DestroyedWorldObjectEvent : IEcsIgnoreInFilter { }
 }

@@ -14,10 +14,8 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game
-{
-    public sealed class GameStartup : MonoBehaviour
-    {
+namespace Game {
+    public sealed class GameStartup : MonoBehaviour {
         public GameObject PauseMenu;
         public GameDefinitions gameDefinitions;
 
@@ -25,10 +23,8 @@ namespace Game
         private EcsSystems _systems;
         private System.Random _random;
 
-        private void OnEnable()
-        {
-            if (!gameDefinitions)
-            {
+        private void OnEnable() {
+            if (!gameDefinitions) {
                 throw new Exception($"{nameof(GameDefinitions)} doesn't exists!");
             }
 
@@ -60,9 +56,9 @@ namespace Game
                 .Add(new DeathSystem())
                 .Add(new PortalSystem())
                 .Add(new TeleportSystem())
-                .Add(new WorldSystem())
                 .Add(new ScoreTableSystem())
                 .Add(new GameStateSystem())
+                .Add(new WorldSystem())
                 .OneFrame<EnableGhostFearStateEvent>()
                 .OneFrame<PlayerIsDeadEvent>()
                 .OneFrame<ChangeGameStateEvent>()
@@ -83,13 +79,11 @@ namespace Game
             StartGame();
         }
 
-        private void Update()
-        {
+        private void Update() {
             _systems.Run();
         }
 
-        private void OnDisable()
-        {
+        private void OnDisable() {
             _systems.Destroy();
             _systems = null;
 
@@ -97,34 +91,24 @@ namespace Game
             _ecsWorld = null;
         }
 
-        private void InitPauseMenu()
-        {
-            _ecsWorld.NewEntityWith(out PauseMenuComponent pauseMenu);
-            pauseMenu.GameObject = PauseMenu;
+        private void InitPauseMenu() {
+            _ecsWorld.NewEntity().Set<PauseMenuComponent>().GameObject = PauseMenu;
         }
 
-        private void StartGame()
-        {
-            _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-            changeGameStateEvent.State = GameStates.Start;
+        private void StartGame() {
+            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Start;
         }
 
-        public void RestartGame()
-        {
-            _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-            changeGameStateEvent.State = GameStates.Restart;
+        public void RestartGame() {
+            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Restart;
         }
 
-        public void ContinueGame()
-        {
-            _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-            changeGameStateEvent.State = GameStates.Start;
+        public void ContinueGame() {
+            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Start;
         }
 
-        public void QuitGame()
-        {
-            _ecsWorld.NewEntityWith(out ChangeGameStateEvent changeGameStateEvent);
-            changeGameStateEvent.State = GameStates.Exit;
+        public void QuitGame() {
+            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Exit;
         }
     }
 }

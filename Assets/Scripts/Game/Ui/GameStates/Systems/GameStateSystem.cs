@@ -3,23 +3,18 @@ using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.Ui.GameStates
-{
-    public class GameStateSystem : IEcsRunSystem
-    {
+namespace Game.Ui.GameStates {
+    public class GameStateSystem : IEcsRunSystem {
         private readonly EcsFilter<PauseMenuComponent> _menus = null;
         private readonly EcsFilter<ChangeGameStateEvent> _changeStateEvents = null;
 
-        public void Run()
-        {
+        public void Run() {
             if (_changeStateEvents.IsEmpty()) return;
 
             bool needDisableMenu = false;
             bool needEnableMenu = false;
-            foreach (int i in _changeStateEvents)
-            {
-                switch (_changeStateEvents.Get1[i].State)
-                {
+            foreach (int i in _changeStateEvents) {
+                switch (_changeStateEvents.Get1(i).State) {
                     case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;
@@ -41,9 +36,8 @@ namespace Game.Ui.GameStates
 
             if (needDisableMenu == needEnableMenu) return;
 
-            foreach (int i in _menus)
-            {
-                _menus.Get1[i].GameObject.SetActive(needEnableMenu);
+            foreach (int i in _menus) {
+                _menus.Get1(i).GameObject.SetActive(needEnableMenu);
             }
         }
     }

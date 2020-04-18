@@ -1,15 +1,7 @@
-using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Ui.GameStates
-{
-    public class PauseMenuComponent : IEcsAutoReset
-    {
+namespace Game.Ui.GameStates {
+    public struct PauseMenuComponent {
         public GameObject GameObject;
-
-        public void Reset()
-        {
-            GameObject = null;
-        }
     }
 }

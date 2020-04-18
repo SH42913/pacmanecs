@@ -1,15 +1,7 @@
-using Leopotam.Ecs;
 using UnityEngine.UI;
 
-namespace Game.Ui.ScoreTable
-{
-    public class ScoreTableComponent : IEcsAutoReset
-    {
+namespace Game.Ui.ScoreTable {
+    public struct ScoreTableComponent {
         public Text ScoreText;
-
-        public void Reset()
-        {
-            ScoreText = null;
-        }
     }
 }

@@ -4,25 +4,20 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Teleports
-{
-    public class TeleportSystem : IEcsRunSystem
-    {
+namespace Game.Teleports {
+    public class TeleportSystem : IEcsRunSystem {
         private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportedEvent> _teleported = null;
 
-        public void Run()
-        {
-            foreach (int i in _teleported)
-            {
-                MoveComponent moveComponent = _teleported.Get1[i];
-                Transform transform = _teleported.Get2[i].Transform;
-                Vector2Int targetPosition = _teleported.Get3[i].NewPosition;
-                EcsEntity entity = _teleported.Entities[i];
+        public void Run() {
+            foreach (int i in _teleported) {
+                ref MoveComponent moveComponent = ref _teleported.Get1(i);
+                Transform transform = _teleported.Get2(i).Transform;
+                Vector2Int targetPosition = _teleported.Get3(i).NewPosition;
 
                 moveComponent.DesiredPosition = targetPosition;
                 transform.position = targetPosition.ToVector3(transform.position.y);
 
-                entity.Set<NewPositionEvent>().NewPosition = targetPosition;
+                _teleported.GetEntity(i).Set<NewPositionEvent>().NewPosition = targetPosition;
             }
         }
     }

@@ -1,17 +1,14 @@
 ﻿using UnityEngine;
 
-namespace Game.Moving
-{
-    public enum Directions
-    {
+namespace Game.Moving {
+    public enum Directions {
         Up,
         Right,
         Down,
         Left
     }
 
-    public class MoveComponent
-    {
+    public struct MoveComponent {
         public float Speed;
         public Directions Heading;
         public Vector2Int DesiredPosition;

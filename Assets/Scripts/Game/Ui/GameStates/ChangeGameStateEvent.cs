@@ -1,15 +1,12 @@
-﻿namespace Game.Ui.GameStates
-{
-    public enum GameStates
-    {
+﻿namespace Game.Ui.GameStates {
+    public enum GameStates {
         Start,
         Pause,
         Restart,
         Exit
     }
 
-    public class ChangeGameStateEvent
-    {
+    public struct ChangeGameStateEvent {
         public GameStates State;
     }
 }

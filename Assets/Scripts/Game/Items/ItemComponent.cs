@@ -1,8 +1,5 @@
 ﻿using Leopotam.Ecs;
 
-namespace Game.Items
-{
-    public class ItemComponent : IEcsIgnoreInFilter
-    {
-    }
+namespace Game.Items {
+    public struct ItemComponent : IEcsIgnoreInFilter { }
 }

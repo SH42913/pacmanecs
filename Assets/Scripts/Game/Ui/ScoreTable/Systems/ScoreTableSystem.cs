@@ -1,39 +1,30 @@
 ﻿using Game.Players;
 using Leopotam.Ecs;
-using UnityEngine.UI;
 
-namespace Game.Ui.ScoreTable
-{
-    public class ScoreTableSystem : IEcsRunSystem
-    {
+namespace Game.Ui.ScoreTable {
+    public class ScoreTableSystem : IEcsRunSystem {
         private readonly EcsFilter<PlayerComponent> _players = null;
         private readonly EcsFilter<ScoreTableComponent> _scoreTables = null;
         private readonly EcsFilter<UpdateScoreTableEvent> _updateEvents = null;
 
-        public void Run()
-        {
+        public void Run() {
             if (_updateEvents.IsEmpty()) return;
 
             string scoresString = "";
-            foreach (int i in _players)
-            {
-                PlayerComponent player = _players.Get1[i];
+            foreach (int i in _players) {
+                ref PlayerComponent player = ref _players.Get1(i);
                 scoresString += $"P{player.Num.ToString()} Scores:{player.Scores.ToString()} ";
 
-                if (player.IsDead)
-                {
+                if (player.IsDead) {
                     scoresString += "IS DEAD\n";
                 }
-                else
-                {
+                else {
                     scoresString += $"Lives:{player.Lives.ToString()}\n";
                 }
             }
 
-            foreach (int i in _scoreTables)
-            {
-                Text unityText = _scoreTables.Get1[i].ScoreText;
-                unityText.text = scoresString;
+            foreach (int i in _scoreTables) {
+                _scoreTables.Get1(i).ScoreText.text = scoresString;
             }
         }
     }

@@ -1,9 +1,5 @@
-﻿using Leopotam.Ecs;
-
-namespace Game.Moving
-{
-    public class ChangeDirectionEvent
-    {
+﻿namespace Game.Moving {
+    public struct ChangeDirectionEvent {
         public Directions NewDirection;
     }
 }

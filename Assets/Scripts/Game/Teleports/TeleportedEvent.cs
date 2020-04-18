@@ -1,10 +1,7 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Game.Teleports
-{
-    public class TeleportedEvent
-    {
+namespace Game.Teleports {
+    public struct TeleportedEvent {
         public Vector2Int NewPosition;
     }
 }

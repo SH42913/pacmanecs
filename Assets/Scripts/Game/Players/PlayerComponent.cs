@@ -1,9 +1,7 @@
 ﻿using UnityEngine;
 
-namespace Game.Players
-{
-    public class PlayerComponent
-    {
+namespace Game.Players {
+    public struct PlayerComponent {
         public int Num;
         public int Scores;
         public int Lives;

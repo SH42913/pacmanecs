@@ -1,10 +1,8 @@
 using UnityEngine;
 
-namespace Game.Ghosts
-{
-    [CreateAssetMenu(menuName = "PacManEcs/GhostDefinition", fileName = "GhostDef")]
-    public class GhostDefinition : ScriptableObject
-    {
+namespace Game.Ghosts {
+    [CreateAssetMenu(menuName = "PacManEcs/" + nameof(GhostDefinition))]
+    public sealed class GhostDefinition : ScriptableObject {
         [Range(0, 10)] public float GhostSpeed;
 
         [Range(0, 10)] public float FearStateInSec;

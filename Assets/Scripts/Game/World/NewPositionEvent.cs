@@ -1,10 +1,7 @@
-using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.World
-{
-    public class NewPositionEvent
-    {
+namespace Game.World {
+    public struct NewPositionEvent {
         public Vector2Int NewPosition;
     }
 }

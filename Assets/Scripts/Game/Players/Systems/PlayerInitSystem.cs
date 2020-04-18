@@ -5,28 +5,23 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Players
-{
-    public class PlayerInitSystem : IEcsInitSystem
-    {
+namespace Game.Players {
+    public class PlayerInitSystem : IEcsInitSystem {
         private readonly EcsWorld _ecsWorld = null;
         private readonly GameDefinitions _gameDefinitions = null;
 
-        public void Init()
-        {
-            if (!_gameDefinitions.playerDefinition)
-            {
+        public void Init() {
+            if (!_gameDefinitions.playerDefinition) {
                 throw new Exception($"{nameof(PlayerDefinition)} doesn't exists!");
             }
 
             int playerCount = 0;
             PlayerDefinition playerDefinition = _gameDefinitions.playerDefinition;
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
-            foreach (GameObject player in playerObjects)
-            {
-                EcsEntity playerEntity = _ecsWorld.NewEntityWith(
-                    out PlayerComponent playerComponent,
-                    out MoveComponent moveComponent);
+            foreach (GameObject player in playerObjects) {
+                EcsEntity playerEntity = _ecsWorld.NewEntity();
+                ref var playerComponent = ref playerEntity.Set<PlayerComponent>();
+                ref var moveComponent = ref playerEntity.Set<MoveComponent>();
 
                 Vector2Int startPosition = player.transform.position.ToVector2Int();
                 moveComponent.Heading = playerCount % 2 != 0

@@ -6,31 +6,25 @@ using Leopotam.Ecs;
 using UnityEngine;
 using Random = System.Random;
 
-namespace Game.Ghosts
-{
-    public class GhostInitSystem : IEcsInitSystem
-    {
+namespace Game.Ghosts {
+    public class GhostInitSystem : IEcsInitSystem {
         private readonly Random _random = null;
         private readonly EcsWorld _ecsWorld = null;
         private readonly GameDefinitions _gameDefinitions = null;
 
-        public void Init()
-        {
-            if (!_gameDefinitions.ghostDefinition)
-            {
+        public void Init() {
+            if (!_gameDefinitions.ghostDefinition) {
                 throw new Exception($"{nameof(GhostDefinition)} doesn't exists!");
             }
 
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
-            foreach (GameObject ghostObject in ghostObjects)
-            {
-                EcsEntity ghostEntity = _ecsWorld.NewEntityWith(
-                    out GhostComponent ghostComponent,
-                    out MoveComponent moveComponent,
-                    out GhostInFearStateComponent _);
+            foreach (GameObject ghostObject in ghostObjects) {
+                EcsEntity ghostEntity = _ecsWorld.NewEntity();
+                ghostEntity.Set<GhostInFearStateComponent>();
+                ref var ghostComponent = ref ghostEntity.Set<GhostComponent>();
+                ref var moveComponent = ref ghostEntity.Set<MoveComponent>();
 
-                switch (ghostObject.name.ToLower())
-                {
+                switch (ghostObject.name.ToLower()) {
                     case "pinky":
                         ghostComponent.GhostType = GhostTypes.Pinky;
                         break;

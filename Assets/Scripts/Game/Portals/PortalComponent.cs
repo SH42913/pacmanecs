@@ -1,15 +1,8 @@
 ﻿using Leopotam.Ecs;
 
-namespace Game.Portals
-{
-    public class PortalComponent : IEcsAutoReset
-    {
+namespace Game.Portals {
+    public struct PortalComponent {
         public EcsEntity OtherPortalEntity;
         public float EstimateReloadTime;
-        
-        public void Reset()
-        {
-            OtherPortalEntity = EcsEntity.Null;
-        }
     }
 }

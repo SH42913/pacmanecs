@@ -1,15 +1,7 @@
-using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.World
-{
-    public class CreateWorldObjectEvent : IEcsAutoReset
-    {
+namespace Game.World {
+    public struct CreateWorldObjectEvent {
         public Transform Transform;
-
-        public void Reset()
-        {
-            Transform = null;
-        }
     }
 }

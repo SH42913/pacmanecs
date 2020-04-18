@@ -1,14 +1,7 @@
 using Leopotam.Ecs;
 
-namespace Game.Items
-{
-    public class TakenItemEvent : IEcsAutoReset
-    {
+namespace Game.Items {
+    public struct TakenItemEvent {
         public EcsEntity PlayerEntity;
-
-        public void Reset()
-        {
-            PlayerEntity = EcsEntity.Null;
-        }
     }
 }

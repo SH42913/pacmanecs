@@ -1,8 +1,5 @@
 using Leopotam.Ecs;
 
-namespace Game.Ghosts
-{
-    public class EnableGhostFearStateEvent : IEcsIgnoreInFilter
-    {
-    }
+namespace Game.Ghosts {
+    public struct EnableGhostFearStateEvent : IEcsIgnoreInFilter { }
 }

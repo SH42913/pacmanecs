@@ -3,57 +3,46 @@ using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Portals
-{
-    public class PortalInitSystem : IEcsInitSystem
-    {
+namespace Game.Portals {
+    public class PortalInitSystem : IEcsInitSystem {
         private readonly EcsWorld _ecsWorld = null;
 
-        public void Init()
-        {
+        public void Init() {
             GameObject[] portals = GameObject.FindGameObjectsWithTag("Portal");
             var channelDict = new Dictionary<int, EcsEntity>();
             var filledChannels = new HashSet<int>();
 
-            foreach (GameObject portal in portals)
-            {
+            foreach (GameObject portal in portals) {
                 int? channelNum = GetChannelFrom(portal);
-                if (!channelNum.HasValue)
-                {
+                if (!channelNum.HasValue) {
                     Debug.LogError($"Portal {portal.name} has wrong name!");
                     continue;
                 }
 
                 int channel = channelNum.Value;
-                if (filledChannels.Contains(channel))
-                {
+                if (filledChannels.Contains(channel)) {
                     Debug.LogError($"Channel {channel.ToString()} for portal {portal.name} already used!");
                     continue;
                 }
 
-                EcsEntity portalEntity = _ecsWorld.NewEntityWith(
-                    out PortalComponent portalComponent,
-                    out CreateWorldObjectEvent createEvt);
-                createEvt.Transform = portal.transform;
+                EcsEntity portalEntity = _ecsWorld.NewEntity();
+                portalEntity.Set<CreateWorldObjectEvent>().Transform = portal.transform;
+                ref var portalComponent = ref portalEntity.Set<PortalComponent>();
 
-                if (channelDict.ContainsKey(channel))
-                {
+                if (channelDict.ContainsKey(channel)) {
                     filledChannels.Add(channel);
+
                     EcsEntity otherPortalEntity = channelDict[channel];
-                    portalComponent.OtherPortalEntity = channelDict[channel];
-                    
-                    PortalComponent otherPortal = otherPortalEntity.Get<PortalComponent>();
-                    otherPortal.OtherPortalEntity = portalEntity;
+                    portalComponent.OtherPortalEntity = otherPortalEntity;
+                    otherPortalEntity.Set<PortalComponent>().OtherPortalEntity = portalEntity;
                 }
-                else
-                {
+                else {
                     channelDict.Add(channel, portalEntity);
                 }
             }
         }
 
-        private static int? GetChannelFrom(Object portal)
-        {
+        private static int? GetChannelFrom(Object portal) {
             int colonPosition = portal.name.IndexOf(':');
             if (colonPosition < 0) return null;
 
