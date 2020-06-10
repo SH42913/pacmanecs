@@ -4,22 +4,22 @@ using Game.Ui.ScoreTable;
 using Leopotam.Ecs;
 
 namespace Game.Items.Food {
-    public class FoodSystem : IEcsRunSystem {
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<FoodComponent, TakenItemEvent> _takenFoods = null;
+    public sealed class FoodSystem : IEcsRunSystem {
+        private readonly EcsWorld ecsWorld = null;
+        private readonly EcsFilter<FoodComponent, TakenItemEvent> takenFoods = null;
 
         public void Run() {
-            foreach (int i in _takenFoods) {
-                EcsEntity playerEntity = _takenFoods.Get2(i).PlayerEntity;
+            foreach (var i in takenFoods) {
+                var playerEntity = takenFoods.Get2(i).playerEntity;
                 if (!playerEntity.Has<PlayerComponent>()) continue;
 
                 ref var player = ref playerEntity.Get<PlayerComponent>();
-                player.Scores += _takenFoods.Get1(i).Scores;
+                player.scores += takenFoods.Get1(i).scores;
 
                 ref var moveComponent = ref playerEntity.Get<MoveComponent>();
-                moveComponent.Speed -= _takenFoods.Get1(i).SpeedPenalty;
+                moveComponent.speed -= takenFoods.Get1(i).speedPenalty;
 
-                _ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+                ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Game.Ghosts {
     }
 
     public struct GhostComponent {
-        public GhostTypes GhostType;
-        public MeshRenderer Renderer;
+        public GhostTypes ghostType;
+        public MeshRenderer renderer;
     }
 }

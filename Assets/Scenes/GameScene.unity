@@ -13352,7 +13352,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f63ae06fc612272448a17e5a5398e4e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PauseMenu: {fileID: 1843432174}
+  pauseMenu: {fileID: 1843432174}
   gameDefinitions: {fileID: 11400000, guid: a17ae3866028d214daa173be9ebb04b8, type: 2}
 --- !u!1001 &1311004012
 PrefabInstance:

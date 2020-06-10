@@ -1,5 +1,5 @@
 namespace Game.Ghosts {
     public struct GhostInFearStateComponent {
-        public float EstimateTime;
+        public float estimateTime;
     }
 }

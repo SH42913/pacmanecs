@@ -6,70 +6,69 @@ using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Ghosts {
-    public class GhostFearStateSystem : IEcsRunSystem {
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly WorldService _worldService = null;
-        private readonly GameDefinitions _gameDefinitions = null;
+    public sealed class GhostFearStateSystem : IEcsRunSystem {
+        private readonly EcsWorld ecsWorld = null;
+        private readonly WorldService worldService = null;
+        private readonly GameDefinitions gameDefinitions = null;
 
-        private readonly EcsFilter<EnableGhostFearStateEvent> _enableEvents = null;
-        private readonly EcsFilter<GhostComponent> _ghosts = null;
-        private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> _fearStateGhosts = null;
+        private readonly EcsFilter<EnableGhostFearStateEvent> enableEvents = null;
+        private readonly EcsFilter<GhostComponent> ghosts = null;
+        private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> fearStateGhosts = null;
 
         public void Run() {
-            GhostDefinition ghostDefinition = _gameDefinitions.ghostDefinition;
+            var ghostDefinition = gameDefinitions.ghostDefinition;
             EnableGhostFearIfNeed(ghostDefinition);
 
-            foreach (int i in _fearStateGhosts) {
-                EcsEntity ghostEntity = _fearStateGhosts.GetEntity(i);
-                ref GhostComponent ghostComponent = ref _fearStateGhosts.Get1(i);
-                ref GhostInFearStateComponent fearState = ref _fearStateGhosts.Get2(i);
+            foreach (var i in fearStateGhosts) {
+                var ghostEntity = fearStateGhosts.GetEntity(i);
+                ref var ghostComponent = ref fearStateGhosts.Get1(i);
+                ref var fearState = ref fearStateGhosts.Get2(i);
 
-                fearState.EstimateTime -= Time.deltaTime;
-                if (fearState.EstimateTime <= 0) {
+                fearState.estimateTime -= Time.deltaTime;
+                if (fearState.estimateTime <= 0) {
                     RemoveFearState(ghostEntity, ghostDefinition, ghostComponent);
                     return;
                 }
 
-                Vector2Int currentPosition = ghostEntity.Get<PositionComponent>().Position;
-                foreach (EcsEntity entity in _worldService.WorldField[currentPosition.x][currentPosition.y]) {
+                var currentPosition = ghostEntity.Get<PositionComponent>().position;
+                foreach (var entity in worldService.worldField[currentPosition.x][currentPosition.y]) {
                     if (!entity.Has<PlayerComponent>()) continue;
 
-                    entity.Get<PlayerComponent>().Scores += ghostDefinition.ScoresPerGhost;
+                    entity.Get<PlayerComponent>().scores += ghostDefinition.scoresPerGhost;
                     ghostEntity.Get<DestroyedWorldObjectEvent>();
-                    _ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+                    ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
                 }
             }
         }
 
         private void EnableGhostFearIfNeed(GhostDefinition ghostDefinition) {
-            if (_enableEvents.IsEmpty()) return;
+            if (enableEvents.IsEmpty()) return;
 
-            foreach (int i in _ghosts) {
-                GhostComponent ghost = _ghosts.Get1(i);
-                EcsEntity ghostEntity = _ghosts.GetEntity(i);
+            foreach (var i in ghosts) {
+                var ghost = ghosts.Get1(i);
+                var ghostEntity = ghosts.GetEntity(i);
 
-                ghostEntity.Get<GhostInFearStateComponent>().EstimateTime = ghostDefinition.FearStateInSec;
-                ghost.Renderer.material.color = ghostDefinition.FearState;
+                ghostEntity.Get<GhostInFearStateComponent>().estimateTime = ghostDefinition.fearStateInSec;
+                ghost.renderer.material.color = ghostDefinition.fearState;
             }
         }
 
         private static void RemoveFearState(EcsEntity ghostEntity, GhostDefinition ghostDefinition, in GhostComponent ghostComponent) {
             ghostEntity.Del<GhostInFearStateComponent>();
-            switch (ghostComponent.GhostType) {
+            switch (ghostComponent.ghostType) {
                 case GhostTypes.Blinky:
-                    ghostComponent.Renderer.material.color = ghostDefinition.Blinky;
+                    ghostComponent.renderer.material.color = ghostDefinition.blinky;
                     break;
                 case GhostTypes.Pinky:
-                    ghostComponent.Renderer.material.color = ghostDefinition.Pinky;
+                    ghostComponent.renderer.material.color = ghostDefinition.pinky;
                     break;
                 case GhostTypes.Inky:
-                    ghostComponent.Renderer.material.color = ghostDefinition.Inky;
+                    ghostComponent.renderer.material.color = ghostDefinition.inky;
                     break;
                 case GhostTypes.Clyde:
-                    ghostComponent.Renderer.material.color = ghostDefinition.Clyde;
+                    ghostComponent.renderer.material.color = ghostDefinition.clyde;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
+                default: throw new ArgumentOutOfRangeException();
             }
         }
     }

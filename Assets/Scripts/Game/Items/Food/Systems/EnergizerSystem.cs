@@ -2,13 +2,13 @@
 using Leopotam.Ecs;
 
 namespace Game.Items.Food {
-    public class EnergizerSystem : IEcsRunSystem {
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly EcsFilter<EnergizerComponent, TakenItemEvent> _takenEnergizers = null;
+    public sealed class EnergizerSystem : IEcsRunSystem {
+        private readonly EcsWorld ecsWorld = null;
+        private readonly EcsFilter<EnergizerComponent, TakenItemEvent> takenEnergizers = null;
 
         public void Run() {
-            if (!_takenEnergizers.IsEmpty()) {
-                _ecsWorld.NewEntity().Get<EnableGhostFearStateEvent>();
+            if (!takenEnergizers.IsEmpty()) {
+                ecsWorld.NewEntity().Get<EnableGhostFearStateEvent>();
             }
         }
     }

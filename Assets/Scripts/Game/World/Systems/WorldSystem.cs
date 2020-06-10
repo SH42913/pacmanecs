@@ -3,41 +3,42 @@ using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.World {
-    public class WorldSystem : IEcsRunSystem {
-        private readonly WorldService _worldService = null;
-        private readonly EcsFilter<CreateWorldObjectEvent> _createEvents = null;
-        private readonly EcsFilter<PositionComponent, NewPositionEvent> _movedObjects = null;
-        private readonly EcsFilter<WorldObjectComponent, PositionComponent, DestroyedWorldObjectEvent> _destroyedObjects = null;
+    public sealed class WorldSystem : IEcsRunSystem {
+        private readonly WorldService worldService = null;
+
+        private readonly EcsFilter<CreateWorldObjectEvent> createEvents = null;
+        private readonly EcsFilter<PositionComponent, NewPositionEvent> movedObjects = null;
+        private readonly EcsFilter<WorldObjectComponent, PositionComponent, DestroyedWorldObjectEvent> destroyedObjects = null;
 
         public void Run() {
-            foreach (int i in _createEvents) {
-                Transform newObject = _createEvents.Get1(i).Transform;
-                EcsEntity entity = _createEvents.GetEntity(i);
+            foreach (var i in createEvents) {
+                var newObject = createEvents.Get1(i).transform;
+                var entity = createEvents.GetEntity(i);
 
-                Vector2Int position = newObject.position.ToVector2Int();
-                _worldService.WorldField[position.x][position.y].Add(entity);
-                entity.Get<PositionComponent>().Position = position;
-                entity.Get<WorldObjectComponent>().Transform = newObject;
+                var position = newObject.position.ToVector2Int();
+                worldService.worldField[position.x][position.y].Add(entity);
+                entity.Get<PositionComponent>().position = position;
+                entity.Get<WorldObjectComponent>().transform = newObject;
             }
 
-            foreach (int i in _movedObjects) {
-                ref PositionComponent positionComponent = ref _movedObjects.Get1(i);
-                Vector2Int oldPosition = positionComponent.Position;
-                Vector2Int newPosition = _movedObjects.Get2(i).NewPosition;
-                EcsEntity entity = _movedObjects.GetEntity(i);
+            foreach (var i in movedObjects) {
+                ref var positionComponent = ref movedObjects.Get1(i);
+                var oldPosition = positionComponent.position;
+                var newPosition = movedObjects.Get2(i).newPosition;
+                var entity = movedObjects.GetEntity(i);
 
-                _worldService.WorldField[oldPosition.x][oldPosition.y].Remove(entity);
-                _worldService.WorldField[newPosition.x][newPosition.y].Add(entity);
+                worldService.worldField[oldPosition.x][oldPosition.y].Remove(entity);
+                worldService.worldField[newPosition.x][newPosition.y].Add(entity);
 
-                positionComponent.Position = newPosition;
+                positionComponent.position = newPosition;
             }
 
-            foreach (int i in _destroyedObjects) {
-                Transform objectToDestroy = _destroyedObjects.Get1(i).Transform;
-                Vector2Int position = _destroyedObjects.Get2(i).Position;
-                EcsEntity entity = _destroyedObjects.GetEntity(i);
+            foreach (var i in destroyedObjects) {
+                var objectToDestroy = destroyedObjects.Get1(i).transform;
+                var position = destroyedObjects.Get2(i).position;
+                var entity = destroyedObjects.GetEntity(i);
 
-                _worldService.WorldField[position.x][position.y].Remove(entity);
+                worldService.worldField[position.x][position.y].Remove(entity);
                 objectToDestroy.gameObject.SetActive(false);
                 entity.Destroy();
             }

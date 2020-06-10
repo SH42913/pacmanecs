@@ -9,8 +9,8 @@ namespace Game.Moving {
     }
 
     public struct MoveComponent {
-        public float Speed;
-        public Directions Heading;
-        public Vector2Int DesiredPosition;
+        public float speed;
+        public Directions heading;
+        public Vector2Int desiredPosition;
     }
 }

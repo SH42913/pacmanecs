@@ -1,5 +1,5 @@
 ﻿namespace Game.Moving {
     public struct ChangeDirectionEvent {
-        public Directions NewDirection;
+        public Directions newDirection;
     }
 }

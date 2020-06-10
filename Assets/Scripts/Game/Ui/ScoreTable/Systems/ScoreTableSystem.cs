@@ -2,29 +2,28 @@
 using Leopotam.Ecs;
 
 namespace Game.Ui.ScoreTable {
-    public class ScoreTableSystem : IEcsRunSystem {
-        private readonly EcsFilter<PlayerComponent> _players = null;
-        private readonly EcsFilter<ScoreTableComponent> _scoreTables = null;
-        private readonly EcsFilter<UpdateScoreTableEvent> _updateEvents = null;
+    public sealed class ScoreTableSystem : IEcsRunSystem {
+        private readonly EcsFilter<PlayerComponent> players = null;
+        private readonly EcsFilter<ScoreTableComponent> scoreTables = null;
+        private readonly EcsFilter<UpdateScoreTableEvent> updateEvents = null;
 
         public void Run() {
-            if (_updateEvents.IsEmpty()) return;
+            if (updateEvents.IsEmpty()) return;
 
-            string scoresString = "";
-            foreach (int i in _players) {
-                ref PlayerComponent player = ref _players.Get1(i);
-                scoresString += $"P{player.Num.ToString()} Scores:{player.Scores.ToString()} ";
+            var scoresString = "";
+            foreach (var i in players) {
+                ref var player = ref players.Get1(i);
+                scoresString += $"P{player.num.ToString()} Scores:{player.scores.ToString()} ";
 
-                if (player.IsDead) {
+                if (player.isDead) {
                     scoresString += "IS DEAD\n";
-                }
-                else {
-                    scoresString += $"Lives:{player.Lives.ToString()}\n";
+                } else {
+                    scoresString += $"Lives:{player.lives.ToString()}\n";
                 }
             }
 
-            foreach (int i in _scoreTables) {
-                _scoreTables.Get1(i).ScoreText.text = scoresString;
+            foreach (var i in scoreTables) {
+                scoreTables.Get1(i).scoreText.text = scoresString;
             }
         }
     }

@@ -3,16 +3,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Ui.ScoreTable {
-    public class ScoreTableInitSystem : IEcsInitSystem {
-        private readonly EcsWorld _ecsWorld = null;
+    public sealed class ScoreTableInitSystem : IEcsInitSystem {
+        private readonly EcsWorld ecsWorld = null;
 
         public void Init() {
-            ScoreTableBehaviour[] scoreTables = Object.FindObjectsOfType<ScoreTableBehaviour>();
-            foreach (ScoreTableBehaviour behaviour in scoreTables) {
-                _ecsWorld.NewEntity().Get<ScoreTableComponent>().ScoreText = behaviour.GetComponent<Text>();
+            var scoreTables = Object.FindObjectsOfType<ScoreTableBehaviour>();
+            foreach (var behaviour in scoreTables) {
+                ecsWorld.NewEntity().Get<ScoreTableComponent>().scoreText = behaviour.GetComponent<Text>();
             }
 
-            _ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+            ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
         }
     }
 }

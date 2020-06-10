@@ -7,6 +7,6 @@
     }
 
     public struct ChangeGameStateEvent {
-        public GameStates State;
+        public GameStates state;
     }
 }

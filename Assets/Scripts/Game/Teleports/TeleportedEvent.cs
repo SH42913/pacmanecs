@@ -2,6 +2,6 @@
 
 namespace Game.Teleports {
     public struct TeleportedEvent {
-        public Vector2Int NewPosition;
+        public Vector2Int newPosition;
     }
 }

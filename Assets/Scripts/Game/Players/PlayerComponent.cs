@@ -2,10 +2,10 @@
 
 namespace Game.Players {
     public struct PlayerComponent {
-        public int Num;
-        public int Scores;
-        public int Lives;
-        public bool IsDead;
-        public Vector2Int SpawnPosition;
+        public int num;
+        public int scores;
+        public int lives;
+        public bool isDead;
+        public Vector2Int spawnPosition;
     }
 }

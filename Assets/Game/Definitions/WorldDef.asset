@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 161453224998e1343ac33bb99e714dae, type: 3}
   m_Name: WorldDef
   m_EditorClassIdentifier: 
-  SizeX: 33
-  SizeY: 33
+  sizeX: 33
+  sizeY: 33

@@ -2,7 +2,7 @@
 
 namespace Game.Portals {
     public struct PortalComponent {
-        public EcsEntity OtherPortalEntity;
-        public float EstimateReloadTime;
+        public EcsEntity otherPortalEntity;
+        public float estimateReloadTime;
     }
 }

@@ -4,40 +4,34 @@ using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Items.Food {
-    public class FoodInitSystem : IEcsInitSystem {
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly GameDefinitions _gameDefinitions = null;
+    public sealed class FoodInitSystem : IEcsInitSystem {
+        private readonly EcsWorld ecsWorld = null;
+        private readonly GameDefinitions gameDefinitions = null;
 
         public void Init() {
-            if (!_gameDefinitions.foodDefinition) {
-                throw new Exception($"{nameof(FoodDefinition)} doesn't exists!");
-            }
+            if (!gameDefinitions.foodDefinition) throw new Exception($"{nameof(FoodDefinition)} doesn't exists!");
 
-            FoodDefinition foodDefinition = _gameDefinitions.foodDefinition;
-            GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
-            foreach (GameObject foodObject in foodObjects) {
-                EcsEntity entity = _ecsWorld.NewEntity();
+            var foodDefinition = gameDefinitions.foodDefinition;
+            var foodObjects = GameObject.FindGameObjectsWithTag("Food");
+            foreach (var foodObject in foodObjects) {
+                var entity = ecsWorld.NewEntity();
                 entity.Replace(new ItemComponent())
+                    .Replace(new CreateWorldObjectEvent { transform = foodObject.transform })
                     .Replace(new FoodComponent {
-                        Scores = foodDefinition.ScoresPerFood,
-                        SpeedPenalty = foodDefinition.SpeedPenalty
-                    })
-                    .Replace(new CreateWorldObjectEvent {
-                        Transform = foodObject.transform
+                        scores = foodDefinition.scoresPerFood,
+                        speedPenalty = foodDefinition.speedPenalty
                     });
             }
 
-            GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
-            foreach (GameObject energizer in energizers) {
-                EcsEntity entity = _ecsWorld.NewEntity();
+            var energizers = GameObject.FindGameObjectsWithTag("Energizer");
+            foreach (var energizer in energizers) {
+                var entity = ecsWorld.NewEntity();
                 entity.Replace(new EnergizerComponent())
                     .Replace(new ItemComponent())
+                    .Replace(new CreateWorldObjectEvent { transform = energizer.transform })
                     .Replace(new FoodComponent {
-                        Scores = foodDefinition.ScoresPerFood * foodDefinition.EnergizerMultiplier,
-                        SpeedPenalty = foodDefinition.SpeedPenalty * foodDefinition.EnergizerMultiplier
-                    })
-                    .Replace(new CreateWorldObjectEvent {
-                        Transform = energizer.transform
+                        scores = foodDefinition.scoresPerFood * foodDefinition.energizerMultiplier,
+                        speedPenalty = foodDefinition.speedPenalty * foodDefinition.energizerMultiplier
                     });
             }
         }

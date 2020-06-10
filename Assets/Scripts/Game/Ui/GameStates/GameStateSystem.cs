@@ -4,17 +4,17 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game.Ui.GameStates {
-    public class GameStateSystem : IEcsRunSystem {
-        private readonly EcsFilter<PauseMenuComponent> _menus = null;
-        private readonly EcsFilter<ChangeGameStateEvent> _changeStateEvents = null;
+    public sealed class GameStateSystem : IEcsRunSystem {
+        private readonly EcsFilter<PauseMenuComponent> menus = null;
+        private readonly EcsFilter<ChangeGameStateEvent> changeStateEvents = null;
 
         public void Run() {
-            if (_changeStateEvents.IsEmpty()) return;
+            if (changeStateEvents.IsEmpty()) return;
 
-            bool needDisableMenu = false;
-            bool needEnableMenu = false;
-            foreach (int i in _changeStateEvents) {
-                switch (_changeStateEvents.Get1(i).State) {
+            var needDisableMenu = false;
+            var needEnableMenu = false;
+            foreach (var i in changeStateEvents) {
+                switch (changeStateEvents.Get1(i).state) {
                     case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;
@@ -29,15 +29,14 @@ namespace Game.Ui.GameStates {
                     case GameStates.Exit:
                         Application.Quit();
                         break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
+                    default: throw new ArgumentOutOfRangeException();
                 }
             }
 
             if (needDisableMenu == needEnableMenu) return;
 
-            foreach (int i in _menus) {
-                _menus.Get1(i).GameObject.SetActive(needEnableMenu);
+            foreach (var i in menus) {
+                menus.Get1(i).gameObject.SetActive(needEnableMenu);
             }
         }
     }

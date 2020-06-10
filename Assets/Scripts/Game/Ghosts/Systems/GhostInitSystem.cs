@@ -7,33 +7,28 @@ using UnityEngine;
 using Random = System.Random;
 
 namespace Game.Ghosts {
-    public class GhostInitSystem : IEcsInitSystem {
-        private readonly Random _random = null;
-        private readonly EcsWorld _ecsWorld = null;
-        private readonly GameDefinitions _gameDefinitions = null;
+    public sealed class GhostInitSystem : IEcsInitSystem {
+        private readonly Random random = null;
+        private readonly EcsWorld ecsWorld = null;
+        private readonly GameDefinitions gameDefinitions = null;
 
         public void Init() {
-            if (!_gameDefinitions.ghostDefinition) {
-                throw new Exception($"{nameof(GhostDefinition)} doesn't exists!");
-            }
+            if (!gameDefinitions.ghostDefinition) throw new Exception($"{nameof(GhostDefinition)} doesn't exists!");
 
-            GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
-            foreach (GameObject ghostObject in ghostObjects) {
-                EcsEntity ghostEntity = _ecsWorld.NewEntity();
-                ghostEntity
-                    .Replace(new GhostInFearStateComponent())
+            var ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
+            foreach (var ghostObject in ghostObjects) {
+                var ghostEntity = ecsWorld.NewEntity();
+                ghostEntity.Replace(new GhostInFearStateComponent())
                     .Replace(new GhostComponent {
-                        GhostType = GetGhostType(ghostObject.name),
-                        Renderer = ghostObject.GetComponent<MeshRenderer>()
+                        ghostType = GetGhostType(ghostObject.name),
+                        renderer = ghostObject.GetComponent<MeshRenderer>()
                     })
                     .Replace(new MoveComponent {
-                        DesiredPosition = ghostObject.transform.position.ToVector2Int(),
-                        Heading = _random.NextEnum<Directions>(),
-                        Speed = _gameDefinitions.ghostDefinition.GhostSpeed,
+                        desiredPosition = ghostObject.transform.position.ToVector2Int(),
+                        heading = random.NextEnum<Directions>(),
+                        speed = gameDefinitions.ghostDefinition.ghostSpeed,
                     })
-                    .Replace(new CreateWorldObjectEvent {
-                        Transform = ghostObject.transform
-                    });
+                    .Replace(new CreateWorldObjectEvent { transform = ghostObject.transform });
             }
         }
 

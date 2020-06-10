@@ -8,22 +8,21 @@ using UnityEngine;
 using Random = System.Random;
 
 namespace Game.Ghosts {
-    public class GhostSystem : IEcsRunSystem {
-        private readonly Random _random = null;
-        private readonly WorldService _worldService = null;
+    public sealed class GhostSystem : IEcsRunSystem {
+        private readonly Random random = null;
+        private readonly WorldService worldService = null;
 
-        private readonly EcsFilter<GhostComponent, StoppedComponent> _stoppedGhosts = null;
-        private readonly EcsFilter<PositionComponent, GhostComponent>.Exclude<GhostInFearStateComponent> _ghosts = null;
+        private readonly EcsFilter<GhostComponent, StoppedComponent> stoppedGhosts = null;
+        private readonly EcsFilter<PositionComponent, GhostComponent>.Exclude<GhostInFearStateComponent> ghosts = null;
 
         public void Run() {
-            foreach (int i in _stoppedGhosts) {
-                EcsEntity ghostEntity = _stoppedGhosts.GetEntity(i);
-                ghostEntity.Get<ChangeDirectionEvent>().NewDirection = _random.NextEnum<Directions>();
+            foreach (var i in stoppedGhosts) {
+                stoppedGhosts.GetEntity(i).Get<ChangeDirectionEvent>().newDirection = random.NextEnum<Directions>();
             }
 
-            foreach (int i in _ghosts) {
-                Vector2Int currentPosition = _ghosts.Get1(i).Position;
-                foreach (EcsEntity entity in _worldService.WorldField[currentPosition.x][currentPosition.y]) {
+            foreach (var i in ghosts) {
+                var currentPosition = ghosts.Get1(i).position;
+                foreach (var entity in worldService.worldField[currentPosition.x][currentPosition.y]) {
                     if (entity.Has<PlayerComponent>() && !entity.Has<PlayerIsDeadEvent>()) {
                         entity.Get<PlayerIsDeadEvent>();
                     }

@@ -13,32 +13,30 @@ using Game.Walls;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game {
     public sealed class GameStartup : MonoBehaviour {
-        public GameObject PauseMenu;
+        public GameObject pauseMenu;
         public GameDefinitions gameDefinitions;
 
-        private EcsWorld _ecsWorld;
-        private EcsSystems _systems;
-        private System.Random _random;
+        private EcsWorld ecsWorld;
+        private EcsSystems systems;
+        private System.Random random;
 
         private void OnEnable() {
-            if (!gameDefinitions) {
-                throw new Exception($"{nameof(GameDefinitions)} doesn't exists!");
-            }
+            if (!gameDefinitions) throw new Exception($"{nameof(GameDefinitions)} doesn't exists!");
 
-            _ecsWorld = new EcsWorld();
-            _systems = new EcsSystems(_ecsWorld);
-            _random = new System.Random();
+            ecsWorld = new EcsWorld();
+            systems = new EcsSystems(ecsWorld);
+            random = new System.Random();
 
 #if UNITY_EDITOR
-            Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(_ecsWorld);
-            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
+            Leopotam.Ecs.UnityIntegration.EcsWorldObserver.Create(ecsWorld);
+            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(systems);
 #endif
 
-            _systems
-                .Add(new WorldInitSystem())
+            systems.Add(new WorldInitSystem())
                 .Add(new PlayerInitSystem())
                 .Add(new GhostInitSystem())
                 .Add(new WallInitSystem())
@@ -53,16 +51,16 @@ namespace Game {
                 .Add(new FoodSystem())
                 .Add(new EnergizerSystem())
                 .Add(new GhostFearStateSystem())
+                .OneFrame<EnableGhostFearStateEvent>()
                 .Add(new DeathSystem())
+                .OneFrame<PlayerIsDeadEvent>()
                 .Add(new PortalSystem())
                 .Add(new TeleportSystem())
                 .Add(new ScoreTableSystem())
                 .Add(new GameStateSystem())
-                .Add(new WorldSystem())
-                .OneFrame<EnableGhostFearStateEvent>()
-                .OneFrame<PlayerIsDeadEvent>()
                 .OneFrame<ChangeGameStateEvent>()
                 .OneFrame<UpdateScoreTableEvent>()
+                .Add(new WorldSystem())
                 .OneFrame<TeleportedEvent>()
                 .OneFrame<TakenItemEvent>()
                 .OneFrame<ChangeDirectionEvent>()
@@ -71,7 +69,7 @@ namespace Game {
                 .OneFrame<NewPositionEvent>()
                 .Inject(new WorldService())
                 .Inject(gameDefinitions)
-                .Inject(_random)
+                .Inject(random)
                 .ProcessInjects()
                 .Init();
 
@@ -80,35 +78,35 @@ namespace Game {
         }
 
         private void Update() {
-            _systems.Run();
+            systems.Run();
         }
 
         private void OnDisable() {
-            _systems.Destroy();
-            _systems = null;
+            systems.Destroy();
+            systems = null;
 
-            _ecsWorld.Destroy();
-            _ecsWorld = null;
+            ecsWorld.Destroy();
+            ecsWorld = null;
         }
 
         private void InitPauseMenu() {
-            _ecsWorld.NewEntity().Get<PauseMenuComponent>().GameObject = PauseMenu;
+            ecsWorld.NewEntity().Get<PauseMenuComponent>().gameObject = pauseMenu;
         }
 
         private void StartGame() {
-            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Start;
+            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Start;
         }
 
         public void RestartGame() {
-            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Restart;
+            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Restart;
         }
 
         public void ContinueGame() {
-            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Start;
+            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Start;
         }
 
         public void QuitGame() {
-            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Exit;
+            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Exit;
         }
     }
 }

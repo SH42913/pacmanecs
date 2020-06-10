@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22d3c78e232b86f45aa98c72d89fdddc, type: 3}
   m_Name: FoodDef
   m_EditorClassIdentifier: 
-  ScoresPerFood: 100
-  SpeedPenalty: 0.001
-  EnergizerMultiplier: 3
+  scoresPerFood: 100
+  speedPenalty: 0.001
+  energizerMultiplier: 3

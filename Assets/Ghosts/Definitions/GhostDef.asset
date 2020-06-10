@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02c160a425b168441beab94bed5dd6f6, type: 3}
   m_Name: GhostDef
   m_EditorClassIdentifier: 
-  GhostSpeed: 2
-  FearStateInSec: 5
-  ScoresPerGhost: 1000
-  Blinky: {r: 1, g: 0, b: 0, a: 1}
-  Pinky: {r: 1, g: 0, b: 0.625, a: 1}
-  Inky: {r: 0, g: 0.725, b: 1, a: 1}
-  Clyde: {r: 1, g: 0.64, b: 0, a: 1}
-  FearState: {r: 0.1, g: 0, b: 1, a: 1}
+  ghostSpeed: 2
+  fearStateInSec: 5
+  scoresPerGhost: 1000
+  blinky: {r: 1, g: 0, b: 0, a: 1}
+  pinky: {r: 1, g: 0, b: 0.625, a: 1}
+  inky: {r: 0, g: 0.725, b: 1, a: 1}
+  clyde: {r: 1, g: 0.64, b: 0, a: 1}
+  fearState: {r: 0.1, g: 0, b: 1, a: 1}
