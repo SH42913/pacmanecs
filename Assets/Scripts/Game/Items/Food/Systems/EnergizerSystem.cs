@@ -8,7 +8,7 @@ namespace Game.Items.Food {
 
         public void Run() {
             if (!_takenEnergizers.IsEmpty()) {
-                _ecsWorld.NewEntity().Set<EnableGhostFearStateEvent>();
+                _ecsWorld.NewEntity().Get<EnableGhostFearStateEvent>();
             }
         }
     }

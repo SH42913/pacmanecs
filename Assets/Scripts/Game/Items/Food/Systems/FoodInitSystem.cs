@@ -17,26 +17,28 @@ namespace Game.Items.Food {
             GameObject[] foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (GameObject foodObject in foodObjects) {
                 EcsEntity entity = _ecsWorld.NewEntity();
-                ref var foodComponent = ref entity.Set<FoodComponent>();
-                entity.Set<ItemComponent>();
-
-                foodComponent.Scores = foodDefinition.ScoresPerFood;
-                foodComponent.SpeedPenalty = foodDefinition.SpeedPenalty;
-
-                entity.Set<CreateWorldObjectEvent>().Transform = foodObject.transform;
+                entity.Replace(new ItemComponent())
+                    .Replace(new FoodComponent {
+                        Scores = foodDefinition.ScoresPerFood,
+                        SpeedPenalty = foodDefinition.SpeedPenalty
+                    })
+                    .Replace(new CreateWorldObjectEvent {
+                        Transform = foodObject.transform
+                    });
             }
 
             GameObject[] energizers = GameObject.FindGameObjectsWithTag("Energizer");
             foreach (GameObject energizer in energizers) {
                 EcsEntity entity = _ecsWorld.NewEntity();
-                ref var foodComponent = ref entity.Set<FoodComponent>();
-                entity.Set<EnergizerComponent>();
-                entity.Set<ItemComponent>();
-
-                foodComponent.Scores = foodDefinition.ScoresPerFood * foodDefinition.EnergizerMultiplier;
-                foodComponent.SpeedPenalty = foodDefinition.SpeedPenalty * foodDefinition.EnergizerMultiplier;
-
-                entity.Set<CreateWorldObjectEvent>().Transform = energizer.transform;
+                entity.Replace(new EnergizerComponent())
+                    .Replace(new ItemComponent())
+                    .Replace(new FoodComponent {
+                        Scores = foodDefinition.ScoresPerFood * foodDefinition.EnergizerMultiplier,
+                        SpeedPenalty = foodDefinition.SpeedPenalty * foodDefinition.EnergizerMultiplier
+                    })
+                    .Replace(new CreateWorldObjectEvent {
+                        Transform = energizer.transform
+                    });
             }
         }
     }

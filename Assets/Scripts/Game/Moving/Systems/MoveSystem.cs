@@ -23,16 +23,15 @@ namespace Game.Moving {
                 Vector3 desiredPosition = moveComponent.DesiredPosition.ToVector3(curPosition.y);
                 Vector3 estimatedVector = desiredPosition - curPosition;
                 if (estimatedVector.magnitude > Epsilon) {
-                    transform.position = Vector3.Lerp(
-                        transform.position, desiredPosition,
-                        moveComponent.Speed / estimatedVector.magnitude * Time.deltaTime);
+                    transform.position = Vector3.Lerp(transform.position, desiredPosition,
+                                                      moveComponent.Speed / estimatedVector.magnitude * Time.deltaTime);
                     continue;
                 }
 
                 Vector2Int oldPosition = positionComponent.Position;
                 Vector2Int newPosition = moveComponent.DesiredPosition;
                 if (!oldPosition.Equals(newPosition)) {
-                    movingEntity.Set<NewPositionEvent>().NewPosition = newPosition;
+                    movingEntity.Get<NewPositionEvent>().NewPosition = newPosition;
                 }
 
                 GetPositions(ref moveComponent, newPosition, out var newDesiredPosition, out var newDirection);
@@ -47,11 +46,10 @@ namespace Game.Moving {
                 }
 
                 if (stuckToWall) {
-                    movingEntity.Set<StoppedComponent>();
-                }
-                else {
+                    movingEntity.Get<StoppedComponent>();
+                } else {
                     moveComponent.DesiredPosition = newDesiredPosition;
-                    movingEntity.Unset<StoppedComponent>();
+                    movingEntity.Del<StoppedComponent>();
                 }
             }
         }

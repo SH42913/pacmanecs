@@ -20,31 +20,29 @@ namespace Game.Ghosts {
             GameObject[] ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
             foreach (GameObject ghostObject in ghostObjects) {
                 EcsEntity ghostEntity = _ecsWorld.NewEntity();
-                ghostEntity.Set<GhostInFearStateComponent>();
-                ref var ghostComponent = ref ghostEntity.Set<GhostComponent>();
-                ref var moveComponent = ref ghostEntity.Set<MoveComponent>();
+                ghostEntity
+                    .Replace(new GhostInFearStateComponent())
+                    .Replace(new GhostComponent {
+                        GhostType = GetGhostType(ghostObject.name),
+                        Renderer = ghostObject.GetComponent<MeshRenderer>()
+                    })
+                    .Replace(new MoveComponent {
+                        DesiredPosition = ghostObject.transform.position.ToVector2Int(),
+                        Heading = _random.NextEnum<Directions>(),
+                        Speed = _gameDefinitions.ghostDefinition.GhostSpeed,
+                    })
+                    .Replace(new CreateWorldObjectEvent {
+                        Transform = ghostObject.transform
+                    });
+            }
+        }
 
-                switch (ghostObject.name.ToLower()) {
-                    case "pinky":
-                        ghostComponent.GhostType = GhostTypes.Pinky;
-                        break;
-                    case "inky":
-                        ghostComponent.GhostType = GhostTypes.Inky;
-                        break;
-                    case "clyde":
-                        ghostComponent.GhostType = GhostTypes.Clyde;
-                        break;
-                    default:
-                        ghostComponent.GhostType = GhostTypes.Blinky;
-                        break;
-                }
-
-                moveComponent.DesiredPosition = ghostObject.transform.position.ToVector2Int();
-                moveComponent.Heading = _random.NextEnum<Directions>();
-                moveComponent.Speed = _gameDefinitions.ghostDefinition.GhostSpeed;
-
-                ghostComponent.Renderer = ghostObject.GetComponent<MeshRenderer>();
-                ghostEntity.Set<CreateWorldObjectEvent>().Transform = ghostObject.transform;
+        private static GhostTypes GetGhostType(string name) {
+            switch (name.ToLower()) {
+                case "pinky": return GhostTypes.Pinky;
+                case "inky": return GhostTypes.Inky;
+                case "clyde": return GhostTypes.Clyde;
+                default: return GhostTypes.Blinky;
             }
         }
     }

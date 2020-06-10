@@ -92,23 +92,23 @@ namespace Game {
         }
 
         private void InitPauseMenu() {
-            _ecsWorld.NewEntity().Set<PauseMenuComponent>().GameObject = PauseMenu;
+            _ecsWorld.NewEntity().Get<PauseMenuComponent>().GameObject = PauseMenu;
         }
 
         private void StartGame() {
-            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Start;
+            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Start;
         }
 
         public void RestartGame() {
-            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Restart;
+            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Restart;
         }
 
         public void ContinueGame() {
-            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Start;
+            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Start;
         }
 
         public void QuitGame() {
-            _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = GameStates.Exit;
+            _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = GameStates.Exit;
         }
     }
 }

@@ -26,17 +26,16 @@ namespace Game.Portals {
                 }
 
                 EcsEntity portalEntity = _ecsWorld.NewEntity();
-                portalEntity.Set<CreateWorldObjectEvent>().Transform = portal.transform;
-                ref var portalComponent = ref portalEntity.Set<PortalComponent>();
+                portalEntity.Get<CreateWorldObjectEvent>().Transform = portal.transform;
+                ref var portalComponent = ref portalEntity.Get<PortalComponent>();
 
                 if (channelDict.ContainsKey(channel)) {
                     filledChannels.Add(channel);
 
                     EcsEntity otherPortalEntity = channelDict[channel];
                     portalComponent.OtherPortalEntity = otherPortalEntity;
-                    otherPortalEntity.Set<PortalComponent>().OtherPortalEntity = portalEntity;
-                }
-                else {
+                    otherPortalEntity.Get<PortalComponent>().OtherPortalEntity = portalEntity;
+                } else {
                     channelDict.Add(channel, portalEntity);
                 }
             }

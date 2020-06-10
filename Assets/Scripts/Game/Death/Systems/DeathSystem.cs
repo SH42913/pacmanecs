@@ -19,11 +19,11 @@ namespace Game.Death {
                 if (--deadPlayer.Lives <= 0) {
                     deadPlayer.IsDead = true;
                     spawnPosition = Vector2Int.zero;
-                    playerEntity.Set<DestroyedWorldObjectEvent>();
+                    playerEntity.Get<DestroyedWorldObjectEvent>();
                 }
 
-                playerEntity.Set<TeleportedEvent>().NewPosition = spawnPosition;
-                _ecsWorld.NewEntity().Set<UpdateScoreTableEvent>();
+                playerEntity.Get<TeleportedEvent>().NewPosition = spawnPosition;
+                _ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
             }
         }
     }

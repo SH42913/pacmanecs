@@ -17,19 +17,16 @@ namespace Game.Players {
 
                 if (yAxis > 0) {
                     SendCommand(Directions.Up, playerEntity);
-                }
-                else if (yAxis < 0) {
+                } else if (yAxis < 0) {
                     SendCommand(Directions.Down, playerEntity);
-                }
-                else if (xAxis > 0) {
+                } else if (xAxis > 0) {
                     SendCommand(Directions.Right, playerEntity);
-                }
-                else if (xAxis < 0) {
+                } else if (xAxis < 0) {
                     SendCommand(Directions.Left, playerEntity);
                 }
 
                 if (Input.GetKeyUp(KeyCode.Escape)) {
-                    _ecsWorld.NewEntity().Set<ChangeGameStateEvent>().State = Time.timeScale < 1
+                    _ecsWorld.NewEntity().Get<ChangeGameStateEvent>().State = Time.timeScale < 1
                         ? GameStates.Start
                         : GameStates.Pause;
                 }
@@ -37,7 +34,7 @@ namespace Game.Players {
         }
 
         private static void SendCommand(Directions newDirection, EcsEntity playerEntity) {
-            playerEntity.Set<ChangeDirectionEvent>().NewDirection = newDirection;
+            playerEntity.Get<ChangeDirectionEvent>().NewDirection = newDirection;
         }
     }
 }

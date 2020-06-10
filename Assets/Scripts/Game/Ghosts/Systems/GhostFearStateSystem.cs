@@ -30,13 +30,13 @@ namespace Game.Ghosts {
                     return;
                 }
 
-                Vector2Int currentPosition = ghostEntity.Set<PositionComponent>().Position;
+                Vector2Int currentPosition = ghostEntity.Get<PositionComponent>().Position;
                 foreach (EcsEntity entity in _worldService.WorldField[currentPosition.x][currentPosition.y]) {
                     if (!entity.Has<PlayerComponent>()) continue;
 
-                    entity.Set<PlayerComponent>().Scores += ghostDefinition.ScoresPerGhost;
-                    ghostEntity.Set<DestroyedWorldObjectEvent>();
-                    _ecsWorld.NewEntity().Set<UpdateScoreTableEvent>();
+                    entity.Get<PlayerComponent>().Scores += ghostDefinition.ScoresPerGhost;
+                    ghostEntity.Get<DestroyedWorldObjectEvent>();
+                    _ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
                 }
             }
         }
@@ -48,13 +48,13 @@ namespace Game.Ghosts {
                 GhostComponent ghost = _ghosts.Get1(i);
                 EcsEntity ghostEntity = _ghosts.GetEntity(i);
 
-                ghostEntity.Set<GhostInFearStateComponent>().EstimateTime = ghostDefinition.FearStateInSec;
+                ghostEntity.Get<GhostInFearStateComponent>().EstimateTime = ghostDefinition.FearStateInSec;
                 ghost.Renderer.material.color = ghostDefinition.FearState;
             }
         }
 
         private static void RemoveFearState(EcsEntity ghostEntity, GhostDefinition ghostDefinition, in GhostComponent ghostComponent) {
-            ghostEntity.Unset<GhostInFearStateComponent>();
+            ghostEntity.Del<GhostInFearStateComponent>();
             switch (ghostComponent.GhostType) {
                 case GhostTypes.Blinky:
                     ghostComponent.Renderer.material.color = ghostDefinition.Blinky;

@@ -18,14 +18,14 @@ namespace Game.Ghosts {
         public void Run() {
             foreach (int i in _stoppedGhosts) {
                 EcsEntity ghostEntity = _stoppedGhosts.GetEntity(i);
-                ghostEntity.Set<ChangeDirectionEvent>().NewDirection = _random.NextEnum<Directions>();
+                ghostEntity.Get<ChangeDirectionEvent>().NewDirection = _random.NextEnum<Directions>();
             }
 
             foreach (int i in _ghosts) {
                 Vector2Int currentPosition = _ghosts.Get1(i).Position;
                 foreach (EcsEntity entity in _worldService.WorldField[currentPosition.x][currentPosition.y]) {
                     if (entity.Has<PlayerComponent>() && !entity.Has<PlayerIsDeadEvent>()) {
-                        entity.Set<PlayerIsDeadEvent>();
+                        entity.Get<PlayerIsDeadEvent>();
                     }
                 }
             }

@@ -17,7 +17,7 @@ namespace Game.Teleports {
                 moveComponent.DesiredPosition = targetPosition;
                 transform.position = targetPosition.ToVector3(transform.position.y);
 
-                _teleported.GetEntity(i).Set<NewPositionEvent>().NewPosition = targetPosition;
+                _teleported.GetEntity(i).Get<NewPositionEvent>().NewPosition = targetPosition;
             }
         }
     }

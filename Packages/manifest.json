@@ -41,11 +41,11 @@
   "lock": {
     "com.leopotam.ecs": {
       "revision": "develop",
-      "hash": "4c066760e47019bf3e3cec44b06bd05bfa1e66c5"
+      "hash": "bb553777bcd71684fc452bea45f9a18325cedff0"
     },
     "com.leopotam.ecs-unityintegration": {
       "revision": "develop",
-      "hash": "cf4bf6d37f93a3639a95578abc5b4e892463c9e1"
+      "hash": "1bee89d650a3c110781d967948b1c41508af0a60"
     }
   }
 }

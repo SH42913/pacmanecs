@@ -10,8 +10,8 @@ namespace Game.Walls {
             GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
             foreach (GameObject wall in walls) {
                 var entity = _ecsWorld.NewEntity();
-                entity.Set<CreateWorldObjectEvent>().Transform = wall.transform;
-                entity.Set<WallComponent>();
+                entity.Get<CreateWorldObjectEvent>().Transform = wall.transform;
+                entity.Get<WallComponent>();
             }
         }
     }

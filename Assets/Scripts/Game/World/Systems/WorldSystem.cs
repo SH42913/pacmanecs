@@ -16,8 +16,8 @@ namespace Game.World {
 
                 Vector2Int position = newObject.position.ToVector2Int();
                 _worldService.WorldField[position.x][position.y].Add(entity);
-                entity.Set<PositionComponent>().Position = position;
-                entity.Set<WorldObjectComponent>().Transform = newObject;
+                entity.Get<PositionComponent>().Position = position;
+                entity.Get<WorldObjectComponent>().Transform = newObject;
             }
 
             foreach (int i in _movedObjects) {

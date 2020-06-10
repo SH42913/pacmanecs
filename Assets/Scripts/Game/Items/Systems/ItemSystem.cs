@@ -16,8 +16,8 @@ namespace Game.Items {
                 foreach (EcsEntity entity in _worldService.WorldField[newPosition.x][newPosition.y]) {
                     if (!entity.Has<ItemComponent>()) continue;
 
-                    entity.Set<TakenItemEvent>().PlayerEntity = playerEntity;
-                    entity.Set<DestroyedWorldObjectEvent>();
+                    entity.Get<TakenItemEvent>().PlayerEntity = playerEntity;
+                    entity.Get<DestroyedWorldObjectEvent>();
                 }
             }
         }

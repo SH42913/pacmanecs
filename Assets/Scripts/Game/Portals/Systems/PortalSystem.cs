@@ -19,15 +19,15 @@ namespace Game.Portals {
                 foreach (EcsEntity entity in _worldService.WorldField[newPosition.x][newPosition.y]) {
                     if (!entity.Has<PortalComponent>()) continue;
 
-                    ref var portal = ref entity.Set<PortalComponent>();
+                    ref var portal = ref entity.Get<PortalComponent>();
                     if (portal.EstimateReloadTime > 0) continue;
 
                     EcsEntity otherPortalEntity = portal.OtherPortalEntity;
-                    Vector2Int otherPortalPosition = otherPortalEntity.Set<PositionComponent>().Position;
-                    movableEntity.Set<TeleportedEvent>().NewPosition = otherPortalPosition;
+                    Vector2Int otherPortalPosition = otherPortalEntity.Get<PositionComponent>().Position;
+                    movableEntity.Get<TeleportedEvent>().NewPosition = otherPortalPosition;
 
                     portal.EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
-                    otherPortalEntity.Set<PortalComponent>().EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
+                    otherPortalEntity.Get<PortalComponent>().EstimateReloadTime = _gameDefinitions.portalDefinition.portalReloadTime;
                 }
             }
 

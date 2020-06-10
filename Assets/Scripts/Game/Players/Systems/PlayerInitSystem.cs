@@ -19,23 +19,26 @@ namespace Game.Players {
             PlayerDefinition playerDefinition = _gameDefinitions.playerDefinition;
             GameObject[] playerObjects = GameObject.FindGameObjectsWithTag("Player");
             foreach (GameObject player in playerObjects) {
-                EcsEntity playerEntity = _ecsWorld.NewEntity();
-                ref var playerComponent = ref playerEntity.Set<PlayerComponent>();
-                ref var moveComponent = ref playerEntity.Set<MoveComponent>();
-
                 Vector2Int startPosition = player.transform.position.ToVector2Int();
-                moveComponent.Heading = playerCount % 2 != 0
+                var startHeading = playerCount % 2 != 0
                     ? Directions.Right
                     : Directions.Left;
 
-                moveComponent.DesiredPosition = startPosition;
-                moveComponent.Speed = playerDefinition.StartSpeed;
-
-                playerComponent.Lives = playerDefinition.StartLives;
-                playerComponent.Num = ++playerCount;
-                playerComponent.SpawnPosition = startPosition;
-
-                playerEntity.Set<CreateWorldObjectEvent>().Transform = player.transform;
+                EcsEntity playerEntity = _ecsWorld.NewEntity();
+                playerEntity
+                    .Replace(new CreateWorldObjectEvent {
+                        Transform = player.transform
+                    })
+                    .Replace(new PlayerComponent {
+                        Lives = playerDefinition.StartLives,
+                        Num = ++playerCount,
+                        SpawnPosition = startPosition,
+                    })
+                    .Replace(new MoveComponent {
+                        Heading = startHeading,
+                        DesiredPosition = startPosition,
+                        Speed = playerDefinition.StartSpeed,
+                    });
             }
         }
     }
