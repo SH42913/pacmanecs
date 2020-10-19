@@ -5,14 +5,14 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "bb553777bcd71684fc452bea45f9a18325cedff0"
+      "hash": "15e7094df6c6080696d431c264914c742277fbc3"
     },
     "com.leopotam.ecs-unityintegration": {
       "version": "https://github.com/Leopotam/ecs-unityintegration.git#develop",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "1bee89d650a3c110781d967948b1c41508af0a60"
+      "hash": "93706ef907672161ae6523a13abcb099c8b9effb"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
