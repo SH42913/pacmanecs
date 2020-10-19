@@ -27,8 +27,8 @@ namespace Game.Portals {
             }
         }
 
-        private void CheckPortalInPosition(EcsEntity movableEntity, in Vector2Int newPosition) {
-            foreach (var entity in worldService.worldField[newPosition.x][newPosition.y]) {
+        private void CheckPortalInPosition(in EcsEntity movableEntity, in Vector2Int newPosition) {
+            foreach (var entity in worldService.GetEntitiesOn(newPosition)) {
                 if (!entity.Has<PortalComponent>()) continue;
 
                 ref var portal = ref entity.Get<PortalComponent>();

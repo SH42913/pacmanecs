@@ -1,9 +1,8 @@
-﻿using System;
-using Utils;
-using Game.Walls;
+﻿using Game.Walls;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
+using Utils;
 
 namespace Game.Moving {
     public sealed class MoveSystem : IEcsRunSystem {
@@ -33,7 +32,7 @@ namespace Game.Moving {
             }
         }
 
-        private static Vector2Int UpdatePosition(EcsEntity movingEntity, ref MovementComponent movement, Transform transform, in Vector2Int oldPosition) {
+        private static Vector2Int UpdatePosition(in EcsEntity movingEntity, ref MovementComponent movement, Transform transform, in Vector2Int oldPosition) {
             var newPosition = movement.desiredPosition;
             if (!oldPosition.Equals(newPosition)) {
                 movingEntity.Get<NewPositionEvent>().newPosition = newPosition;
@@ -43,9 +42,9 @@ namespace Game.Moving {
             return movement.heading.GetPosition(newPosition);
         }
 
-        private void CheckStuckToWall(EcsEntity movingEntity, ref MovementComponent movement, Vector2Int newDesiredPosition) {
+        private void CheckStuckToWall(in EcsEntity movingEntity, ref MovementComponent movement, in Vector2Int newDesiredPosition) {
             var stuckToWall = false;
-            foreach (var entity in worldService.worldField[newDesiredPosition.x][newDesiredPosition.y]) {
+            foreach (var entity in worldService.GetEntitiesOn(newDesiredPosition)) {
                 if (entity.IsAlive() && entity.Has<WallComponent>()) {
                     stuckToWall = true;
                 }

@@ -31,7 +31,7 @@ namespace Game.Ghosts {
                 }
 
                 var currentPosition = ghostEntity.Get<PositionComponent>().position;
-                foreach (var entity in worldService.worldField[currentPosition.x][currentPosition.y]) {
+                foreach (var entity in worldService.GetEntitiesOn(currentPosition)) {
                     if (!entity.Has<PlayerComponent>()) continue;
 
                     entity.Get<PlayerComponent>().scores += ghostDefinition.scoresPerGhost;
