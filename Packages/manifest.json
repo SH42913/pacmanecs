@@ -6,7 +6,7 @@
     "com.unity.ext.nunit": "1.0.0",
     "com.unity.ide.rider": "1.1.4",
     "com.unity.ide.vscode": "1.2.1",
-    "com.unity.test-framework": "1.1.14",
+    "com.unity.test-framework": "1.1.16",
     "com.unity.ugui": "1.0.0",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -37,15 +37,5 @@
     "com.unity.modules.vehicles": "1.0.0",
     "com.unity.modules.video": "1.0.0",
     "com.unity.modules.wind": "1.0.0"
-  },
-  "lock": {
-    "com.leopotam.ecs": {
-      "revision": "develop",
-      "hash": "bb553777bcd71684fc452bea45f9a18325cedff0"
-    },
-    "com.leopotam.ecs-unityintegration": {
-      "revision": "develop",
-      "hash": "1bee89d650a3c110781d967948b1c41508af0a60"
-    }
   }
 }
