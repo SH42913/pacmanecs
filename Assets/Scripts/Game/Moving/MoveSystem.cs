@@ -10,7 +10,7 @@ namespace Game.Moving {
         private const float epsilon = 0.1f;
 
         private readonly WorldService worldService = null;
-        private readonly EcsFilter<PositionComponent, MoveComponent, WorldObjectComponent> moveEntities = null;
+        private readonly EcsFilter<PositionComponent, MovementComponent, WorldObjectComponent> moveEntities = null;
 
         public void Run() {
             foreach (var i in moveEntities) {
@@ -33,17 +33,17 @@ namespace Game.Moving {
             }
         }
 
-        private static Vector2Int UpdatePosition(EcsEntity movingEntity, ref MoveComponent moveComponent, Transform transform, in Vector2Int oldPosition) {
-            var newPosition = moveComponent.desiredPosition;
+        private static Vector2Int UpdatePosition(EcsEntity movingEntity, ref MovementComponent movement, Transform transform, in Vector2Int oldPosition) {
+            var newPosition = movement.desiredPosition;
             if (!oldPosition.Equals(newPosition)) {
                 movingEntity.Get<NewPositionEvent>().newPosition = newPosition;
             }
 
-            transform.rotation = moveComponent.heading.GetRotation();
-            return moveComponent.heading.GetPosition(newPosition);
+            transform.rotation = movement.heading.GetRotation();
+            return movement.heading.GetPosition(newPosition);
         }
 
-        private void CheckStuckToWall(EcsEntity movingEntity, ref MoveComponent moveComponent, Vector2Int newDesiredPosition) {
+        private void CheckStuckToWall(EcsEntity movingEntity, ref MovementComponent movement, Vector2Int newDesiredPosition) {
             var stuckToWall = false;
             foreach (var entity in worldService.worldField[newDesiredPosition.x][newDesiredPosition.y]) {
                 if (entity.IsAlive() && entity.Has<WallComponent>()) {
@@ -54,7 +54,7 @@ namespace Game.Moving {
             if (stuckToWall) {
                 movingEntity.Get<StoppedComponent>();
             } else {
-                moveComponent.desiredPosition = newDesiredPosition;
+                movement.desiredPosition = newDesiredPosition;
                 movingEntity.Del<StoppedComponent>();
             }
         }

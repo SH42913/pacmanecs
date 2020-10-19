@@ -10,7 +10,7 @@ namespace Game.Portals {
         private readonly GameDefinitions gameDefinitions = null;
 
         private readonly EcsFilter<PortalComponent> portals = null;
-        private readonly EcsFilter<NewPositionEvent, MoveComponent> moveObjects = null;
+        private readonly EcsFilter<NewPositionEvent, MovementComponent> moveObjects = null;
 
         public void Run() {
             foreach (var i in moveObjects) {

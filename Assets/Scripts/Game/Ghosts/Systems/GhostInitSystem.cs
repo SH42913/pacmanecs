@@ -23,7 +23,7 @@ namespace Game.Ghosts {
                         ghostType = GetGhostType(ghostObject.name),
                         renderer = ghostObject.GetComponent<MeshRenderer>()
                     })
-                    .Replace(new MoveComponent {
+                    .Replace(new MovementComponent {
                         desiredPosition = ghostObject.transform.position.ToVector2Int(),
                         heading = random.NextEnum<Directions>(),
                         speed = gameDefinitions.ghostDefinition.ghostSpeed,

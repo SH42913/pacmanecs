@@ -17,7 +17,7 @@ namespace Game.Ghosts {
 
         public void Run() {
             foreach (var i in stoppedGhosts) {
-                stoppedGhosts.GetEntity(i).Get<ChangeDirectionEvent>().newDirection = random.NextEnum<Directions>();
+                stoppedGhosts.GetEntity(i).Get<MovementComponent>().heading = random.NextEnum<Directions>();
             }
 
             foreach (var i in ghosts) {

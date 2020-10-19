@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Teleports {
     public sealed class TeleportSystem : IEcsRunSystem {
-        private readonly EcsFilter<MoveComponent, WorldObjectComponent, TeleportedEvent> teleported = null;
+        private readonly EcsFilter<MovementComponent, WorldObjectComponent, TeleportedEvent> teleported = null;
 
         public void Run() {
             foreach (var i in teleported) {

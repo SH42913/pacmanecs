@@ -16,7 +16,7 @@ namespace Game.Items.Food {
                 ref var player = ref playerEntity.Get<PlayerComponent>();
                 player.scores += takenFoods.Get1(i).scores;
 
-                ref var moveComponent = ref playerEntity.Get<MoveComponent>();
+                ref var moveComponent = ref playerEntity.Get<MovementComponent>();
                 moveComponent.speed -= takenFoods.Get1(i).speedPenalty;
 
                 ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();

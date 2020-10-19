@@ -29,7 +29,7 @@ namespace Game.Players {
                         num = ++playerCount,
                         spawnPosition = startPosition,
                     })
-                    .Replace(new MoveComponent {
+                    .Replace(new MovementComponent {
                         heading = startHeading,
                         desiredPosition = startPosition,
                         speed = playerDefinition.startSpeed,
