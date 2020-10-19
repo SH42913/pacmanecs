@@ -39,30 +39,8 @@ namespace Game.Moving {
                 movingEntity.Get<NewPositionEvent>().newPosition = newPosition;
             }
 
-            Vector2Int newDesiredPosition;
-            Vector3 newDirection;
-            switch (moveComponent.heading) {
-                case Directions.Up:
-                    newDesiredPosition = new Vector2Int(newPosition.x, newPosition.y + 1);
-                    newDirection = new Vector3(0, 0, 0);
-                    break;
-                case Directions.Right:
-                    newDesiredPosition = new Vector2Int(newPosition.x + 1, newPosition.y);
-                    newDirection = new Vector3(0, 90, 0);
-                    break;
-                case Directions.Down:
-                    newDesiredPosition = new Vector2Int(newPosition.x, newPosition.y - 1);
-                    newDirection = new Vector3(0, 180, 0);
-                    break;
-                case Directions.Left:
-                    newDesiredPosition = new Vector2Int(newPosition.x - 1, newPosition.y);
-                    newDirection = new Vector3(0, -90, 0);
-                    break;
-                default: throw new ArgumentOutOfRangeException();
-            }
-
-            transform.rotation = Quaternion.Euler(newDirection);
-            return newDesiredPosition;
+            transform.rotation = moveComponent.heading.GetRotation();
+            return moveComponent.heading.GetPosition(newPosition);
         }
 
         private void CheckStuckToWall(EcsEntity movingEntity, ref MoveComponent moveComponent, Vector2Int newDesiredPosition) {
