@@ -17,6 +17,7 @@ using UnityEngine;
 
 public sealed class GameStartup : MonoBehaviour {
     public GameObject pauseMenu;
+    public WallRegistry wallRegistry;
     public GameDefinitions gameDefinitions;
 
     private EcsWorld ecsWorld;
@@ -63,6 +64,7 @@ public sealed class GameStartup : MonoBehaviour {
             .AddUiSystems()
             .Inject(new WorldService())
             .Inject(gameDefinitions)
+            .Inject(wallRegistry)
             .Inject(random)
             .ProcessInjects()
             .Init();
