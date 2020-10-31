@@ -1,5 +1,5 @@
 using Leopotam.Ecs;
 
-namespace Game.Gameplay.Moving {
+namespace Game.Gameplay.Movement {
     public struct MovementStoppedMarker : IEcsIgnoreInFilter { }
 }

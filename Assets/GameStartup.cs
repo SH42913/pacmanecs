@@ -3,7 +3,7 @@ using Game.Gameplay;
 using Game.Gameplay.Ghosts;
 using Game.Gameplay.Items;
 using Game.Gameplay.Items.Food;
-using Game.Gameplay.Moving;
+using Game.Gameplay.Movement;
 using Game.Gameplay.Players;
 using Game.Gameplay.Portals;
 using Game.Gameplay.Teleports;

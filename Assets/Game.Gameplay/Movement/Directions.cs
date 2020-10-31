@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Gameplay.Moving {
+namespace Game.Gameplay.Movement {
     public enum Directions {
         Up,
         Right,

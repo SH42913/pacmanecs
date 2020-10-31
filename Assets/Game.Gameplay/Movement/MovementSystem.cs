@@ -3,7 +3,7 @@ using Game.Gameplay.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Gameplay.Moving {
+namespace Game.Gameplay.Movement {
     public sealed class MovementSystem : IEcsRunSystem {
         private const float epsilon = 0.1f;
 

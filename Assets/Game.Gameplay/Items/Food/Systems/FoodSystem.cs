@@ -1,4 +1,4 @@
-﻿using Game.Gameplay.Moving;
+﻿using Game.Gameplay.Movement;
 using Game.Gameplay.Players;
 using Leopotam.Ecs;
 

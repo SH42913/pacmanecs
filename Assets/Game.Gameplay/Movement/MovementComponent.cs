@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Gameplay.Moving {
+namespace Game.Gameplay.Movement {
     public struct MovementComponent {
         public float speed;
         public Directions heading;

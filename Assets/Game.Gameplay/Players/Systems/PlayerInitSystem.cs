@@ -1,5 +1,5 @@
 ﻿using System;
-using Game.Gameplay.Moving;
+using Game.Gameplay.Movement;
 using Game.Gameplay.World;
 using Leopotam.Ecs;
 using UnityEngine;
