@@ -5,7 +5,7 @@ namespace Game.Ui.ScoreTable {
     public sealed class ScoreTableSystem : IEcsRunSystem {
         private readonly EcsFilter<PlayerComponent> players = null;
         private readonly EcsFilter<ScoreTableComponent> scoreTables = null;
-        private readonly EcsFilter<UpdateScoreTableEvent> updateEvents = null;
+        private readonly EcsFilter<ScoreTableNeedUpdateEvent> updateEvents = null;
 
         public void Run() {
             if (updateEvents.IsEmpty()) return;

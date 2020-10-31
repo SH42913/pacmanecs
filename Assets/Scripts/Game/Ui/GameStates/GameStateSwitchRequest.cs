@@ -3,10 +3,10 @@
         Start,
         Pause,
         Restart,
-        Exit
+        Exit,
     }
 
-    public struct ChangeGameStateEvent {
+    public struct GameStateSwitchRequest {
         public GameStates state;
     }
 }

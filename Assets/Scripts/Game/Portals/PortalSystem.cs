@@ -10,7 +10,7 @@ namespace Game.Portals {
         private readonly GameDefinitions gameDefinitions = null;
 
         private readonly EcsFilter<PortalComponent> portals = null;
-        private readonly EcsFilter<NewPositionEvent, MovementComponent> moveObjects = null;
+        private readonly EcsFilter<WorldObjectNewPositionRequest, MovementComponent> moveObjects = null;
 
         public void Run() {
             foreach (var i in moveObjects) {
@@ -36,7 +36,7 @@ namespace Game.Portals {
 
                 var otherPortalEntity = portal.otherPortalEntity;
                 var otherPortalPosition = otherPortalEntity.Get<PositionComponent>().position;
-                movableEntity.Get<TeleportedEvent>().newPosition = otherPortalPosition;
+                movableEntity.Get<TeleportToPositionRequest>().newPosition = otherPortalPosition;
 
                 portal.estimateReloadTime = gameDefinitions.portalDefinition.portalReloadTime;
                 otherPortalEntity.Get<PortalComponent>().estimateReloadTime = gameDefinitions.portalDefinition.portalReloadTime;

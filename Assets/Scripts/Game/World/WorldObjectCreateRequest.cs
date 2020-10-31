@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Game.World {
-    public struct CreateWorldObjectEvent {
+    public struct WorldObjectCreateRequest {
         public Transform transform;
     }
 }

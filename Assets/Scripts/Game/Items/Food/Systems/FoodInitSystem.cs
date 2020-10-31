@@ -15,8 +15,8 @@ namespace Game.Items.Food {
             var foodObjects = GameObject.FindGameObjectsWithTag("Food");
             foreach (var foodObject in foodObjects) {
                 var entity = ecsWorld.NewEntity();
-                entity.Replace(new ItemComponent())
-                    .Replace(new CreateWorldObjectEvent { transform = foodObject.transform })
+                entity.Replace(new ItemMarker())
+                    .Replace(new WorldObjectCreateRequest { transform = foodObject.transform })
                     .Replace(new FoodComponent {
                         scores = foodDefinition.scoresPerFood,
                         speedPenalty = foodDefinition.speedPenalty
@@ -26,9 +26,9 @@ namespace Game.Items.Food {
             var energizers = GameObject.FindGameObjectsWithTag("Energizer");
             foreach (var energizer in energizers) {
                 var entity = ecsWorld.NewEntity();
-                entity.Replace(new EnergizerComponent())
-                    .Replace(new ItemComponent())
-                    .Replace(new CreateWorldObjectEvent { transform = energizer.transform })
+                entity.Replace(new EnergizerMarker())
+                    .Replace(new ItemMarker())
+                    .Replace(new WorldObjectCreateRequest { transform = energizer.transform })
                     .Replace(new FoodComponent {
                         scores = foodDefinition.scoresPerFood * foodDefinition.energizerMultiplier,
                         speedPenalty = foodDefinition.speedPenalty * foodDefinition.energizerMultiplier

@@ -19,10 +19,10 @@ namespace Game.Ghosts {
                 var position = ghosts.Get1(i).position;
                 var isFear = ghostEntity.Has<GhostInFearStateComponent>();
                 if (!isFear && TryGetAlivePlayerOnPosition(position, out var playerEntity)) {
-                    playerEntity.Replace(new PlayerIsDeadEvent());
+                    playerEntity.Replace(new PlayerDeathRequest());
                 }
 
-                if (ghostEntity.Has<StoppedComponent>()) {
+                if (ghostEntity.Has<MovementStoppedMarker>()) {
                     ref var movement = ref ghosts.Get2(i);
                     ChangeDirection(ref movement);
                 }
@@ -33,7 +33,7 @@ namespace Game.Ghosts {
             playerEntity = EcsEntity.Null;
 
             foreach (var entity in worldService.GetEntitiesOn(currentPosition)) {
-                if (entity.Has<PlayerComponent>() && !entity.Has<PlayerIsDeadEvent>()) {
+                if (entity.Has<PlayerComponent>() && !entity.Has<PlayerDeathRequest>()) {
                     playerEntity = entity;
                     return true;
                 }

@@ -12,7 +12,7 @@ namespace Game.Ui.ScoreTable {
                 ecsWorld.NewEntity().Get<ScoreTableComponent>().scoreText = behaviour.GetComponent<Text>();
             }
 
-            ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+            ecsWorld.NewEntity().Get<ScoreTableNeedUpdateEvent>();
         }
     }
 }

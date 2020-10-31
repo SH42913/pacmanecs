@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Game.World {
-    public struct NewPositionEvent {
+    public struct WorldObjectNewPositionRequest {
         public Vector2Int newPosition;
     }
 }

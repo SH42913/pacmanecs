@@ -6,7 +6,7 @@ using Leopotam.Ecs;
 namespace Game.Items.Food {
     public sealed class FoodSystem : IEcsRunSystem {
         private readonly EcsWorld ecsWorld = null;
-        private readonly EcsFilter<FoodComponent, TakenItemEvent> takenFoods = null;
+        private readonly EcsFilter<FoodComponent, ItemTakenEvent> takenFoods = null;
 
         public void Run() {
             foreach (var i in takenFoods) {
@@ -19,7 +19,7 @@ namespace Game.Items.Food {
                 ref var moveComponent = ref playerEntity.Get<MovementComponent>();
                 moveComponent.speed -= takenFoods.Get1(i).speedPenalty;
 
-                ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+                ecsWorld.NewEntity().Get<ScoreTableNeedUpdateEvent>();
             }
         }
     }

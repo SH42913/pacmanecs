@@ -5,7 +5,7 @@ using Leopotam.Ecs;
 namespace Game.Items {
     public sealed class ItemSystem : IEcsRunSystem {
         private readonly WorldService worldService = null;
-        private readonly EcsFilter<NewPositionEvent, PlayerComponent> players = null;
+        private readonly EcsFilter<WorldObjectNewPositionRequest, PlayerComponent> players = null;
 
         public void Run() {
             foreach (var i in players) {
@@ -13,10 +13,10 @@ namespace Game.Items {
                 var playerEntity = players.GetEntity(i);
 
                 foreach (var entity in worldService.GetEntitiesOn(newPosition)) {
-                    if (!entity.Has<ItemComponent>()) continue;
+                    if (!entity.Has<ItemMarker>()) continue;
 
-                    entity.Get<TakenItemEvent>().playerEntity = playerEntity;
-                    entity.Get<DestroyedWorldObjectEvent>();
+                    entity.Get<ItemTakenEvent>().playerEntity = playerEntity;
+                    entity.Get<WorldObjectDestroyedEvent>();
                 }
             }
         }

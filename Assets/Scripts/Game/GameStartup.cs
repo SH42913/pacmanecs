@@ -44,26 +44,26 @@ namespace Game {
                 .Add(new ScoreTableInitSystem())
                 .Add(new PlayerInputSystem())
                 .Add(new GhostSystem())
-                .Add(new MoveSystem())
+                .Add(new MovementSystem())
                 .Add(new ItemSystem())
                 .Add(new FoodSystem())
                 .Add(new EnergizerSystem())
                 .Add(new GhostFearStateSystem())
-                .OneFrame<GhostStartFearStateEvent>()
-                .Add(new DeathSystem())
-                .OneFrame<PlayerIsDeadEvent>()
+                .OneFrame<GhostFearStateRequest>()
+                .Add(new PlayerDeathSystem())
+                .OneFrame<PlayerDeathRequest>()
                 .Add(new PortalSystem())
                 .Add(new TeleportSystem())
                 .Add(new ScoreTableSystem())
                 .Add(new GameStateSystem())
-                .OneFrame<ChangeGameStateEvent>()
-                .OneFrame<UpdateScoreTableEvent>()
+                .OneFrame<GameStateSwitchRequest>()
+                .OneFrame<ScoreTableNeedUpdateEvent>()
                 .Add(new WorldSystem())
-                .OneFrame<TeleportedEvent>()
-                .OneFrame<TakenItemEvent>()
-                .OneFrame<CreateWorldObjectEvent>()
-                .OneFrame<DestroyedWorldObjectEvent>()
-                .OneFrame<NewPositionEvent>()
+                .OneFrame<TeleportToPositionRequest>()
+                .OneFrame<ItemTakenEvent>()
+                .OneFrame<WorldObjectCreateRequest>()
+                .OneFrame<WorldObjectDestroyedEvent>()
+                .OneFrame<WorldObjectNewPositionRequest>()
                 .Inject(new WorldService())
                 .Inject(gameDefinitions)
                 .Inject(random)
@@ -91,19 +91,19 @@ namespace Game {
         }
 
         private void StartGame() {
-            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Start;
+            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Start;
         }
 
         public void RestartGame() {
-            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Restart;
+            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Restart;
         }
 
         public void ContinueGame() {
-            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Start;
+            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Start;
         }
 
         public void QuitGame() {
-            ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = GameStates.Exit;
+            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Exit;
         }
     }
 }

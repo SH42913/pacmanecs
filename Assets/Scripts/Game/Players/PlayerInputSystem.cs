@@ -26,7 +26,7 @@ namespace Game.Players {
                 }
 
                 if (Input.GetKeyUp(KeyCode.Escape)) {
-                    ecsWorld.NewEntity().Get<ChangeGameStateEvent>().state = Time.timeScale < 1
+                    ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = Time.timeScale < 1
                         ? GameStates.Start
                         : GameStates.Pause;
                 }

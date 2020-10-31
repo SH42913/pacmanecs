@@ -1,9 +1,9 @@
 ﻿using System;
-using Utils;
 using Game.Moving;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
+using Utils;
 
 namespace Game.Players {
     public sealed class PlayerInitSystem : IEcsInitSystem {
@@ -23,7 +23,7 @@ namespace Game.Players {
                     : Directions.Left;
 
                 var playerEntity = ecsWorld.NewEntity();
-                playerEntity.Replace(new CreateWorldObjectEvent { transform = player.transform })
+                playerEntity.Replace(new WorldObjectCreateRequest { transform = player.transform })
                     .Replace(new PlayerComponent {
                         lives = playerDefinition.startLives,
                         num = ++playerCount,

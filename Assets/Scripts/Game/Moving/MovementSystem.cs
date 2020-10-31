@@ -5,7 +5,7 @@ using UnityEngine;
 using Utils;
 
 namespace Game.Moving {
-    public sealed class MoveSystem : IEcsRunSystem {
+    public sealed class MovementSystem : IEcsRunSystem {
         private const float epsilon = 0.1f;
 
         private readonly WorldService worldService = null;
@@ -35,7 +35,7 @@ namespace Game.Moving {
         private static Vector2Int UpdatePosition(in EcsEntity movingEntity, ref MovementComponent movement, Transform transform, in Vector2Int oldPosition) {
             var newPosition = movement.desiredPosition;
             if (!oldPosition.Equals(newPosition)) {
-                movingEntity.Get<NewPositionEvent>().newPosition = newPosition;
+                movingEntity.Get<WorldObjectNewPositionRequest>().newPosition = newPosition;
             }
 
             transform.rotation = movement.heading.GetRotation();
@@ -45,16 +45,16 @@ namespace Game.Moving {
         private void CheckStuckToWall(in EcsEntity movingEntity, ref MovementComponent movement, in Vector2Int newDesiredPosition) {
             var stuckToWall = false;
             foreach (var entity in worldService.GetEntitiesOn(newDesiredPosition)) {
-                if (entity.IsAlive() && entity.Has<WallComponent>()) {
+                if (entity.IsAlive() && entity.Has<WallMarker>()) {
                     stuckToWall = true;
                 }
             }
 
             if (stuckToWall) {
-                movingEntity.Get<StoppedComponent>();
+                movingEntity.Get<MovementStoppedMarker>();
             } else {
                 movement.desiredPosition = newDesiredPosition;
-                movingEntity.Del<StoppedComponent>();
+                movingEntity.Del<MovementStoppedMarker>();
             }
         }
     }

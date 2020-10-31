@@ -1,14 +1,13 @@
 using System;
-using Utils;
 using Game.Moving;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
-using Random = System.Random;
+using Utils;
 
 namespace Game.Ghosts {
     public sealed class GhostInitSystem : IEcsInitSystem {
-        private readonly Random random = null;
+        private readonly System.Random random = null;
         private readonly EcsWorld ecsWorld = null;
         private readonly GameDefinitions gameDefinitions = null;
 
@@ -28,7 +27,7 @@ namespace Game.Ghosts {
                         heading = random.NextEnum<Directions>(),
                         speed = gameDefinitions.ghostDefinition.ghostSpeed,
                     })
-                    .Replace(new CreateWorldObjectEvent { transform = ghostObject.transform });
+                    .Replace(new WorldObjectCreateRequest { transform = ghostObject.transform });
             }
         }
 

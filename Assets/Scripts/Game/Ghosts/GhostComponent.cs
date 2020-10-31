@@ -5,7 +5,7 @@ namespace Game.Ghosts {
         Blinky,
         Pinky,
         Inky,
-        Clyde
+        Clyde,
     }
 
     public struct GhostComponent {

@@ -6,15 +6,15 @@ using UnityEngine.SceneManagement;
 namespace Game.Ui.GameStates {
     public sealed class GameStateSystem : IEcsRunSystem {
         private readonly EcsFilter<PauseMenuComponent> menus = null;
-        private readonly EcsFilter<ChangeGameStateEvent> changeStateEvents = null;
+        private readonly EcsFilter<GameStateSwitchRequest> requests = null;
 
         public void Run() {
-            if (changeStateEvents.IsEmpty()) return;
+            if (requests.IsEmpty()) return;
 
             var needDisableMenu = false;
             var needEnableMenu = false;
-            foreach (var i in changeStateEvents) {
-                switch (changeStateEvents.Get1(i).state) {
+            foreach (var i in requests) {
+                switch (requests.Get1(i).state) {
                     case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;

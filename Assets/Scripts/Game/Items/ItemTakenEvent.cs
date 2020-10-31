@@ -1,7 +1,7 @@
 using Leopotam.Ecs;
 
 namespace Game.Items {
-    public struct TakenItemEvent {
+    public struct ItemTakenEvent {
         public EcsEntity playerEntity;
     }
 }

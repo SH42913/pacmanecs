@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 namespace Game.Teleports {
-    public struct TeleportedEvent {
+    public struct TeleportToPositionRequest {
         public Vector2Int newPosition;
     }
 }

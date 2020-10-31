@@ -11,8 +11,8 @@ namespace Game.Ghosts {
         private readonly WorldService worldService = null;
         private readonly GameDefinitions gameDefinitions = null;
 
-        private readonly EcsFilter<GhostStartFearStateEvent> enableEvents = null;
         private readonly EcsFilter<GhostComponent> ghosts = null;
+        private readonly EcsFilter<GhostFearStateRequest> requests = null;
         private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> fearStateGhosts = null;
 
         public void Run() {
@@ -35,14 +35,14 @@ namespace Game.Ghosts {
                     if (!entity.Has<PlayerComponent>()) continue;
 
                     entity.Get<PlayerComponent>().scores += ghostDefinition.scoresPerGhost;
-                    ghostEntity.Get<DestroyedWorldObjectEvent>();
-                    ecsWorld.NewEntity().Get<UpdateScoreTableEvent>();
+                    ghostEntity.Get<WorldObjectDestroyedEvent>();
+                    ecsWorld.NewEntity().Get<ScoreTableNeedUpdateEvent>();
                 }
             }
         }
 
         private void EnableGhostFearIfNeed(GhostDefinition ghostDefinition) {
-            if (enableEvents.IsEmpty()) return;
+            if (requests.IsEmpty()) return;
 
             foreach (var i in ghosts) {
                 var ghost = ghosts.Get1(i);

@@ -26,7 +26,7 @@ namespace Game.Portals {
                 }
 
                 var portalEntity = ecsWorld.NewEntity();
-                portalEntity.Get<CreateWorldObjectEvent>().transform = portal.transform;
+                portalEntity.Get<WorldObjectCreateRequest>().transform = portal.transform;
                 ref var portalComponent = ref portalEntity.Get<PortalComponent>();
 
                 if (channelDict.ContainsKey(channel)) {
