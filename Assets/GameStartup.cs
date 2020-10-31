@@ -20,6 +20,9 @@ public sealed class GameStartup : MonoBehaviour {
     public WallRegistry wallRegistry;
     public GameDefinitions gameDefinitions;
 
+    [Header("Food")] public Transform[] foodTransforms;
+    public Transform[] energizerTransforms;
+
     private EcsWorld ecsWorld;
     private EcsSystems systems;
     private System.Random random;
@@ -41,7 +44,7 @@ public sealed class GameStartup : MonoBehaviour {
             .Add(new GhostInitSystem())
             .Add(new WallInitSystem())
             .Add(new PortalInitSystem())
-            .Add(new FoodInitSystem())
+            .Add(new FoodInitSystem(foodTransforms, energizerTransforms))
             .Add(new ScoreTableInitSystem())
             .Add(new PlayerInputSystem())
             .Add(new GhostSystem())
