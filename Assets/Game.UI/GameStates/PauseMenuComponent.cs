@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Gameplay.Ui.GameStates {
+namespace Game.UI.GameStates {
     public struct PauseMenuComponent {
         public GameObject gameObject;
     }

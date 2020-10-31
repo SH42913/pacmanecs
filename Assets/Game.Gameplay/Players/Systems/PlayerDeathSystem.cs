@@ -1,12 +1,10 @@
 ﻿using Game.Gameplay.Teleports;
-using Game.Gameplay.Ui.ScoreTable;
 using Game.Gameplay.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Gameplay.Players {
     public sealed class PlayerDeathSystem : IEcsRunSystem {
-        private readonly EcsWorld ecsWorld = null;
         private readonly EcsFilter<PlayerComponent, PlayerDeathRequest> requests = null;
 
         public void Run() {
@@ -22,7 +20,7 @@ namespace Game.Gameplay.Players {
                 }
 
                 playerEntity.Get<TeleportToPositionRequest>().newPosition = spawnPosition;
-                ecsWorld.NewEntity().Get<ScoreTableNeedUpdateEvent>();
+                playerEntity.Get<PlayerScoreChangedEvent>();
             }
         }
     }

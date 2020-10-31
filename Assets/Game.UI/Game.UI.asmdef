@@ -1,0 +1,16 @@
+{
+  "name": "Game.UI",
+  "references": [
+    "Leopotam.Ecs",
+    "Game.Gameplay"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

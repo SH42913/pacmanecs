@@ -1,4 +1,4 @@
-﻿namespace Game.Gameplay.Ui.GameStates {
+﻿namespace Game.UI.GameStates {
     public enum GameStates {
         Start,
         Pause,
@@ -7,6 +7,6 @@
     }
 
     public struct GameStateSwitchRequest {
-        public GameStates state;
+        public GameStates newState;
     }
 }

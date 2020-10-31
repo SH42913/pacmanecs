@@ -3,7 +3,7 @@ using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Game.Gameplay.Ui.GameStates {
+namespace Game.UI.GameStates {
     public sealed class GameStateSystem : IEcsRunSystem {
         private readonly EcsFilter<PauseMenuComponent> menus = null;
         private readonly EcsFilter<GameStateSwitchRequest> requests = null;
@@ -14,7 +14,7 @@ namespace Game.Gameplay.Ui.GameStates {
             var needDisableMenu = false;
             var needEnableMenu = false;
             foreach (var i in requests) {
-                switch (requests.Get1(i).state) {
+                switch (requests.Get1(i).newState) {
                     case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;

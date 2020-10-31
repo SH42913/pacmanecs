@@ -7,10 +7,11 @@ using Game.Gameplay.Moving;
 using Game.Gameplay.Players;
 using Game.Gameplay.Portals;
 using Game.Gameplay.Teleports;
-using Game.Gameplay.Ui.GameStates;
-using Game.Gameplay.Ui.ScoreTable;
 using Game.Gameplay.Walls;
 using Game.Gameplay.World;
+using Game.UI;
+using Game.UI.GameStates;
+using Game.UI.ScoreTable;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -47,34 +48,37 @@ public sealed class GameStartup : MonoBehaviour {
             .Add(new ItemSystem())
             .Add(new FoodSystem())
             .Add(new EnergizerSystem())
+            .OneFrame<ItemTakenEvent>()
             .Add(new GhostFearStateSystem())
             .OneFrame<GhostFearStateRequest>()
             .Add(new PlayerDeathSystem())
             .OneFrame<PlayerDeathRequest>()
             .Add(new PortalSystem())
             .Add(new TeleportSystem())
-            .Add(new ScoreTableSystem())
-            .Add(new GameStateSystem())
-            .OneFrame<GameStateSwitchRequest>()
-            .OneFrame<ScoreTableNeedUpdateEvent>()
-            .Add(new WorldSystem())
             .OneFrame<TeleportToPositionRequest>()
-            .OneFrame<ItemTakenEvent>()
+            .Add(new WorldSystem())
             .OneFrame<WorldObjectCreateRequest>()
             .OneFrame<WorldObjectDestroyedEvent>()
             .OneFrame<WorldObjectNewPositionRequest>()
+            .AddUiSystems()
             .Inject(new WorldService())
             .Inject(gameDefinitions)
             .Inject(random)
             .ProcessInjects()
             .Init();
 
-        InitPauseMenu();
+        ecsWorld.NewEntity().Get<PauseMenuComponent>().gameObject = pauseMenu;
         StartGame();
     }
 
     private void Update() {
         systems.Run();
+
+        if (Input.GetKeyUp(KeyCode.Escape)) {
+            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = Time.timeScale < 1
+                ? GameStates.Start
+                : GameStates.Pause;
+        }
     }
 
     private void OnDisable() {
@@ -85,23 +89,19 @@ public sealed class GameStartup : MonoBehaviour {
         ecsWorld = null;
     }
 
-    private void InitPauseMenu() {
-        ecsWorld.NewEntity().Get<PauseMenuComponent>().gameObject = pauseMenu;
-    }
-
     private void StartGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Start;
+        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Start;
     }
 
     public void RestartGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Restart;
+        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Restart;
     }
 
     public void ContinueGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Start;
+        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Start;
     }
 
     public void QuitGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = GameStates.Exit;
+        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Exit;
     }
 }

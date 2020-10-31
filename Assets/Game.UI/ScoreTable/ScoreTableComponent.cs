@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 
-namespace Game.Gameplay.Ui.ScoreTable {
+namespace Game.UI.ScoreTable {
     public struct ScoreTableComponent {
         public Text scoreText;
     }

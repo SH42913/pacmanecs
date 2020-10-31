@@ -1,11 +1,9 @@
 ﻿using Game.Gameplay.Moving;
-using Game.Gameplay.Ui.GameStates;
 using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Gameplay.Players {
     public sealed class PlayerInputSystem : IEcsRunSystem {
-        private readonly EcsWorld ecsWorld = null;
         private readonly EcsFilter<PlayerComponent, MovementComponent> players = null;
 
         public void Run() {
@@ -23,12 +21,6 @@ namespace Game.Gameplay.Players {
                     movement.heading = Directions.Right;
                 } else if (xAxis < 0) {
                     movement.heading = Directions.Left;
-                }
-
-                if (Input.GetKeyUp(KeyCode.Escape)) {
-                    ecsWorld.NewEntity().Get<GameStateSwitchRequest>().state = Time.timeScale < 1
-                        ? GameStates.Start
-                        : GameStates.Pause;
                 }
             }
         }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Gameplay.Ui.ScoreTable {
+namespace Game.UI.ScoreTable {
     [RequireComponent(typeof(Text))]
     public sealed class ScoreTableBehaviour : MonoBehaviour { }
 }

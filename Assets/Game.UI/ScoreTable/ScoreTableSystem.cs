@@ -1,14 +1,15 @@
 ﻿using Game.Gameplay.Players;
 using Leopotam.Ecs;
 
-namespace Game.Gameplay.Ui.ScoreTable {
+namespace Game.UI.ScoreTable {
     public sealed class ScoreTableSystem : IEcsRunSystem {
         private readonly EcsFilter<PlayerComponent> players = null;
         private readonly EcsFilter<ScoreTableComponent> scoreTables = null;
-        private readonly EcsFilter<ScoreTableNeedUpdateEvent> updateEvents = null;
+        private readonly EcsFilter<PlayerScoreChangedEvent> updateEvents = null;
+        private readonly EcsFilter<ScoreTableComponent>.Exclude<InitializedScoreTableMarker> tablesToInit = null;
 
         public void Run() {
-            if (updateEvents.IsEmpty()) return;
+            if (updateEvents.IsEmpty() && tablesToInit.IsEmpty()) return;
 
             var scoresString = "";
             foreach (var i in players) {
@@ -24,7 +25,10 @@ namespace Game.Gameplay.Ui.ScoreTable {
 
             foreach (var i in scoreTables) {
                 scoreTables.Get1(i).scoreText.text = scoresString;
+                scoreTables.GetEntity(i).Get<InitializedScoreTableMarker>();
             }
         }
+
+        private struct InitializedScoreTableMarker { }
     }
 }

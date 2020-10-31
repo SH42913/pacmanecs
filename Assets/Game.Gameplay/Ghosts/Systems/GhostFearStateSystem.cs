@@ -1,13 +1,11 @@
 using System;
 using Game.Gameplay.Players;
-using Game.Gameplay.Ui.ScoreTable;
 using Game.Gameplay.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.Gameplay.Ghosts {
     public sealed class GhostFearStateSystem : IEcsRunSystem {
-        private readonly EcsWorld ecsWorld = null;
         private readonly WorldService worldService = null;
         private readonly GameDefinitions gameDefinitions = null;
 
@@ -34,9 +32,9 @@ namespace Game.Gameplay.Ghosts {
                 foreach (var entity in worldService.GetEntitiesOn(currentPosition)) {
                     if (!entity.Has<PlayerComponent>()) continue;
 
-                    entity.Get<PlayerComponent>().scores += ghostDefinition.scoresPerGhost;
                     ghostEntity.Get<WorldObjectDestroyedEvent>();
-                    ecsWorld.NewEntity().Get<ScoreTableNeedUpdateEvent>();
+                    entity.Get<PlayerComponent>().scores += ghostDefinition.scoresPerGhost;
+                    entity.Get<PlayerScoreChangedEvent>();
                 }
             }
         }
