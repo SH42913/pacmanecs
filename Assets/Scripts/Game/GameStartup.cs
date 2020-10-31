@@ -1,8 +1,8 @@
 ﻿using System;
 using Game.Death;
 using Game.Ghosts;
-using Game.Items.Food;
 using Game.Items;
+using Game.Items.Food;
 using Game.Moving;
 using Game.Players;
 using Game.Portals;
@@ -13,7 +13,6 @@ using Game.Walls;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game {
     public sealed class GameStartup : MonoBehaviour {
@@ -50,7 +49,7 @@ namespace Game {
                 .Add(new FoodSystem())
                 .Add(new EnergizerSystem())
                 .Add(new GhostFearStateSystem())
-                .OneFrame<EnableGhostFearStateEvent>()
+                .OneFrame<GhostStartFearStateEvent>()
                 .Add(new DeathSystem())
                 .OneFrame<PlayerIsDeadEvent>()
                 .Add(new PortalSystem())

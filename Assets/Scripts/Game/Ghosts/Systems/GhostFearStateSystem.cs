@@ -11,7 +11,7 @@ namespace Game.Ghosts {
         private readonly WorldService worldService = null;
         private readonly GameDefinitions gameDefinitions = null;
 
-        private readonly EcsFilter<EnableGhostFearStateEvent> enableEvents = null;
+        private readonly EcsFilter<GhostStartFearStateEvent> enableEvents = null;
         private readonly EcsFilter<GhostComponent> ghosts = null;
         private readonly EcsFilter<GhostComponent, GhostInFearStateComponent> fearStateGhosts = null;
 
