@@ -1,11 +1,10 @@
-﻿using Game.Players;
-using Game.Teleports;
+﻿using Game.Teleports;
 using Game.Ui.ScoreTable;
 using Game.World;
 using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Game.Death {
+namespace Game.Players {
     public sealed class PlayerDeathSystem : IEcsRunSystem {
         private readonly EcsWorld ecsWorld = null;
         private readonly EcsFilter<PlayerComponent, PlayerDeathRequest> requests = null;

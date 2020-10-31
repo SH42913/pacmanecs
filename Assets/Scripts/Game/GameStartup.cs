@@ -1,5 +1,4 @@
 ﻿using System;
-using Game.Death;
 using Game.Ghosts;
 using Game.Items;
 using Game.Items.Food;

@@ -1,5 +1,5 @@
 ﻿using Leopotam.Ecs;
 
-namespace Game.Death {
+namespace Game.Players {
     public struct PlayerDeathRequest : IEcsIgnoreInFilter { }
 }

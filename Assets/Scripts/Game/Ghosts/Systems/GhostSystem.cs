@@ -1,5 +1,4 @@
-﻿using Game.Death;
-using Game.Moving;
+﻿using Game.Moving;
 using Game.Players;
 using Game.World;
 using Leopotam.Ecs;
