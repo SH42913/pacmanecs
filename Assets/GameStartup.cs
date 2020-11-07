@@ -48,6 +48,7 @@ public sealed class GameStartup : MonoBehaviour {
             .Add(new ScoreTableInitSystem())
             .Add(new PlayerInputSystem())
             .Add(new GhostSystem())
+            .Add(new MovementTargetSystem())
             .Add(new MovementSystem())
             .Add(new ItemSystem())
             .Add(new FoodSystem())

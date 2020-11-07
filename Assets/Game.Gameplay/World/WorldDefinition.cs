@@ -5,5 +5,7 @@ namespace Game.Gameplay.World {
     public sealed class WorldDefinition : ScriptableObject {
         public int sizeX;
         public int sizeY;
+
+        public Vector2Int worldSize => new Vector2Int(sizeX, sizeY);
     }
 }

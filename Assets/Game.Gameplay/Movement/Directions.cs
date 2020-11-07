@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Game.Gameplay.Movement {
     public enum Directions {
@@ -22,6 +24,8 @@ namespace Game.Gameplay.Movement {
             Quaternion.Euler(0, 180, 0),
             Quaternion.Euler(0, -90, 0),
         };
+
+        public static readonly IReadOnlyList<Directions> availableDirections = (Directions[]) Enum.GetValues(typeof(Directions));
 
         public static Vector2Int GetPosition(this Directions direction, in Vector2Int position) {
             return position + GetPosition(direction);
