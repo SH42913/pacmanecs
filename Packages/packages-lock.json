@@ -1,18 +1,18 @@
 {
   "dependencies": {
     "com.leopotam.ecs": {
-      "version": "https://github.com/Leopotam/ecs.git#develop",
+      "version": "https://github.com/Leopotam/ecs.git#master",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "60c78d544f483a07f228115a7118a3933ace5692"
+      "hash": "1966a4c1fd1893697e27a65f8980943f5df86b88"
     },
     "com.leopotam.ecs-unityintegration": {
-      "version": "https://github.com/Leopotam/ecs-unityintegration.git#develop",
+      "version": "https://github.com/Leopotam/ecs-unityintegration.git#master",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "6d4dea106235b8319aa17229ef94d2d751c22fc2"
+      "hash": "16f527e942e4c03efabff357d718c4ba0092a477"
     },
     "com.unity.2d.sprite": {
       "version": "1.0.0",
@@ -37,7 +37,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.visualstudio": {
-      "version": "2.0.12",
+      "version": "2.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -46,14 +46,14 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.vscode": {
-      "version": "1.2.4",
+      "version": "1.2.5",
       "depth": 0,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.29",
+      "version": "1.1.31",
       "depth": 0,
       "source": "registry",
       "dependencies": {
