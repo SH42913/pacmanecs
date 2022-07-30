@@ -15,11 +15,16 @@ namespace Game.Gameplay.Ghosts {
 
             var ghostObjects = GameObject.FindGameObjectsWithTag("Ghost");
             foreach (var ghostObject in ghostObjects) {
+                var renderer = ghostObject.GetComponent<Renderer>();
+                var materialPropertyBlock = new MaterialPropertyBlock();
+                renderer.GetPropertyBlock(materialPropertyBlock);
+
                 var ghostEntity = ecsWorld.NewEntity();
                 ghostEntity.Replace(new GhostInFearStateComponent())
                     .Replace(new GhostComponent {
                         ghostType = GetGhostType(ghostObject.name),
-                        renderer = ghostObject.GetComponent<MeshRenderer>()
+                        renderer = renderer,
+                        materialPropertyBlock = materialPropertyBlock,
                     })
                     .Replace(new MovementComponent {
                         desiredPosition = ghostObject.transform.position.ToVector2Int(),

@@ -24,7 +24,7 @@ namespace Game.Gameplay.Ghosts {
 
                 fearState.estimateTime -= Time.deltaTime;
                 if (fearState.estimateTime <= 0) {
-                    RemoveFearState(ghostEntity, ghostDefinition, ghostComponent);
+                    RemoveFearState(ghostEntity, ghostDefinition, ref ghostComponent);
                     return;
                 }
 
@@ -47,24 +47,24 @@ namespace Game.Gameplay.Ghosts {
                 var ghostEntity = ghosts.GetEntity(i);
 
                 ghostEntity.Get<GhostInFearStateComponent>().estimateTime = ghostDefinition.fearStateInSec;
-                ghost.renderer.material.color = ghostDefinition.fearState;
+                ghost.SetColor(ghostDefinition.fearState);
             }
         }
 
-        private static void RemoveFearState(EcsEntity ghostEntity, GhostDefinition ghostDefinition, in GhostComponent ghostComponent) {
+        private static void RemoveFearState(EcsEntity ghostEntity, GhostDefinition ghostDefinition, ref GhostComponent ghostComponent) {
             ghostEntity.Del<GhostInFearStateComponent>();
             switch (ghostComponent.ghostType) {
                 case GhostTypes.Blinky:
-                    ghostComponent.renderer.material.color = ghostDefinition.blinky;
+                    ghostComponent.SetColor(ghostDefinition.blinky);
                     break;
                 case GhostTypes.Pinky:
-                    ghostComponent.renderer.material.color = ghostDefinition.pinky;
+                    ghostComponent.SetColor(ghostDefinition.pinky);
                     break;
                 case GhostTypes.Inky:
-                    ghostComponent.renderer.material.color = ghostDefinition.inky;
+                    ghostComponent.SetColor(ghostDefinition.inky);
                     break;
                 case GhostTypes.Clyde:
-                    ghostComponent.renderer.material.color = ghostDefinition.clyde;
+                    ghostComponent.SetColor(ghostDefinition.clyde);
                     break;
                 default: throw new ArgumentOutOfRangeException();
             }
