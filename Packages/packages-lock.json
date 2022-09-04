@@ -5,7 +5,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "44e783c9d642c9da18791874e950fc53634ee4e4"
+      "hash": "126dd262efea6ab44210ca605e4551b5ab2f3d02"
     },
     "com.leopotam.ecs-unityintegration": {
       "version": "https://github.com/Leopotam/ecs-unityintegration.git#master",
