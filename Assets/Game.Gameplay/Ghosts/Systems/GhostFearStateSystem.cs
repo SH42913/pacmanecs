@@ -43,7 +43,7 @@ namespace Game.Gameplay.Ghosts {
             if (requests.IsEmpty()) return;
 
             foreach (var i in ghosts) {
-                var ghost = ghosts.Get1(i);
+                ref var ghost = ref ghosts.Get1(i);
                 var ghostEntity = ghosts.GetEntity(i);
 
                 ghostEntity.Get<GhostInFearStateComponent>().estimateTime = ghostDefinition.fearStateInSec;

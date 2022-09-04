@@ -20,7 +20,7 @@ namespace Game.Gameplay.Portals {
             }
 
             foreach (var i in portals) {
-                var portalComponent = portals.Get1(i);
+                ref var portalComponent = ref portals.Get1(i);
                 if (portalComponent.estimateReloadTime > 0) {
                     portalComponent.estimateReloadTime -= Time.deltaTime;
                 }
