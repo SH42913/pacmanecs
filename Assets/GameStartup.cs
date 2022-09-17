@@ -16,7 +16,7 @@ using Leopotam.Ecs;
 using UnityEngine;
 
 public sealed class GameStartup : MonoBehaviour {
-    public GameObject pauseMenu;
+    public PauseMenuComponent pauseMenu;
     public WallRegistry wallRegistry;
     public GameDefinitions gameDefinitions;
 
@@ -71,11 +71,11 @@ public sealed class GameStartup : MonoBehaviour {
             .Inject(gameDefinitions)
             .Inject(wallRegistry)
             .Inject(random)
-            .ProcessInjects()
-            .Init();
+            .ProcessInjects();
 
-        ecsWorld.NewEntity().Get<PauseMenuComponent>().gameObject = pauseMenu;
+        ecsWorld.NewEntity().Replace(pauseMenu);
         StartGame();
+        systems.Init();
     }
 
     private void Update() {
@@ -92,17 +92,5 @@ public sealed class GameStartup : MonoBehaviour {
 
     private void StartGame() {
         ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Start;
-    }
-
-    public void RestartGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Restart;
-    }
-
-    public void ContinueGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Start;
-    }
-
-    public void QuitGame() {
-        ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.Exit;
     }
 }

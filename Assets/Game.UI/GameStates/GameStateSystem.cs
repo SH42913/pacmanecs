@@ -36,7 +36,7 @@ namespace Game.UI.GameStates {
             if (needDisableMenu == needEnableMenu) return;
 
             foreach (var i in menus) {
-                menus.Get1(i).gameObject.SetActive(needEnableMenu);
+                menus.Get1(i).root.SetActive(needEnableMenu);
             }
         }
     }
