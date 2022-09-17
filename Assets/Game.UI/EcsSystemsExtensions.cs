@@ -1,5 +1,4 @@
-﻿using Game.Gameplay.Players;
-using Game.UI.GameStates;
+﻿using Game.UI.GameStates;
 using Game.UI.ScoreTable;
 using Leopotam.Ecs;
 
@@ -9,8 +8,7 @@ namespace Game.UI {
             return systems
                 .Add(new GameStateSystem())
                 .OneFrame<GameStateSwitchRequest>()
-                .Add(new ScoreTableSystem())
-                .OneFrame<PlayerScoreChangedEvent>();
+                .Add(new ScoreTableSystem());
         }
     }
 }

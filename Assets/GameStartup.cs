@@ -66,6 +66,7 @@ public sealed class GameStartup : MonoBehaviour {
             .OneFrame<WorldObjectDestroyedEvent>()
             .OneFrame<WorldObjectNewPositionRequest>()
             .AddUiSystems()
+            .OneFrame<PlayerScoreChangedEvent>()
             .Inject(new WorldService())
             .Inject(gameDefinitions)
             .Inject(wallRegistry)
