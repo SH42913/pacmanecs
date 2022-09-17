@@ -80,12 +80,6 @@ public sealed class GameStartup : MonoBehaviour {
 
     private void Update() {
         systems.Run();
-
-        if (Input.GetKeyUp(KeyCode.Escape)) {
-            ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = Time.timeScale < 1
-                ? GameStates.Start
-                : GameStates.Pause;
-        }
     }
 
     private void OnDisable() {
