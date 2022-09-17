@@ -16,7 +16,9 @@ namespace Game.Gameplay.Items {
                     if (!entity.Has<ItemMarker>()) continue;
 
                     entity.Get<ItemTakenEvent>().playerEntity = playerEntity;
-                    entity.Get<WorldObjectDestroyedEvent>();
+                    entity.Replace(new WorldObjectDestroyedEvent {
+                        deleteEntity = true,
+                    });
                 }
             }
         }

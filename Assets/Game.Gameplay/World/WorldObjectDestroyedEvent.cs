@@ -1,5 +1,5 @@
-using Leopotam.Ecs;
-
 namespace Game.Gameplay.World {
-    public struct WorldObjectDestroyedEvent : IEcsIgnoreInFilter { }
+    public struct WorldObjectDestroyedEvent {
+        public bool deleteEntity;
+    }
 }

@@ -34,11 +34,18 @@ namespace Game.Gameplay.World {
             foreach (var i in destroyedObjects) {
                 var objectToDestroy = destroyedObjects.Get1(i).transform;
                 var position = destroyedObjects.Get2(i).position;
+                var deleteEntity = destroyedObjects.Get3(i).deleteEntity;
                 var entity = destroyedObjects.GetEntity(i);
 
                 worldService.worldField[position.x][position.y].Remove(entity);
                 objectToDestroy.gameObject.SetActive(false);
-                entity.Destroy();
+
+                if (deleteEntity) {
+                    entity.Destroy();
+                } else {
+                    entity.Del<WorldObjectComponent>();
+                    entity.Del<PositionComponent>();
+                }
             }
         }
     }
