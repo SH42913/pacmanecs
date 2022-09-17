@@ -5,7 +5,6 @@ namespace Game.Gameplay.Players {
         public int num;
         public int scores;
         public int lives;
-        public bool isDead;
         public Vector2Int spawnPosition;
     }
 }

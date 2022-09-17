@@ -16,7 +16,7 @@ namespace Game.UI.ScoreTable {
                 ref var player = ref players.Get1(i);
                 scoresString += $"P{player.num.ToString()} Scores:{player.scores.ToString()} ";
 
-                if (player.isDead) {
+                if (players.GetEntity(i).Has<DeadPlayerMarker>()) {
                     scoresString += "IS DEAD\n";
                 } else {
                     scoresString += $"Lives:{player.lives.ToString()}\n";

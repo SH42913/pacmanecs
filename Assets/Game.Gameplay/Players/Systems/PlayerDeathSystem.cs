@@ -14,8 +14,8 @@ namespace Game.Gameplay.Players {
 
                 var spawnPosition = deadPlayer.spawnPosition;
                 if (--deadPlayer.lives <= 0) {
-                    deadPlayer.isDead = true;
                     spawnPosition = Vector2Int.zero;
+                    playerEntity.Get<DeadPlayerMarker>();
                     playerEntity.Get<WorldObjectDestroyedEvent>();
                 }
 
