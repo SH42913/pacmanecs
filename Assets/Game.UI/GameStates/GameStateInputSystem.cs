@@ -1,10 +1,12 @@
-﻿using Leopotam.Ecs;
+﻿using Game.Gameplay.Players;
+using Leopotam.Ecs;
 using UnityEngine;
 
 namespace Game.UI.GameStates {
     public sealed class GameStateInputSystem : IEcsInitSystem, IEcsRunSystem {
         private readonly EcsWorld ecsWorld = null;
         private readonly EcsFilter<PauseMenuComponent> menus = null;
+        private readonly EcsFilter<PlayerComponent>.Exclude<DeadPlayerMarker> alivePlayers = null;
 
         public void Init() {
             foreach (var i in menus) {
@@ -17,7 +19,10 @@ namespace Game.UI.GameStates {
         }
 
         public void Run() {
-            if (Input.GetKeyUp(KeyCode.Escape)) {
+            var alivePlayersCount = alivePlayers.GetEntitiesCount();
+            if (alivePlayersCount < 1) {
+                ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = GameStates.GameOver;
+            } else if (Input.GetKeyUp(KeyCode.Escape)) {
                 ecsWorld.NewEntity().Get<GameStateSwitchRequest>().newState = Time.timeScale < 1
                     ? GameStates.Start
                     : GameStates.Pause;

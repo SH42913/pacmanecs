@@ -11,10 +11,12 @@ namespace Game.UI.GameStates {
         public void Run() {
             if (requests.IsEmpty()) return;
 
+            var gameState = GameStates.Start;
             var needDisableMenu = false;
             var needEnableMenu = false;
             foreach (var i in requests) {
-                switch (requests.Get1(i).newState) {
+                gameState = requests.Get1(i).newState;
+                switch (gameState) {
                     case GameStates.Pause:
                         Time.timeScale = 0f;
                         needEnableMenu = true;
@@ -29,6 +31,9 @@ namespace Game.UI.GameStates {
                     case GameStates.Exit:
                         Application.Quit();
                         break;
+                    case GameStates.GameOver:
+                        needEnableMenu = true;
+                        break;
                     default: throw new ArgumentOutOfRangeException();
                 }
             }
@@ -36,7 +41,12 @@ namespace Game.UI.GameStates {
             if (needDisableMenu == needEnableMenu) return;
 
             foreach (var i in menus) {
-                menus.Get1(i).root.SetActive(needEnableMenu);
+                ref var menu = ref menus.Get1(i);
+
+                var isGameOver = gameState == GameStates.GameOver;
+                menu.menuText.gameObject.SetActive(isGameOver);
+                menu.continueBtn.interactable = !isGameOver;
+                menu.root.SetActive(needEnableMenu);
             }
         }
     }

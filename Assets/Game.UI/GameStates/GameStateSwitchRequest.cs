@@ -4,6 +4,7 @@
         Pause,
         Restart,
         Exit,
+        GameOver,
     }
 
     public struct GameStateSwitchRequest {
