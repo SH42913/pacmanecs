@@ -29,7 +29,11 @@ namespace Game.UI.GameStates {
                         SceneManager.LoadScene(0);
                         break;
                     case GameStates.Exit:
+#if UNITY_EDITOR
+                        UnityEditor.EditorApplication.isPlaying = false;
+#else
                         Application.Quit();
+#endif
                         break;
                     case GameStates.GameOver:
                         needEnableMenu = true;
