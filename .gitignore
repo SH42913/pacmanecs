@@ -5,6 +5,7 @@
 /[Bb]uilds/
 /.idea/
 /[Ll]ogs/
+/UserSettings/
 
 /Assets/Plugins/*
 /Assets/Plugins.meta
